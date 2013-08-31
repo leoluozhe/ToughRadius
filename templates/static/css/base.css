@@ -1,0 +1,38 @@
+/* ---------------------- */
+body {
+  font-family: 微软雅黑, Verdana, sans-serif, 宋体;
+  font-size: 13px;
+}
+
+.navbar-inner{
+  border: 0;
+  border-radius: 0;
+}
+.navbar .brand {
+  display: block;
+  float: left;
+  padding: 10px 20px 10px;
+  margin-left: -20px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #ffffff;
+  text-shadow: 0 1px 0 #2C3E50;
+}
+
+.navbar .brand:hover {
+  text-decoration: none;
+}
+
+.nav .active > a,
+.nav .active > a:hover,
+.nav .active > a:focus
+{
+  background-color: #464547;
+}
+
+
+footer{
+  background-color: #f1f1f1;
+  font-size: 12px;
+  padding: 20px;
+}

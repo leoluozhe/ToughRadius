@@ -70,7 +70,7 @@ public class Project
         
         Beans.put(Config.class);
         
-        HashSet<Class> CLASSES = Utils.loadClasses("com.zhengtu");
+        HashSet<Class> CLASSES = Utils.loadClasses("org.toughradius");
         ActionSet<Class> actionSet = new ActionSet<Class>();
         
         for (Class clasz : CLASSES) {
@@ -87,11 +87,12 @@ public class Project
         
         ToughServer rserver = new ToughServer(Beans.getBean(Config.class));
         WebServer wserv = new WebServer(Beans.getBean(Config.class), actionSet);
-
-        Beans.put(rserver);
-        Beans.put(wserv);
         
         Beans.start();
+        
+        rserver.start();
+        wserv.start();
+        
     }
     
     public static SqlSession getSession()

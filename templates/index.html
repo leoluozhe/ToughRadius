@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+   <#include "/header.html" parse=true>
+  </head>
+  <body>
+  <#include "/nav.html" parse=true>
+	<div class="main-box">
+		<div class="container">
+		    <div class="row">
+               <#include "/menu.html" parse=true>
+				<div class="span9">
+
+						
+						<table class="table table-striped " >
+						 <thead>
+						    <tr>
+						      <th>系统信息</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>系统版本：</td>
+						      <td>V1.0</td>
+						      <td>已运行时间：</td>
+						      <td>...</td>
+						      <td>内存使用：</td>
+						      <td>...</td>
+						    </tr>						  
+						    <tr>
+						      <td>当前登陆IP地址：</td>
+						      <td>...</td>
+						      <td>最后登录时间：</td>
+						      <td>...</td>
+						      <td>当前在线：</td>
+						      <td>1000</td>
+						    </tr>
+						    </tbody>
+						</table>		
+						<table class="table table-bordered table-striped">
+						 <thead>
+						    <tr>
+						      <th>统计信息  </th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						      <td>
+								<ul >
+								  <li>认证包总数：4291736 </li>
+								  <li> 认证接受包：226271 </li>
+								  <li>认证拒绝包：4065456 </li>
+								  <li>认证丢弃包：15</li>
+								</ul>						      
+                              </td>
+						      <td>
+								<ul >						      
+									<li>记帐包总数：449358 </li>
+									<li>记帐上线包：225743 </li>
+									<li>记帐更新包：0 </li>
+									<li>记帐下线包：223604 </li>
+									<li>记帐开始包：0 </li>
+									<li>记帐结束包：0 </li>
+									<li>记帐丢弃包：0 </li>
+								</ul>						      
+						      </td>
+						    </tr>	    
+						    </tbody>
+						</table>											
+
+				</div>
+			</div>
+		</div>
+    </div > <!-- /container -->
+  <#include "/footer.html" parse=true>
+  </body>
+</html>

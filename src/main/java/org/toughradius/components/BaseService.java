@@ -6,8 +6,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.toughradius.annotation.Inject;
+import org.toughradius.data.RadAdminMapper;
 import org.toughradius.data.RadBlacklistMapper;
 import org.toughradius.data.RadClientMapper;
+import org.toughradius.model.RadAdmin;
 import org.toughradius.model.RadBlacklist;
 import org.toughradius.model.RadClient;
 @Inject
@@ -98,4 +100,19 @@ public class BaseService
         }
     }
     
+    
+    public RadAdmin getAdmin(String loginName)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadAdminMapper mapper = session.getMapper(RadAdminMapper.class);
+            RadAdmin admin = mapper.selectByPrimaryKey(loginName);
+            return admin;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
 }

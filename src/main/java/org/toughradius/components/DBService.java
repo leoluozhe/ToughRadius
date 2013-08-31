@@ -15,10 +15,12 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.picocontainer.Startable;
 import org.toughradius.annotation.Inject;
 import org.toughradius.common.Config;
+import org.toughradius.data.RadAdminMapper;
 import org.toughradius.data.RadBlacklistMapper;
 import org.toughradius.data.RadClientMapper;
 import org.toughradius.data.RadGroupMapper;
 import org.toughradius.data.RadGroupMetaMapper;
+import org.toughradius.data.RadOnlineMapper;
 import org.toughradius.data.RadUserMapper;
 import org.toughradius.data.RadUserMetaMapper;
 
@@ -53,14 +55,18 @@ public class DBService implements Startable
             Environment environment = new Environment("development", transactionFactory, dataSource.getDataSource());
             Configuration configuration = new Configuration(environment);
             configuration.setCacheEnabled(true);
+            configuration.setLazyLoadingEnabled(true);
+            configuration.setAggressiveLazyLoading(false);
             configuration.addMapper(RadUserMapper.class);
             configuration.addMapper(RadUserMetaMapper.class);
             configuration.addMapper(RadGroupMapper.class);
             configuration.addMapper(RadGroupMetaMapper.class);
             configuration.addMapper(RadClientMapper.class);
             configuration.addMapper(RadBlacklistMapper.class);
+            configuration.addMapper(RadAdminMapper.class);
+            configuration.addMapper(RadOnlineMapper.class);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-            log.info("初始化数据库完成");
+            log.info("database init done !");
         }
         catch (Exception e)
         {
