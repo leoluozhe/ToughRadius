@@ -8,7 +8,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import org.toughradius.utils.FileUtil;
+
+import org.toughradius.common.FileUtil;
 
 public class UpgradeDB {
 

@@ -2,10 +2,9 @@ package org.toughradius.server;
 
 import java.net.InetSocketAddress;
 
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ibatis.session.SqlSession;
+import org.picocontainer.Startable;
 import org.tinyradius.attribute.IntegerAttribute;
 import org.tinyradius.packet.AccessRequest;
 import org.tinyradius.packet.AccountingRequest;
@@ -13,17 +12,35 @@ import org.tinyradius.packet.RadiusPacket;
 import org.tinyradius.util.RadiusException;
 import org.tinyradius.util.RadiusServer;
 import org.toughradius.Project;
+import org.toughradius.common.Config;
+import org.toughradius.common.DateTimeUtil;
+import org.toughradius.common.ValidateUtil;
 import org.toughradius.constant.Constant;
 import org.toughradius.model.RadClient;
 import org.toughradius.model.RadUser;
 import org.toughradius.model.RadUserMeta;
-import org.toughradius.utils.DateTimeUtil;
-import org.toughradius.utils.ValidateUtil;
 
-
-public class ToughServer extends RadiusServer implements Constant
+public class ToughServer extends RadiusServer implements Constant,Startable
 {
     private static Log logger = LogFactory.getLog(ToughServer.class);
+    private Config config;
+    
+    public ToughServer()
+    {
+    }
+    
+    public ToughServer(Config config)
+    {
+        this.config = config;
+    }
+    
+    public void start()
+    {
+        logger.info("start  RadiusServer...");
+        this.setAuthPort(config.getInt("radius.authPort", 1812));
+        this.setAcctPort(config.getInt("radius.acctPort", 1813));
+        this.start(true, true);
+    }
 
     @Override
     public String getSharedSecret(InetSocketAddress client)
@@ -62,7 +79,7 @@ public class ToughServer extends RadiusServer implements Constant
         //ÅÐ¶Ïµ½ÆÚ
         RadUserMeta attr = Project.getUserService().getUserMeta(accessRequest.getUserName(), USER_EXPIRE.value());
         
-        int sessionTimeout = Project.getObject(XMLConfiguration.class).getInt("radius.maxSessionTimeout");
+        int sessionTimeout = config.getInt("radius.maxSessionTimeout");
         
         if(attr!=null)
         {
@@ -133,5 +150,7 @@ public class ToughServer extends RadiusServer implements Constant
         // TODO Auto-generated method stub
         return super.accountingRequestReceived(accountingRequest, client);
     }
+
+
 
 }

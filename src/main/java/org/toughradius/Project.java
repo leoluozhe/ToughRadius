@@ -2,6 +2,7 @@ package org.toughradius;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Properties;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -16,6 +17,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.toughradius.annotation.Inject;
+import org.toughradius.common.ActionSet;
+import org.toughradius.common.Beans;
+import org.toughradius.common.Config;
+import org.toughradius.common.Utils;
+import org.toughradius.components.BaseService;
+import org.toughradius.components.DBService;
+import org.toughradius.components.UserService;
 import org.toughradius.data.RadBlacklistMapper;
 import org.toughradius.data.RadClientMapper;
 import org.toughradius.data.RadGroupMapper;
@@ -23,29 +32,17 @@ import org.toughradius.data.RadGroupMetaMapper;
 import org.toughradius.data.RadUserMapper;
 import org.toughradius.data.RadUserMetaMapper;
 import org.toughradius.server.ToughServer;
-import org.toughradius.service.BaseService;
-import org.toughradius.service.UserService;
+import org.toughradius.server.WebServer;
+import org.xlightweb.Mapping;
+
 
 public class Project
 {
     public static final String LOG4J_FILE = "conf/log4j.xml";
     public static final String CONFIG_FILE = "conf/system.xml";
-    private static final HashMap<Class<?>, Object> objectMap = new HashMap<Class<?>, Object>();
     private static Log log = LogFactory.getLog(Project.class);
-    private XMLConfiguration config = null;
     private ToughServer server;
     
-    /**
-     * 注册系统单例对象
-     * @param clasz
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T getObject(Class<T> clasz)
-    {
-        return (T) objectMap.get(clasz);
-    }
-
     /**
      * 初始化日志环境
      * @return
@@ -72,110 +69,65 @@ public class Project
         
     }
     
-    /**
-     * 初始化系统配置
-     * @return
-     */
-    private boolean loadConfig()
+    private void startWebServer()
     {
-        try
-        {
-            config = new XMLConfiguration(CONFIG_FILE);
-            objectMap.put(XMLConfiguration.class, config);
-            log.info("加载系统配置完成");
-        }
-        catch (ConfigurationException e)
-        {
-            e.printStackTrace();
-            System.out.println("初始化配置异常,请检查conf/system.xml文件;"+e.getMessage());
-            return false;
-        }
-        return true;
+        
     }
-    
 
-    
-    
-    private boolean initDB()
-    {
-        try
-        {
-            PooledDataSourceFactory dataSource = new PooledDataSourceFactory();
-            Properties dbpr = new Properties();
-            dbpr.setProperty("driver", config.getString("database.driver", "org.hsqldb.jdbc.JDBCDriver"));
-            dbpr.setProperty("url", config.getString("database.url", "jdbc:hsqldb:./data/radius"));
-            dbpr.setProperty("username", config.getString("database.username", "sa"));
-            dbpr.setProperty("password", config.getString("database.password", ""));
-            dataSource.setProperties(dbpr);
-            TransactionFactory transactionFactory = new JdbcTransactionFactory();
-            Environment environment = new Environment("development", transactionFactory, dataSource.getDataSource());
-            Configuration configuration = new Configuration(environment);
-            configuration.setCacheEnabled(true);
-            configuration.addMapper(RadUserMapper.class);
-            configuration.addMapper(RadUserMetaMapper.class);
-            configuration.addMapper(RadGroupMapper.class);
-            configuration.addMapper(RadGroupMetaMapper.class);
-            configuration.addMapper(RadClientMapper.class);
-            configuration.addMapper(RadBlacklistMapper.class);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-            objectMap.put(SqlSessionFactory.class, sqlSessionFactory);
-            log.info("初始化数据库完成");
-        }
-        catch (Exception e)
-        {
-            System.out.println("初始化数据库失败；"+e.getMessage());
-            return false;
-        }
-        return true;
-    }
-    
-    /**
-     * 启动RADIUS服务器
-     */
-    private void startRadiusServer()
-    {
-        log.info("启动 RadiusServer...");
-        server = new ToughServer();
-        server.setAuthPort(config.getInt("radius.authPort", 1812));
-        server.setAcctPort(config.getInt("radius.acctPort", 1813));
-        objectMap.put(ToughServer.class, server);
-        server.start(true, true);
-    }
     
     /**
      * 初始化系統環境，啓動服務器
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void start()
     {
         if(!initLogger())
             System.exit(1);
         
-        if(!loadConfig())
-            System.exit(1);
+        Beans.put(Config.class);
         
-        if(!initDB())
-            System.exit(1);
+        HashSet<Class> CLASSES = Utils.loadClasses("com.zhengtu");
+        ActionSet<Class> actionSet = new ActionSet<Class>();
         
-        objectMap.put(BaseService.class, new BaseService(getObject(SqlSessionFactory.class)));
-        objectMap.put(UserService.class, new UserService(getObject(SqlSessionFactory.class)));
+        for (Class clasz : CLASSES) {
+            if(clasz.getAnnotation(Inject.class)!=null)
+            {
+                Beans.put(clasz);
+            }
+            if(clasz.getAnnotation(Mapping.class)!=null)
+            {
+                Beans.put(clasz);
+                actionSet.add(clasz);
+            }
+        }
         
-        startRadiusServer();
+        
+        ToughServer rserver = new ToughServer(Beans.getBean(Config.class));
+//        rserver.start();
+        
+        WebServer wserv = new WebServer(Beans.getBean(Config.class), actionSet);
+//        wserv.start();
+
+        Beans.put(rserver);
+        Beans.put(wserv);
+        
+        Beans.start();
     }
     
     public static SqlSession getSession()
     {
-        SqlSessionFactory ssf = getObject(SqlSessionFactory.class);
-        return ssf.openSession();
+        DBService db = Beans.getBean(DBService.class);
+        return db.openSession();
     }
     
     public static BaseService getBaseService()
     {
-        return getObject(BaseService.class);
+        return Beans.getBean(BaseService.class);
     }
     
     public static UserService getUserService()
     {
-        return getObject(UserService.class);
+        return Beans.getBean(UserService.class);
     }
     
     public static void main(String[] args)
