@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+generatorConfig.xml
+mbgen.bat
+logs
+bin
+data

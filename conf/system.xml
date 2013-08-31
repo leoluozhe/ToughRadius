@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<radius>
+		<version>ToughRadius V1.0</version>
+		<authPort>1812</authPort>
+		<acctPort>1813</acctPort>
+		<adminPort>1815</adminPort>
+		<maxSessionTimeout>86400</maxSessionTimeout>
+	</radius>
+	<database>
+		<driver>org.hsqldb.jdbc.JDBCDriver</driver>
+		<url>jdbc:hsqldb:./data/radius</url>
+		<username>sa</username>
+		<password></password>
+	</database>	
+</config>
