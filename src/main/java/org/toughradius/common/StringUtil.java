@@ -10,33 +10,33 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * ×Ö·û´®¹¤¾ßÀà
+ * å­—ç¬¦ä¸²å·¥å…·ç±»
  */
 public class StringUtil
 {
-    private static final String RMB_NUM[] = { "Áã", "Ò¼", "·¡", "Èş", "ËÁ", "Îé", "Â½", "Æâ", "°Æ", "¾Á" };
-    private static final String RMB_UNIT[] = { "Ô²", "Ê°", "°Û", "Çª", "Íò", "Ê°", "°Û", "Çª", "ÒÚ", "Ê°","°Û", "Çª" };
-    private static final String RMB_DEC[] = { "½Ç", "·Ö" };
+    private static final String RMB_NUM[] = { "é›¶", "å£¹", "è´°", "å", "è‚†", "ä¼", "é™†", "æŸ’", "æŒ", "ç–" };
+    private static final String RMB_UNIT[] = { "åœ†", "æ‹¾", "ä½°", "ä»Ÿ", "ä¸‡", "æ‹¾", "ä½°", "ä»Ÿ", "äº¿", "æ‹¾","ä½°", "ä»Ÿ" };
+    private static final String RMB_DEC[] = { "è§’", "åˆ†" };
     
-    /** Êı×Öchars */
+    /** æ•°å­—chars */
     public static final String DIGITS = "0123456789";
     
-    /**  Ğ¡Ğ´×ÖÄ¸chars */
+    /**  å°å†™å­—æ¯chars */
     public static final String LETTERS_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     
-    /**  Ğ¡Ğ´×ÖÄ¸chars + Êı×Ö */
+    /**  å°å†™å­—æ¯chars + æ•°å­— */
     public static final String LETTERS_DIGITS_LOWERCASE = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-    /** ´óĞ´×ÖÄ¸chars */
+    /** å¤§å†™å­—æ¯chars */
     public static final String LETTERS_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    /** È«²¿×ÖÄ¸chars */
+    /** å…¨éƒ¨å­—æ¯chars */
     public static final String LETTERS = LETTERS_LOWERCASE + LETTERS_UPPERCASE;
 
-    /** È«²¿×ÖÄ¸Êı×Ö */
+    /** å…¨éƒ¨å­—æ¯æ•°å­— */
     public static final String LETTERS_DIGITS = LETTERS + DIGITS;
     
-    /** ¿Õ°×µÄchars (°üÀ¨¿Õ¸ñ,\t,\n,\r) */
+    /** ç©ºç™½çš„chars (åŒ…æ‹¬ç©ºæ ¼,\t,\n,\r) */
     public static final String WHITE_SPACE = " \t\n\r";
   
     private static char[] LOWER_CASES = {
@@ -57,13 +57,13 @@ public class StringUtil
         '\160','\161','\162','\163','\164','\165','\166','\167',
         '\170','\171','\172','\173','\174','\175','\176','\177' };
     
-    /** Éú³ÉUTF-8µÄ×Ö·û´® */
+    /** ç”ŸæˆUTF-8çš„å­—ç¬¦ä¸² */
     public static String newStringByUTF8(byte[] data)
     {
         return newString(data, "UTF-8");
     }
     
-    /** Éú³ÉÖ¸¶¨±àÂëµÄ×Ö·û´® */
+    /** ç”ŸæˆæŒ‡å®šç¼–ç çš„å­—ç¬¦ä¸² */
     public static String newString(byte[] data, String encoding)
     {
         try
@@ -76,13 +76,13 @@ public class StringUtil
         }
     }
     
-    /** ×ª»»Îª×Ö·û´® */
+    /** è½¬æ¢ä¸ºå­—ç¬¦ä¸² */
     public static String toString(Object o)
     {
         return String.valueOf(o);
     }
     
-    /** ×ª»»Îª×Ö·û´®,Èç¹ûobject==null,·µ»Ø"" */
+    /** è½¬æ¢ä¸ºå­—ç¬¦ä¸²,å¦‚æœobject==null,è¿”å›"" */
     public static String getString(Object o)
     {
         if (o == null)
@@ -91,7 +91,7 @@ public class StringUtil
         return toString(o);
     }
     
-    /** ×ª»»Îª×Ö·û´®,Èç¹ûobject==null,·µ»Ød */
+    /** è½¬æ¢ä¸ºå­—ç¬¦ä¸²,å¦‚æœobject==null,è¿”å›d */
     public static String getString(Object o, String d)
     {
         if (o == null)
@@ -100,13 +100,13 @@ public class StringUtil
         return toString(o);
     }
     
-    /** ×Ö·û´®×ª»»Îªint,Òì³£²»´¦Àí ×¢:Ä¬ÈÏ10½øÖÆ */
+    /** å­—ç¬¦ä¸²è½¬æ¢ä¸ºint,å¼‚å¸¸ä¸å¤„ç† æ³¨:é»˜è®¤10è¿›åˆ¶ */
     public static int toInt(String s)
     {
         return Integer.parseInt(s);
     }
 
-    /** ×Ö·û´®×ª»»Îªint Èç¹ûÒì³£Ôò·µ»ØÒì³£Öµ */
+    /** å­—ç¬¦ä¸²è½¬æ¢ä¸ºint å¦‚æœå¼‚å¸¸åˆ™è¿”å›å¼‚å¸¸å€¼ */
     public static int toInt(String s,int exception)
     {
         try
@@ -120,11 +120,11 @@ public class StringUtil
     }
 
     /**
-     * °Ñ×Ö·û´®°´split·Ö¸ô×ª»»³ÉÕûÊıÊı×é
+     * æŠŠå­—ç¬¦ä¸²æŒ‰splitåˆ†éš”è½¬æ¢æˆæ•´æ•°æ•°ç»„
      * 
-     * @param strs ×Ö·û´®
-     * @param split ·Ö¸ô
-     * @return int[] ×ª»»ºóµÄÕûÊıÊı×é
+     * @param strs å­—ç¬¦ä¸²
+     * @param split åˆ†éš”
+     * @return int[] è½¬æ¢åçš„æ•´æ•°æ•°ç»„
      */
     public static int[] toIntArray(String strs, String split)
     {
@@ -142,10 +142,10 @@ public class StringUtil
     }
     
     /**
-     * °Ñ×Ö·û´®Êı×é´«»»³ÉÕûÊıÊı×é ÊÊºÏÔÚwebµÄform±íµ¥Ìá½»Ê±µÃµ½µÄÊÇ×Ö·û´®Êı×é,µ«Êµ¼ÊÒªÕûÊıÊı×é
+     * æŠŠå­—ç¬¦ä¸²æ•°ç»„ä¼ æ¢æˆæ•´æ•°æ•°ç»„ é€‚åˆåœ¨webçš„formè¡¨å•æäº¤æ—¶å¾—åˆ°çš„æ˜¯å­—ç¬¦ä¸²æ•°ç»„,ä½†å®é™…è¦æ•´æ•°æ•°ç»„
      * 
      * @param array
-     * @return int[] ×ª»»ºóµÄÕûÊıÊı×é
+     * @return int[] è½¬æ¢åçš„æ•´æ•°æ•°ç»„
      */
     public static int[] toIntArray(String[] array)
     {
@@ -156,11 +156,11 @@ public class StringUtil
     }
     
     /**
-     * °Ñ×Ö·û´®°´split·Ö¸ô×ª»»³ÉÕûÊıÊı×é
+     * æŠŠå­—ç¬¦ä¸²æŒ‰splitåˆ†éš”è½¬æ¢æˆæ•´æ•°æ•°ç»„
      * 
-     * @param strs ×Ö·û´®
-     * @param split ·Ö¸ô
-     * @return int[] ×ª»»ºóµÄÕûÊıÊı×é
+     * @param strs å­—ç¬¦ä¸²
+     * @param split åˆ†éš”
+     * @return int[] è½¬æ¢åçš„æ•´æ•°æ•°ç»„
      */
     public static long[] toLongArray(String strs, String split)
     {
@@ -178,10 +178,10 @@ public class StringUtil
     }
 
     /**
-     * °Ñ×Ö·û´®Êı×é´«»»³ÉÕûÊıÊı×é ÊÊºÏÔÚwebµÄform±íµ¥Ìá½»Ê±µÃµ½µÄÊÇ×Ö·û´®Êı×é,µ«Êµ¼ÊÒªÕûÊıÊı×é
+     * æŠŠå­—ç¬¦ä¸²æ•°ç»„ä¼ æ¢æˆæ•´æ•°æ•°ç»„ é€‚åˆåœ¨webçš„formè¡¨å•æäº¤æ—¶å¾—åˆ°çš„æ˜¯å­—ç¬¦ä¸²æ•°ç»„,ä½†å®é™…è¦æ•´æ•°æ•°ç»„
      * 
      * @param array
-     * @return long[] ×ª»»ºóµÄÕûÊıÊı×é
+     * @return long[] è½¬æ¢åçš„æ•´æ•°æ•°ç»„
      */
     public static long[] toLongArray(String[] array)
     {
@@ -192,10 +192,10 @@ public class StringUtil
     }
     
     /**
-     * ½«ÆÕÍ¨×Ö·û´®¸ñÊ½»¯³ÉÊı¾İ¿âÈÏ¿ÉµÄ×Ö·û´®¸ñÊ½
+     * å°†æ™®é€šå­—ç¬¦ä¸²æ ¼å¼åŒ–æˆæ•°æ®åº“è®¤å¯çš„å­—ç¬¦ä¸²æ ¼å¼
      * 
-     * @param str Òª¸ñÊ½»¯µÄ×Ö·û´®
-     * @return ºÏ·¨µÄÊı¾İ¿â×Ö·û´®
+     * @param str è¦æ ¼å¼åŒ–çš„å­—ç¬¦ä¸²
+     * @return åˆæ³•çš„æ•°æ®åº“å­—ç¬¦ä¸²
      */
     public static String toSql(String str)
     {
@@ -203,10 +203,10 @@ public class StringUtil
     }
 
     /**
-     * °ÑidÊı×é×éºÏÎª×Ö·û´® ÊÊºÏÔÚ×éÖ¯sqlÓï¾äÊÇ»áÓÃÉÏ
+     * æŠŠidæ•°ç»„ç»„åˆä¸ºå­—ç¬¦ä¸² é€‚åˆåœ¨ç»„ç»‡sqlè¯­å¥æ˜¯ä¼šç”¨ä¸Š
      * 
-     * @param ids idÊı×é
-     * @param delimeter ·Ö¸ô·û
+     * @param ids idæ•°ç»„
+     * @param delimeter åˆ†éš”ç¬¦
      * @return
      */
     public static String toStringByArray(int[] ids, String separator)
@@ -225,10 +225,10 @@ public class StringUtil
     }
     
     /**
-     * °ÑidÊı×é×éºÏÎª×Ö·û´® ÊÊºÏÔÚ×éÖ¯sqlÓï¾äÊÇ»áÓÃÉÏ
+     * æŠŠidæ•°ç»„ç»„åˆä¸ºå­—ç¬¦ä¸² é€‚åˆåœ¨ç»„ç»‡sqlè¯­å¥æ˜¯ä¼šç”¨ä¸Š
      * 
-     * @param ids idÊı×é
-     * @param delimeter ·Ö¸ô·û
+     * @param ids idæ•°ç»„
+     * @param delimeter åˆ†éš”ç¬¦
      * @return
      */
     public static String toStringByArrayLong(long[] ids, String separator)
@@ -247,10 +247,10 @@ public class StringUtil
     }
     
     /**
-     * °ÑidÊı×é×éºÏÎª×Ö·û´® ÊÊºÏÔÚ×éÖ¯sqlÓï¾äÊÇ»áÓÃÉÏ
+     * æŠŠidæ•°ç»„ç»„åˆä¸ºå­—ç¬¦ä¸² é€‚åˆåœ¨ç»„ç»‡sqlè¯­å¥æ˜¯ä¼šç”¨ä¸Š
      * 
-     * @param ids idÊı×é
-     * @param delimeter ·Ö¸ô·û
+     * @param ids idæ•°ç»„
+     * @param delimeter åˆ†éš”ç¬¦
      * @return
      */
     public static String toStringSqlByArray(String[] ids, String separator)
@@ -272,10 +272,10 @@ public class StringUtil
 
     
     /**
-     * ½«×Ö·û´®¸ñÊ½»¯³É HTML ´úÂëÊä³ö ³ıÆÕÍ¨ÌØÊâ×Ö·ûÍâ£¬»¹¶Ô¿Õ¸ñ¡¢ÖÆ±í·ûºÍ»»ĞĞ½øĞĞ×ª»»£¬ ÒÔ½«ÄÚÈİ¸ñÊ½»¯Êä³ö£¬ ÊÊºÏÓÚ HTML ÖĞµÄÏÔÊ¾Êä³ö
+     * å°†å­—ç¬¦ä¸²æ ¼å¼åŒ–æˆ HTML ä»£ç è¾“å‡º é™¤æ™®é€šç‰¹æ®Šå­—ç¬¦å¤–ï¼Œè¿˜å¯¹ç©ºæ ¼ã€åˆ¶è¡¨ç¬¦å’Œæ¢è¡Œè¿›è¡Œè½¬æ¢ï¼Œ ä»¥å°†å†…å®¹æ ¼å¼åŒ–è¾“å‡ºï¼Œ é€‚åˆäº HTML ä¸­çš„æ˜¾ç¤ºè¾“å‡º
      * 
-     * @param str Òª¸ñÊ½»¯µÄ×Ö·û´®
-     * @return ¸ñÊ½»¯ºóµÄ×Ö·û´®
+     * @param str è¦æ ¼å¼åŒ–çš„å­—ç¬¦ä¸²
+     * @return æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²
      */
     public static String toHtml(String str)
     {
@@ -294,10 +294,10 @@ public class StringUtil
     }
 
     /**
-     * ½«×Ö·û´®¸ñÊ½»¯³É HTML ´úÂëÊä³ö Ö»×ª»»ÌØÊâ×Ö·û£¬ÊÊºÏÓÚ HTML ÖĞµÄ±íµ¥ÇøÓò
+     * å°†å­—ç¬¦ä¸²æ ¼å¼åŒ–æˆ HTML ä»£ç è¾“å‡º åªè½¬æ¢ç‰¹æ®Šå­—ç¬¦ï¼Œé€‚åˆäº HTML ä¸­çš„è¡¨å•åŒºåŸŸ
      * 
-     * @param str Òª¸ñÊ½»¯µÄ×Ö·û´®
-     * @return ¸ñÊ½»¯ºóµÄ×Ö·û´®
+     * @param str è¦æ ¼å¼åŒ–çš„å­—ç¬¦ä¸²
+     * @return æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²
      */
     public static String toHtmlInput(String str)
     {
@@ -315,10 +315,10 @@ public class StringUtil
     }
     
     /**
-     * ½«×Ö·û´®¸ñÊ½»¯³É HTML ´úÂëÊä³ö Ö»×ª»»ÌØÊâ×Ö·û£¬ÊÊºÏÓÚ HTML ÖĞµÄ±íµ¥ÇøÓò
+     * å°†å­—ç¬¦ä¸²æ ¼å¼åŒ–æˆ HTML ä»£ç è¾“å‡º åªè½¬æ¢ç‰¹æ®Šå­—ç¬¦ï¼Œé€‚åˆäº HTML ä¸­çš„è¡¨å•åŒºåŸŸ
      * 
-     * @param str Òª¸ñÊ½»¯µÄ×Ö·û´®
-     * @return ¸ñÊ½»¯ºóµÄ×Ö·û´®
+     * @param str è¦æ ¼å¼åŒ–çš„å­—ç¬¦ä¸²
+     * @return æ ¼å¼åŒ–åçš„å­—ç¬¦ä¸²
      */
     public static String toInputStr(String str)
     {
@@ -335,7 +335,7 @@ public class StringUtil
         return html;
     }
 
-    /** JS×ªÒå */
+    /** JSè½¬ä¹‰ */
     public static String toJsStr(String str)
     {
         if (str == null)
@@ -372,9 +372,9 @@ public class StringUtil
     }
     
     /**
-     * °ÑÎÄ·û×ª»»³É±à¼­Æ÷ºÏ·¨µÄ¸ñÊ½
+     * æŠŠæ–‡ç¬¦è½¬æ¢æˆç¼–è¾‘å™¨åˆæ³•çš„æ ¼å¼
      * 
-     * @param source Ô´×Ö·û´®
+     * @param source æºå­—ç¬¦ä¸²
      * @return String
      */
     public static String toHtmlEditor(String source)
@@ -388,7 +388,7 @@ public class StringUtil
         html = html.replaceAll("\r\n", "\n");
         html = html.replaceAll("\n", "\\n");
         html = html.replaceAll("\t", "    ");
-        //html = html.replaceAll(" ", " &nbsp;"); //ÕâÒ»ÏîÔİÊ±²»¼Ó
+        //html = html.replaceAll(" ", " &nbsp;"); //è¿™ä¸€é¡¹æš‚æ—¶ä¸åŠ 
 
         html = html.replaceAll("<script", "\\<script");
         html = html.replaceAll("<SCRIPT", "\\<SCRIPT");
@@ -399,12 +399,12 @@ public class StringUtil
     }
 
     /**
-     * ºÏ²¢×Ö·û´®,¹ØÓÚ²ğ·Ö×Ö·û´®ÎªÊı×é,ÇëÖ±½Óµ÷ÓÃString.split(String regex)·½·¨
+     * åˆå¹¶å­—ç¬¦ä¸²,å…³äºæ‹†åˆ†å­—ç¬¦ä¸²ä¸ºæ•°ç»„,è¯·ç›´æ¥è°ƒç”¨String.split(String regex)æ–¹æ³•
      * 
-     * ¾ÙÀı:Èç×Ö·û´®Êı×éÓĞÈı¸öÔªËØhello¡¢my¡¢friend£¬ÓÃ»§¶¨Òå·Ö¸ô·ûÎª|£¬ÄÇÃ´×Ö·û´®¿É ÒÔºÏ²¢Îªhello|my|friend
-     * @param array ×Ö·û´®Êı×é
-     * @param delim ·Ö¸ô·û
-     * @return ºÏ²¢ºóµÄ×Ö·û´®
+     * ä¸¾ä¾‹:å¦‚å­—ç¬¦ä¸²æ•°ç»„æœ‰ä¸‰ä¸ªå…ƒç´ helloã€myã€friendï¼Œç”¨æˆ·å®šä¹‰åˆ†éš”ç¬¦ä¸º|ï¼Œé‚£ä¹ˆå­—ç¬¦ä¸²å¯ ä»¥åˆå¹¶ä¸ºhello|my|friend
+     * @param array å­—ç¬¦ä¸²æ•°ç»„
+     * @param delim åˆ†éš”ç¬¦
+     * @return åˆå¹¶åçš„å­—ç¬¦ä¸²
      */
     public static String toStringByArray(String[] array, String separator)
     {
@@ -426,12 +426,12 @@ public class StringUtil
     }
 
     /**
-     * Ìæ»»Ò»¸öĞòÁĞ
+     * æ›¿æ¢ä¸€ä¸ªåºåˆ—
      * 
-     * @param src Ô´´® ±ÈÈç "ÄúÒÑ³É¹¦×¢²áµ½%s£¬ÓÃ»§Ãû£º%s£¬ÃÜÂë£º%s£¬ÇëµÇÂ¼..."
-     * @param placeholder Õ¼Î»·ûºÅ ±ÈÈç "%s"
-     * @param replaceList Ìæ»»ÁĞ±í£¬±ÈÈç {"½­ËÕÒÆ¶¯","ÕÅÈı","111111"};
-     * @return Ìæ»»ºóµÄÄÚÈİ£¬Àı×ÓµÄÄÚÈİÔòÎª£º "ÄúÒÑ³É¹¦×¢²áµ½½­ËÕÒÆ¶¯£¬ÓÃ»§Ãû£ºÕÅÈı£¬ÃÜÂë£º111111£¬ÇëµÇÂ¼..."
+     * @param src æºä¸² æ¯”å¦‚ "æ‚¨å·²æˆåŠŸæ³¨å†Œåˆ°%sï¼Œç”¨æˆ·åï¼š%sï¼Œå¯†ç ï¼š%sï¼Œè¯·ç™»å½•..."
+     * @param placeholder å ä½ç¬¦å· æ¯”å¦‚ "%s"
+     * @param replaceList æ›¿æ¢åˆ—è¡¨ï¼Œæ¯”å¦‚ {"æ±Ÿè‹ç§»åŠ¨","å¼ ä¸‰","111111"};
+     * @return æ›¿æ¢åçš„å†…å®¹ï¼Œä¾‹å­çš„å†…å®¹åˆ™ä¸ºï¼š "æ‚¨å·²æˆåŠŸæ³¨å†Œåˆ°æ±Ÿè‹ç§»åŠ¨ï¼Œç”¨æˆ·åï¼šå¼ ä¸‰ï¼Œå¯†ç ï¼š111111ï¼Œè¯·ç™»å½•..."
      */
     public static String replaceSequence(String src, String placeholder,String[] replaceList)
     {
@@ -455,10 +455,10 @@ public class StringUtil
 
 
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄÊı×Ö
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„æ•°å­—
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomDigits(int length)
     {
@@ -473,10 +473,10 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄ´óĞ´×ÖÄ¸
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å¤§å†™å­—æ¯
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomUpperLetters(int length)
     {
@@ -492,10 +492,10 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄĞ¡Ğ´×ÖÄ¸
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å°å†™å­—æ¯
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomLowerLetters(int length)
     {
@@ -511,10 +511,10 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄĞ¡Ğ´×ÖÄ¸
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å°å†™å­—æ¯
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomLowerLettersDigits(int length)
     {
@@ -530,10 +530,10 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄ×ÖÄ¸
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å­—æ¯
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomLetters(int length)
     {
@@ -549,10 +549,10 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄ×ÖÄ¸»òÊı×Ö
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å­—æ¯æˆ–æ•°å­—
      * 
-     * @param length ³¤¶È
-     * @return ×Ö·û´®
+     * @param length é•¿åº¦
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomLettersDigits(int length)
     {
@@ -568,11 +568,11 @@ public class StringUtil
     }
     
     /**
-     * Ëæ»úÉú³ÉÒ»¶¨³¤¶ÈµÄ×Ö·û»òÊı×Ö
+     * éšæœºç”Ÿæˆä¸€å®šé•¿åº¦çš„å­—ç¬¦æˆ–æ•°å­—
      * 
-     * @param radomLength ³¤¶È
-     * @param type ÀàĞÍ±íÃûÉú³ÉµÄËæ»ú×Ö·û´®ÊÇ×ÖÄ¸Êı×Ö(0),Êı×Ö(1),×ÖÄ¸(2),´óĞ´×ÖÄ¸(3),Ğ¡Ğ´×ÖÄ¸(4),´óĞ´×ÖÄ¸ºÍÊı×Ö(5),Ğ¡Ğ´×ÖÄ¸ºÍÊı×Ö(6)
-     * @return ×Ö·û´®
+     * @param radomLength é•¿åº¦
+     * @param type ç±»å‹è¡¨åç”Ÿæˆçš„éšæœºå­—ç¬¦ä¸²æ˜¯å­—æ¯æ•°å­—(0),æ•°å­—(1),å­—æ¯(2),å¤§å†™å­—æ¯(3),å°å†™å­—æ¯(4),å¤§å†™å­—æ¯å’Œæ•°å­—(5),å°å†™å­—æ¯å’Œæ•°å­—(6)
+     * @return å­—ç¬¦ä¸²
      */
     public static String getRandomValue(int randomLength, int type)
     {
@@ -622,10 +622,10 @@ public class StringUtil
     }
 
     /*********************************/
-    //ÒÔÏÂÎª×Ö·û´®½ØÈ¡Ïà¹Ø
+    //ä»¥ä¸‹ä¸ºå­—ç¬¦ä¸²æˆªå–ç›¸å…³
     /*********************************/
     
-    /** »ñÈ¡Ò»¸ö×Ö·ûÔÚ×Ö·û´®³öÏÖµÄ´ÎÊı */
+    /** è·å–ä¸€ä¸ªå­—ç¬¦åœ¨å­—ç¬¦ä¸²å‡ºç°çš„æ¬¡æ•° */
     public static int getTimes(String src, char c)
     {
         int times = 0;
@@ -639,7 +639,7 @@ public class StringUtil
         return times;
     }
 
-    /** »ñÈ¡Ò»¸ö×Ö·û´®ÔÚÁí×Ö·û´®³öÏÖµÄ´ÎÊı */
+    /** è·å–ä¸€ä¸ªå­—ç¬¦ä¸²åœ¨å¦å­—ç¬¦ä¸²å‡ºç°çš„æ¬¡æ•° */
     public static int getTimes(String src, String timeStr)
     {
         int times = 0;
@@ -664,19 +664,19 @@ public class StringUtil
 
     
     /**
-     * ¸ù¾İsrcPageÀ´µÃµ½Åä¶ÔµÄreturnPageÏà¶ÔÂ·¾¶ ÔÚWEBActionServletÓÃµ½ÁË£¬ºÜÖØÒª 
+     * æ ¹æ®srcPageæ¥å¾—åˆ°é…å¯¹çš„returnPageç›¸å¯¹è·¯å¾„ åœ¨WEBActionServletç”¨åˆ°äº†ï¼Œå¾ˆé‡è¦ 
      * 
-     * @param returnPage ¾ø¶ÔÂ·¾¶»òÏà¶ÔÂ·¾¶
-     * @param srcPage ¾ø¶ÔÂ·¾¶
-     * @return Åä¶ÔºóµÄÏà¶ÔÂ·¾¶
+     * @param returnPage ç»å¯¹è·¯å¾„æˆ–ç›¸å¯¹è·¯å¾„
+     * @param srcPage ç»å¯¹è·¯å¾„
+     * @return é…å¯¹åçš„ç›¸å¯¹è·¯å¾„
      */
     public static String convertPath(String returnPage,String srcPage)
     {
-        //Èç¹û²»ÊÇ/¿ªÍ·£¬ÔòÈÏÎªÊÇÏà¶ÔÂ·¾¶£¬·µ»Ø
+        //å¦‚æœä¸æ˜¯/å¼€å¤´ï¼Œåˆ™è®¤ä¸ºæ˜¯ç›¸å¯¹è·¯å¾„ï¼Œè¿”å›
         if (!returnPage.startsWith("/"))
             return returnPage;
         
-        //¾ø¶ÔÂ·¾¶,È¥³ı"/"
+        //ç»å¯¹è·¯å¾„,å»é™¤"/"
         returnPage = returnPage.substring(1);
         
         int count = StringUtil.getTimes(srcPage,'/');
@@ -689,13 +689,13 @@ public class StringUtil
         return returnPage;
     }
     
-    /** É¾³ısÖĞËùÓĞ¿Õ°× (°üÀ¨¿Õ¸ñ,\t,\r,\n) */
+    /** åˆ é™¤sä¸­æ‰€æœ‰ç©ºç™½ (åŒ…æ‹¬ç©ºæ ¼,\t,\r,\n) */
     public static String removeWhitespace(String s)
     {
         return removeCharsInBag(s, WHITE_SPACE);
     }
 
-    /** É¾³ı×Ö·û´®Ç°ÃæµÄ¿Õ°×,Ö±µ½³öÏÖÄÚÈİ */
+    /** åˆ é™¤å­—ç¬¦ä¸²å‰é¢çš„ç©ºç™½,ç›´åˆ°å‡ºç°å†…å®¹ */
     public static String removeInitialWhitespace(String s)
     {
         int i = 0;
@@ -705,12 +705,12 @@ public class StringUtil
     }
     
     /** 
-     * É¾³ısÖĞ³öÏÖµÄËùÓĞbag¶¨ÒåµÄ×Ö·û
+     * åˆ é™¤sä¸­å‡ºç°çš„æ‰€æœ‰bagå®šä¹‰çš„å­—ç¬¦
      * 
-     * ¾ÙÀı: s = "adddsg"; bag = "ds"; µÃµ½½á¹ûÊÇ:returnString = "ag";
-     * @param s Ô­×Ö·û´®
-     * @param bag °ü×Ö·û´®
-     * @return É¾³ısÖĞ³öÏÖµÄËùÓĞbag¶¨ÒåµÄ×Ö·ûºóµÄ×Ö·û´®
+     * ä¸¾ä¾‹: s = "adddsg"; bag = "ds"; å¾—åˆ°ç»“æœæ˜¯:returnString = "ag";
+     * @param s åŸå­—ç¬¦ä¸²
+     * @param bag åŒ…å­—ç¬¦ä¸²
+     * @return åˆ é™¤sä¸­å‡ºç°çš„æ‰€æœ‰bagå®šä¹‰çš„å­—ç¬¦åçš„å­—ç¬¦ä¸²
      */
     public static String removeCharsInBag(String s, String bag)
     {
@@ -719,7 +719,7 @@ public class StringUtil
         if (ValidateUtil.isEmpty(s))
             return returnString;
 
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û¸Ã×Ö·û²»ÔÚbagÖĞ,Ôò¼Óµ½returnStringÖĞ
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœè¯¥å­—ç¬¦ä¸åœ¨bagä¸­,åˆ™åŠ åˆ°returnStringä¸­
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -731,18 +731,18 @@ public class StringUtil
     }
 
     /** 
-     * É¾³ısÖĞËùÓĞbagÎ´¶¨ÒåµÄ×Ö·û
+     * åˆ é™¤sä¸­æ‰€æœ‰bagæœªå®šä¹‰çš„å­—ç¬¦
      * 
-     * ¾ÙÀı: s = "adddsg"; bag = "ds"; µÃµ½½á¹ûÊÇ:returnString = "ddds";
-     * @param s Ô­×Ö·û´®
-     * @param bag °ü×Ö·û´®
-     * @return É¾³ısÖĞ³öÏÖµÄËùÓĞbagÎ´¶¨ÒåµÄ×Ö·ûºóµÄ×Ö·û´®
+     * ä¸¾ä¾‹: s = "adddsg"; bag = "ds"; å¾—åˆ°ç»“æœæ˜¯:returnString = "ddds";
+     * @param s åŸå­—ç¬¦ä¸²
+     * @param bag åŒ…å­—ç¬¦ä¸²
+     * @return åˆ é™¤sä¸­å‡ºç°çš„æ‰€æœ‰bagæœªå®šä¹‰çš„å­—ç¬¦åçš„å­—ç¬¦ä¸²
      */
     public static String removeCharsNotInBag(String s, String bag)
     {
         String returnString = "";
 
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û¸Ã×Ö·ûÔÚbagÖĞ,Ôò¼Óµ½returnStringÖĞ
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœè¯¥å­—ç¬¦åœ¨bagä¸­,åˆ™åŠ åˆ°returnStringä¸­
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -754,14 +754,14 @@ public class StringUtil
     }
     
     /*********************************/
-    //ÒÔÏÂÎª±àÂëÏà¹Ø
+    //ä»¥ä¸‹ä¸ºç¼–ç ç›¸å…³
     /*********************************/
     
     /**
-     * ÖĞÎÄ(GBK,GB2312)±àÂëµ½UTF8 ÊÊÓÃÓÚWAP &#x;±àÂë
+     * ä¸­æ–‡(GBK,GB2312)ç¼–ç åˆ°UTF8 é€‚ç”¨äºWAP &#x;ç¼–ç 
      * 
      * @param sChinese
-     * @return String UTF8±àÂë
+     * @return String UTF8ç¼–ç 
      */
     public static String toWAPUTF8(String sChinese)
     {
@@ -780,7 +780,7 @@ public class StringUtil
     }
     
     /**
-     * ÖĞÎÄ(GBK,GB2312Ë«×Ö½Ú)±àÂëµ½Unicode ÊÊÓÃÓÚApplication \\u±àÂë
+     * ä¸­æ–‡(GBK,GB2312åŒå­—èŠ‚)ç¼–ç åˆ°Unicode é€‚ç”¨äºApplication \\uç¼–ç 
      * 
      * @param sChinese
      * @return
@@ -800,7 +800,7 @@ public class StringUtil
         return retStr;
     }
     
-    /** 4½Ú×Ö to ip */
+    /** 4èŠ‚å­— to ip */
     public static String byteToIp(byte[] value)
     {
         StringBuffer strb = new StringBuffer();
@@ -825,13 +825,13 @@ public class StringUtil
     }
     
     /*********************************/
-    //ÒÔÏÂÎªÎÄ¼şÏà¹Ø
+    //ä»¥ä¸‹ä¸ºæ–‡ä»¶ç›¸å…³
     /*********************************/
 
     /**
-     * È¡µÃÏµÍ³µÄÎÄ¼ş·Ö¸ô·û
+     * å–å¾—ç³»ç»Ÿçš„æ–‡ä»¶åˆ†éš”ç¬¦
      * 
-     * @return ÏµÍ³·Ö¸ô·û£¬ÔÚwindowÏµÍ³·µ»Ø"\"£¬ÔÚunix/linuxÏµÍ³·µ»Ø"/"
+     * @return ç³»ç»Ÿåˆ†éš”ç¬¦ï¼Œåœ¨windowç³»ç»Ÿè¿”å›"\"ï¼Œåœ¨unix/linuxç³»ç»Ÿè¿”å›"/"
      */
     public static String getSystemSeparator()
     {
@@ -839,10 +839,10 @@ public class StringUtil
     }
     
     /**
-     * ¼ìÑéÂ·¾¶ Ö÷ÒªÊÇÂËÈ¥¶àÓàµÄ·Ö¸ô·û ÔÚWINÖĞ
+     * æ£€éªŒè·¯å¾„ ä¸»è¦æ˜¯æ»¤å»å¤šä½™çš„åˆ†éš”ç¬¦ åœ¨WINä¸­
      * 
-     * @param path Òª¼ìÑéÂ·¾¶
-     * @return ¼ìÑéºóµÄÂ·¾¶
+     * @param path è¦æ£€éªŒè·¯å¾„
+     * @return æ£€éªŒåçš„è·¯å¾„
      */
     public static String formatWinPath(String path)
     {
@@ -851,10 +851,10 @@ public class StringUtil
     }
     
     /**
-     * È¡µÃURL»òÎÄ¼şºó×º ×¢:ÕâÀïÖ»ÊÇÕÒ"." 
+     * å–å¾—URLæˆ–æ–‡ä»¶åç¼€ æ³¨:è¿™é‡Œåªæ˜¯æ‰¾"." 
      * 
-     * @param path URL»òÎÄ¼şÃû
-     * @return ºó×º,Ğ¡Ğ´
+     * @param path URLæˆ–æ–‡ä»¶å
+     * @return åç¼€,å°å†™
      */
     public static String getPathSuffix(String path)
     {
@@ -867,10 +867,10 @@ public class StringUtil
     }
     
     /**
-     * È¡µÃÎÄ¼şÀàĞÍ,ÔòÈ¡µÃÎÄ¼şºó×º ×¢:ÕâÀïÖ»ÊÇÕÒ"."
+     * å–å¾—æ–‡ä»¶ç±»å‹,åˆ™å–å¾—æ–‡ä»¶åç¼€ æ³¨:è¿™é‡Œåªæ˜¯æ‰¾"."
      * 
-     * @param fileName ÎÄ¼şÃû
-     * @return ÎÄ¼şºó×º,Ğ¡Ğ´
+     * @param fileName æ–‡ä»¶å
+     * @return æ–‡ä»¶åç¼€,å°å†™
      */
     public static String getFileExt(String fileName)
     {
@@ -886,10 +886,10 @@ public class StringUtil
     }
 
     /**
-     * ÌáÈ¡Ò»¸öÎÄ¼şÂ·¾¶µÄÄ¿Â¼½á¹¹£¬ Èçc:\\temp\\article.jsp£¬Ôò·µ»Øc:\\temp\\¡£º¯ÊıÖ÷Òª ÓÃÓÚÌáÈ¡Â·¾¶µÄÄ¿Â¼²¿·İ
+     * æå–ä¸€ä¸ªæ–‡ä»¶è·¯å¾„çš„ç›®å½•ç»“æ„ï¼Œ å¦‚c:\\temp\\article.jspï¼Œåˆ™è¿”å›c:\\temp\\ã€‚å‡½æ•°ä¸»è¦ ç”¨äºæå–è·¯å¾„çš„ç›®å½•éƒ¨ä»½
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @return Ä¿Â¼½á¹¹
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return ç›®å½•ç»“æ„
      */
     public static String getFilePath(String filePath)
     {
@@ -897,11 +897,11 @@ public class StringUtil
     }
     
     /**
-     * ÌáÈ¡Ò»¸öÎÄ¼şÂ·¾¶µÄÄ¿Â¼½á¹¹£¬ Èçc:\\temp\\article.jsp£¬Ôò·µ»Øc:\\temp\\¡£º¯ÊıÖ÷Òª ÓÃÓÚÌáÈ¡Â·¾¶µÄÄ¿Â¼²¿·İ
+     * æå–ä¸€ä¸ªæ–‡ä»¶è·¯å¾„çš„ç›®å½•ç»“æ„ï¼Œ å¦‚c:\\temp\\article.jspï¼Œåˆ™è¿”å›c:\\temp\\ã€‚å‡½æ•°ä¸»è¦ ç”¨äºæå–è·¯å¾„çš„ç›®å½•éƒ¨ä»½
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @param sep ·Ö¸ô·û
-     * @return Ä¿Â¼½á¹¹
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param sep åˆ†éš”ç¬¦
+     * @return ç›®å½•ç»“æ„
      */
     public static String getFilePath(String filePath, String sep)
     {
@@ -913,10 +913,10 @@ public class StringUtil
     }
 
     /**
-     * ÌáÈ¡Ò»¸öÎÄ¼şÂ·¾¶µÄÄ¿Â¼½á¹¹£¬ Èçc:\\temp\\article.jsp£¬Ôò·µ»Øc:\\temp\\¡£º¯ÊıÖ÷Òª ÓÃÓÚÌáÈ¡Â·¾¶µÄÄ¿Â¼²¿·İ
+     * æå–ä¸€ä¸ªæ–‡ä»¶è·¯å¾„çš„ç›®å½•ç»“æ„ï¼Œ å¦‚c:\\temp\\article.jspï¼Œåˆ™è¿”å›c:\\temp\\ã€‚å‡½æ•°ä¸»è¦ ç”¨äºæå–è·¯å¾„çš„ç›®å½•éƒ¨ä»½
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @return Ä¿Â¼½á¹¹
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return ç›®å½•ç»“æ„
      */
     public static String getFileURL(String filePath)
     {
@@ -927,10 +927,10 @@ public class StringUtil
     }
 
     /**
-     * ÌáÈ¡Ò»¸öÎÄ¼şÂ·¾¶µÄÄ¿Â¼½á¹¹£¬ Èçc:\\temp\\article.jsp£¬Ôò·µ»Øarticle.jsp¡£º¯ÊıÖ÷Òª ÓÃÓÚÌáÈ¡Â·¾¶µÄÎÄ¼şÃû³Æ
+     * æå–ä¸€ä¸ªæ–‡ä»¶è·¯å¾„çš„ç›®å½•ç»“æ„ï¼Œ å¦‚c:\\temp\\article.jspï¼Œåˆ™è¿”å›article.jspã€‚å‡½æ•°ä¸»è¦ ç”¨äºæå–è·¯å¾„çš„æ–‡ä»¶åç§°
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @return ÎÄ¼şÃû³Æ
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return æ–‡ä»¶åç§°
      */
     public static String getFileName(String filePath)
     {
@@ -938,11 +938,11 @@ public class StringUtil
     }
     
     /**
-     * ÌáÈ¡Ò»¸öÎÄ¼şÂ·¾¶µÄÄ¿Â¼½á¹¹£¬ Èçc:\\temp\\article.jsp£¬Ôò·µ»Øarticle.jsp¡£º¯ÊıÖ÷Òª ÓÃÓÚÌáÈ¡Â·¾¶µÄÎÄ¼şÃû³Æ
+     * æå–ä¸€ä¸ªæ–‡ä»¶è·¯å¾„çš„ç›®å½•ç»“æ„ï¼Œ å¦‚c:\\temp\\article.jspï¼Œåˆ™è¿”å›article.jspã€‚å‡½æ•°ä¸»è¦ ç”¨äºæå–è·¯å¾„çš„æ–‡ä»¶åç§°
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @param sep ·Ö¸ô·û
-     * @return ÎÄ¼şÃû³Æ
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param sep åˆ†éš”ç¬¦
+     * @return æ–‡ä»¶åç§°
      */
     public static String getFileName(String filePath, String sep)
     {
@@ -953,9 +953,9 @@ public class StringUtil
     }
     
     /**
-     * ÌáÈ¡Ä¿Â¼Â·¾¶£¬ÒÔµ±Ç°Ê±¼ä×é³ÉÒ»¸öÂ·¾¶
+     * æå–ç›®å½•è·¯å¾„ï¼Œä»¥å½“å‰æ—¶é—´ç»„æˆä¸€ä¸ªè·¯å¾„
      * 
-     * @return String ÍêÕûÂ·¾¶
+     * @return String å®Œæ•´è·¯å¾„
      */
     public static String getPathByCurrentDate()
     {
@@ -968,8 +968,8 @@ public class StringUtil
     }
 
     /**
-     * ÌáÈ¡Ä¿Â¼Â·¾¶£¬ÒÔ²Î¿¼Ê±¼ä×é³ÉÒ»¸öÍêÕûÂ·¾¶
-     * @return String ÍêÕûÂ·¾¶
+     * æå–ç›®å½•è·¯å¾„ï¼Œä»¥å‚è€ƒæ—¶é—´ç»„æˆä¸€ä¸ªå®Œæ•´è·¯å¾„
+     * @return String å®Œæ•´è·¯å¾„
      */
     public static String getPathByCurrentDate(Date date)
     {
@@ -985,11 +985,11 @@ public class StringUtil
     }
       
     /**
-     * Í¨¹ı¸ø¶¨³õÊ¼str,ºÍÇ°ÖÃchar,µÃµ½¸ø¶¨³¤¶ÈµÄÖµ, Í¨³£ÓÃÓÚÇ°²¹0µÈ
+     * é€šè¿‡ç»™å®šåˆå§‹str,å’Œå‰ç½®char,å¾—åˆ°ç»™å®šé•¿åº¦çš„å€¼, é€šå¸¸ç”¨äºå‰è¡¥0ç­‰
      * 
-     * @param str ³õÊ¼str
-     * @param len ¸ø¶¨³¤¶È
-     * @param prefix Ç°ÖÃchar
+     * @param str åˆå§‹str
+     * @param len ç»™å®šé•¿åº¦
+     * @param prefix å‰ç½®char
      * @return String
      */
     public static String getPrefixFixLenStr(String str, int len, char prefix)
@@ -1005,11 +1005,11 @@ public class StringUtil
     }
     
     /**
-     * Í¨¹ı¸ø¶¨³õÊ¼int,ºÍÇ°ÖÃchar,µÃµ½¸ø¶¨³¤¶ÈµÄÖµ, Í¨³£ÓÃÓÚÇ°²¹0µÈ
+     * é€šè¿‡ç»™å®šåˆå§‹int,å’Œå‰ç½®char,å¾—åˆ°ç»™å®šé•¿åº¦çš„å€¼, é€šå¸¸ç”¨äºå‰è¡¥0ç­‰
      * 
-     * @param str ³õÊ¼str
-     * @param len ¸ø¶¨³¤¶È
-     * @param prefix Ç°ÖÃchar
+     * @param str åˆå§‹str
+     * @param len ç»™å®šé•¿åº¦
+     * @param prefix å‰ç½®char
      * @return String
      */
     public static String getPrefixFixLenStr(int intValue, int len, char prefix)
@@ -1025,17 +1025,17 @@ public class StringUtil
     }
     
     /**
-     * ±È½ÏÁ½¸ö×Ö·û´®µÄ±àÂë´óĞ¡,Ä¬ÈÏGBK±àÂë
+     * æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²çš„ç¼–ç å¤§å°,é»˜è®¤GBKç¼–ç 
      * 
-     * @param s1 µÚÒ»¸ö×Ö·û´®
-     * @param s2 µÚ¶ş¸ö×Ö·û´®
-     * @return Èç¹ûµÚÒ»¸ö±ÈµÚ¶ş¸öÔÚ×Öµä(ÄÚÂë)Ç°,Ôò<0,·ñÔò>0
+     * @param s1 ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²
+     * @param s2 ç¬¬äºŒä¸ªå­—ç¬¦ä¸²
+     * @return å¦‚æœç¬¬ä¸€ä¸ªæ¯”ç¬¬äºŒä¸ªåœ¨å­—å…¸(å†…ç )å‰,åˆ™<0,å¦åˆ™>0
      */
     public static int compare(String s1, String s2)
     {
         String m_s1 = null, m_s2 = null;
         try
-        { // ÏÈ½«Á½×Ö·û´®±àÂë³ÉGBK
+        { // å…ˆå°†ä¸¤å­—ç¬¦ä¸²ç¼–ç æˆGBK
             m_s1 = new String(s1.getBytes(), "GBK");
             m_s2 = new String(s2.getBytes(), "GBK");
         }
@@ -1048,11 +1048,11 @@ public class StringUtil
     }
 
     /**
-     * ±È½ÏÁ½¸ö×Ö·û´®µÄ±àÂë´óĞ¡, È¡»úÆ÷±àÂë
+     * æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²çš„ç¼–ç å¤§å°, å–æœºå™¨ç¼–ç 
      * 
-     * @param s1 µÚÒ»¸ö×Ö·û´®
-     * @param s2 µÚ¶ş¸ö×Ö·û´®
-     * @return Èç¹ûµÚÒ»¸ö±ÈµÚ¶ş¸öÔÚ×Öµä(ÄÚÂë)Ç°,Ôò<0,·ñÔò>0
+     * @param s1 ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²
+     * @param s2 ç¬¬äºŒä¸ªå­—ç¬¦ä¸²
+     * @return å¦‚æœç¬¬ä¸€ä¸ªæ¯”ç¬¬äºŒä¸ªåœ¨å­—å…¸(å†…ç )å‰,åˆ™<0,å¦åˆ™>0
      */
     public static int chineseCompareTo(String s1, String s2)
     {
@@ -1070,10 +1070,10 @@ public class StringUtil
     }
     
     /**
-     * Í¨¹ıÒ»¸ö×Ö·û´®,¶ÁÈ¡ËûµÄCHAR,±£Ö¤µÚÒ»¸ö×Ö·ûÊÇºº×Ö»òÓ¢ÎÄ(È¡Á½Î»)
+     * é€šè¿‡ä¸€ä¸ªå­—ç¬¦ä¸²,è¯»å–ä»–çš„CHAR,ä¿è¯ç¬¬ä¸€ä¸ªå­—ç¬¦æ˜¯æ±‰å­—æˆ–è‹±æ–‡(å–ä¸¤ä½)
      * 
-     * @param s ×Ö·û´®
-     * @return ¶ÔÓ¦intĞÍ
+     * @param s å­—ç¬¦ä¸²
+     * @return å¯¹åº”intå‹
      */
     public static int getCharCode(String s)
     {
@@ -1081,7 +1081,7 @@ public class StringUtil
             return -1;
 
         byte[] b = s.getBytes();
-        int value = 0; // ±£Ö¤È¡µÚÒ»¸ö×Ö·û£¨ºº×Ö»òÕßÓ¢ÎÄ£©
+        int value = 0; // ä¿è¯å–ç¬¬ä¸€ä¸ªå­—ç¬¦ï¼ˆæ±‰å­—æˆ–è€…è‹±æ–‡ï¼‰
         for (int i = 0; i < b.length && i <= 2; i++)
         {
             value = value * 100 + b[i];
@@ -1090,7 +1090,7 @@ public class StringUtil
         return value;
     }
     
-    /** »ñÈ¡×Ö·û´®³¤¶È */
+    /** è·å–å­—ç¬¦ä¸²é•¿åº¦ */
     public static int length(String s)
     {
         if (s == null || s.length() ==0)
@@ -1099,7 +1099,7 @@ public class StringUtil
         return s.length();
     }
     
-    /** »ñÈ¡º¬unicodeµÄ³¤¶È */
+    /** è·å–å«unicodeçš„é•¿åº¦ */
     public static int lengthUnicode(String s)
     {
         if (s == null || s.length() ==0)
@@ -1116,18 +1116,18 @@ public class StringUtil
         return len;
     }
     
-    /** ³¤¶È»¹Ê£¶àÉÙ×Ö½Ú */
+    /** é•¿åº¦è¿˜å‰©å¤šå°‘å­—èŠ‚ */
     public static int lengthUnicodeRemain(String s, int maxLength)
     {
         return maxLength - lengthUnicode(s);
     }
     
     /** 
-     * ½ØÈ¡³¤¶È£¬Ö¸¶¨¿ªÊ¼ºÍÖÕÖ¹Ë÷Òı
+     * æˆªå–é•¿åº¦ï¼ŒæŒ‡å®šå¼€å§‹å’Œç»ˆæ­¢ç´¢å¼•
      * 
-     * @param Ô´´®
-     * @param ³õÊ¼Ë÷Òı
-     * @param ÖÕÖ¹Ë÷Òı
+     * @param æºä¸²
+     * @param åˆå§‹ç´¢å¼•
+     * @param ç»ˆæ­¢ç´¢å¼•
      */
     public static String substring(String src, int beginIndex, int endIndex)
     {
@@ -1138,10 +1138,10 @@ public class StringUtil
     }
     
     /** 
-     * ½ØÈ¡³¤¶È£¬Ö¸¶¨¿ªÊ¼ÖÁ½áÎ²
+     * æˆªå–é•¿åº¦ï¼ŒæŒ‡å®šå¼€å§‹è‡³ç»“å°¾
      * 
-     * @param Ô´´®
-     * @param ³õÊ¼Ë÷Òı
+     * @param æºä¸²
+     * @param åˆå§‹ç´¢å¼•
      */
     public static String substring(String src, int beginIndex)
     {
@@ -1152,23 +1152,23 @@ public class StringUtil
     }
     
     /**
-     * ½ØÈ¡³¤¶È£¬Ö¸¶¨ºº×Ö³¤¶È
+     * æˆªå–é•¿åº¦ï¼ŒæŒ‡å®šæ±‰å­—é•¿åº¦
      * 
-     * @param str Ô´´®
-     * @param len ºº×Ö³¤¶È
-     * @return ½ØÈ¡ºó×ÖÄ¸´®£¬³¬³¤ÓÃ...´úÌæ×îºóÒ»¸öºº×Ö
+     * @param str æºä¸²
+     * @param len æ±‰å­—é•¿åº¦
+     * @return æˆªå–åå­—æ¯ä¸²ï¼Œè¶…é•¿ç”¨...ä»£æ›¿æœ€åä¸€ä¸ªæ±‰å­—
      */
     public static String substringLen(String str, int len)
     {
         if(ValidateUtil.isEmpty(str))
             return "";
         
-        len = len * 5;//ºº×ÖÎ»*5£¬ÔÙ¼ÆËã
+        len = len * 5;//æ±‰å­—ä½*5ï¼Œå†è®¡ç®—
         int length = 0;int ind = 0;
         for (int i=0;i<str.length();i++)
         {
             if ((int) str.charAt(i) > 127)
-                length += 5;//ºº×ÖºÍ×ÖÄ¸ËÎÌå±ÈÀı´ó¸ÅÊÇ5:3£¬¼´3¸öºº×ÖºÍ5¸ö×ÖÄ¸Õ¼Î»Ïàµ±
+                length += 5;//æ±‰å­—å’Œå­—æ¯å®‹ä½“æ¯”ä¾‹å¤§æ¦‚æ˜¯5:3ï¼Œå³3ä¸ªæ±‰å­—å’Œ5ä¸ªå­—æ¯å ä½ç›¸å½“
             else
                 length += 3;
             
@@ -1186,12 +1186,12 @@ public class StringUtil
     }
     
     /**
-     * Ìá¹©±»³ıÊı£¬³ıÊıºÍĞ¡ÊıÎ»Êı£¬µÃµ½½á¹û
+     * æä¾›è¢«é™¤æ•°ï¼Œé™¤æ•°å’Œå°æ•°ä½æ•°ï¼Œå¾—åˆ°ç»“æœ
      * 
-     * @param dividend ±»³ıÊı
-     * @param divisor ³ıÊı
-     * @param radixLen Ğ¡ÊıÎ»Êı
-     * @return String ½á¹û
+     * @param dividend è¢«é™¤æ•°
+     * @param divisor é™¤æ•°
+     * @param radixLen å°æ•°ä½æ•°
+     * @return String ç»“æœ
      */
     public static String getDivisionString(long dividend, long divisor, int radixLen)
     {
@@ -1211,13 +1211,13 @@ public class StringUtil
         {
             int ind = ret.indexOf('.');
             if (ind == -1)
-            {//Ã»ÓĞĞ¡Êıµã
+            {//æ²¡æœ‰å°æ•°ç‚¹
                 ret += ".";
                 for (int i=0;i<radixLen;i++)
                     ret += "0";
             }
             else if (ind > ret.length() - radixLen -1)
-            {//Ğ¡ÊıÎ»Êı²»×ã,Î²²¿¼Ó0
+            {//å°æ•°ä½æ•°ä¸è¶³,å°¾éƒ¨åŠ 0
                 int zeroNum = ind - (ret.length() - radixLen - 1);
                 for (int i=0;i<zeroNum;i++)
                 {
@@ -1249,7 +1249,7 @@ public class StringUtil
         }
         if ("00".equals(decText))
         {
-            sb.append("Õû");
+            sb.append("æ•´");
         } 
         else
         {
@@ -1259,15 +1259,15 @@ public class StringUtil
             sb.append(RMB_DEC[1]);
         }
         String result = sb.toString();
-        result = result.replace("Áã·Ö", "");
-        result = result.replace("Áã½Ç", "Áã");
-        result = result.replace("ÁãÇª", "Áã");
-        result = result.replace("Áã°Û", "Áã");
-        result = result.replace("ÁãÊ°", "Áã");
-        result = result.replace("ÁãÔ²", "Ô²");
+        result = result.replace("é›¶åˆ†", "");
+        result = result.replace("é›¶è§’", "é›¶");
+        result = result.replace("é›¶ä»Ÿ", "é›¶");
+        result = result.replace("é›¶ä½°", "é›¶");
+        result = result.replace("é›¶æ‹¾", "é›¶");
+        result = result.replace("é›¶åœ†", "åœ†");
         while (true)
         {
-            String r = result.replace("ÁãÁã", "Áã");
+            String r = result.replace("é›¶é›¶", "é›¶");
             if (r.equals(result))
             {
                 break;
@@ -1277,21 +1277,21 @@ public class StringUtil
                 result = r;
             }
         }
-        result = result.replace("ÁãÔ²", "Ô²");
-        result = result.replace("ÁãÍò", "Íò");
-        result = result.replace("ÁãÒÚ", "ÒÚ");
-        result = result.replace("ÒÚÍò", "ÒÚ");
-        if(result.startsWith("Ô²"))
+        result = result.replace("é›¶åœ†", "åœ†");
+        result = result.replace("é›¶ä¸‡", "ä¸‡");
+        result = result.replace("é›¶äº¿", "äº¿");
+        result = result.replace("äº¿ä¸‡", "äº¿");
+        if(result.startsWith("åœ†"))
         {
-            result="Áã"+result;
+            result="é›¶"+result;
         }
         return result;
     }
 
     /**
-     * ¶ÁÈ¡×ÊÔ´ÎÄ¼ş path¸ñÊ½Îª/com/zoulab/res/abc.js
+     * è¯»å–èµ„æºæ–‡ä»¶ pathæ ¼å¼ä¸º/com/zoulab/res/abc.js
      * 
-     * @param path Â·¾¶
+     * @param path è·¯å¾„
      * @return String
      * @throws IOException
      */
@@ -1301,10 +1301,10 @@ public class StringUtil
     }
     
     /**
-     * ¶ÁÈ¡×ÊÔ´ÎÄ¼ş path¸ñÊ½Îª/com/zoulab/res/abc.js
+     * è¯»å–èµ„æºæ–‡ä»¶ pathæ ¼å¼ä¸º/com/zoulab/res/abc.js
      * 
-     * @param clazz ÀàÃû
-     * @param path Â·¾¶
+     * @param clazz ç±»å
+     * @param path è·¯å¾„
      * @return String
      * @throws IOException
      */
@@ -1327,10 +1327,10 @@ public class StringUtil
     }
     
     /**
-     * ¿ìËÙ×ª»»³ÉĞ¡Ğ´£¬Ö»¶ÔASCII¸ñÊ½£¬UNICODE²»×ª»»
+     * å¿«é€Ÿè½¬æ¢æˆå°å†™ï¼Œåªå¯¹ASCIIæ ¼å¼ï¼ŒUNICODEä¸è½¬æ¢
      * 
-     * @param Ô­×Ö·û´®
-     * @return Ä¿±ê×Ö·û´®
+     * @param åŸå­—ç¬¦ä¸²
+     * @return ç›®æ ‡å­—ç¬¦ä¸²
      */
     public static String asciiToLowerCase(String s)
     {
@@ -1364,11 +1364,11 @@ public class StringUtil
 
 
     /**
-     * ºöÂÔ´óĞ¡Ğ´ÑéÖ¤startsWith
+     * å¿½ç•¥å¤§å°å†™éªŒè¯startsWith
      * 
-     * @param s ±»ÑéÖ¤×Ö·û´®
-     * @param w ÑéÖ¤×Ö·û´®
-     * @return boolean =true±íÊ¾startsWith, ·ñÔò=false
+     * @param s è¢«éªŒè¯å­—ç¬¦ä¸²
+     * @param w éªŒè¯å­—ç¬¦ä¸²
+     * @return boolean =trueè¡¨ç¤ºstartsWith, å¦åˆ™=false
      */
     public static boolean startsWithIgnoreCase(String s,String w)
     {
@@ -1396,11 +1396,11 @@ public class StringUtil
     }
     
     /**
-     * ºöÂÔ´óĞ¡Ğ´ÑéÖ¤endsWith
+     * å¿½ç•¥å¤§å°å†™éªŒè¯endsWith
      * 
-     * @param s ±»ÑéÖ¤×Ö·û´®
-     * @param w ÑéÖ¤×Ö·û´®
-     * @return boolean =true±íÊ¾endsWith, ·ñÔò=false
+     * @param s è¢«éªŒè¯å­—ç¬¦ä¸²
+     * @param w éªŒè¯å­—ç¬¦ä¸²
+     * @return boolean =trueè¡¨ç¤ºendsWith, å¦åˆ™=false
      */
     public static boolean endsWithIgnoreCase(String s,String w)
     {
@@ -1431,10 +1431,10 @@ public class StringUtil
     }
     
     /**
-     * ½ğ¶î×Ö·û´®×ªint½ğ¶î·Ö£¬Ö§³ÖÁ½Î»Ğ¡ÊıµãµÄ½ğ¶î×Ö·û´®
-     * @param str  ½ğ¶î×Ö·û´®
-     * @param defaultValue È±Ê¡Öµ
-     * @return int½ğ¶î·Ö
+     * é‡‘é¢å­—ç¬¦ä¸²è½¬inté‡‘é¢åˆ†ï¼Œæ”¯æŒä¸¤ä½å°æ•°ç‚¹çš„é‡‘é¢å­—ç¬¦ä¸²
+     * @param str  é‡‘é¢å­—ç¬¦ä¸²
+     * @param defaultValue ç¼ºçœå€¼
+     * @return inté‡‘é¢åˆ†
      */
     public static int getMoneyTwoRadix(String str, int defaultValue)
     {
@@ -1454,7 +1454,7 @@ public class StringUtil
         int index = str.indexOf('.');
         if (index == -1)
         {
-            int value = Integer.parseInt(str) * 100;//ÓÉÔª×ªÎª·Ö
+            int value = Integer.parseInt(str) * 100;//ç”±å…ƒè½¬ä¸ºåˆ†
             return (isNegative)?-value:value;
         }
         

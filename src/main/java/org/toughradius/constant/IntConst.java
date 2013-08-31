@@ -2,7 +2,7 @@ package org.toughradius.constant;
 final public class IntConst
 {
     private int value = -1;
-    private String desc = "δ֪";
+    private String desc = "未知";
     
     public IntConst(int status,String desc)
     {

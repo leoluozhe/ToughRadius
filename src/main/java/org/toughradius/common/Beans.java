@@ -9,7 +9,7 @@ import org.picocontainer.defaults.SetterInjectionComponentAdapterFactory;
 import org.picocontainer.defaults.VerifyingVisitor;
 
 /**
- * 实例管理系统初始化时将所有服务组件装
+ * 瀹炰緥绠＄悊绯荤粺鍒濆鍖栨椂灏嗘墍鏈夋湇鍔＄粍浠惰
  * @author @jamiesun
  */
 public class Beans

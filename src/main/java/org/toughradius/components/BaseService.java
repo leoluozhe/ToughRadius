@@ -21,7 +21,7 @@ public class BaseService
         this.dbservice = dbservice;
     }
     /**
-     * ²éÑ¯µ¥¸ö¿Í»§¶Ë
+     * æŸ¥è¯¢å•ä¸ªå®¢æˆ·ç«¯
      * @param address
      * @return
      */
@@ -41,7 +41,7 @@ public class BaseService
     }
     
     /**
-     * ²éÑ¯¿Í»§¶Ë¼¯ºÏ
+     * æŸ¥è¯¢å®¢æˆ·ç«¯é›†åˆ
      * @return
      */
     public List<RadClient> getClients()
@@ -60,7 +60,7 @@ public class BaseService
     }
     
     /**
-     * ²éÑ¯µ¥¸öºÚÃûµ¥
+     * æŸ¥è¯¢å•ä¸ªé»‘åå•
      * @param macaddr
      * @return
      */
@@ -80,7 +80,7 @@ public class BaseService
     }
     
     /**
-     * ²éÑ¯ºÚÃûµ¥¼¯ºÏ
+     * æŸ¥è¯¢é»‘åå•é›†åˆ
      * @return
      */
     public List<RadBlacklist> getBlacklists()

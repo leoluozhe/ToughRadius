@@ -7,6 +7,10 @@
 		<adminPort>1815</adminPort>
 		<maxSessionTimeout>86400</maxSessionTimeout>
 	</radius>
+	<webapp>
+		<port>8080</port>
+		<maxConn>1024</maxConn>
+	</webapp>
 	<database>
 		<driver>org.hsqldb.jdbc.JDBCDriver</driver>
 		<url>jdbc:hsqldb:./data/radius</url>

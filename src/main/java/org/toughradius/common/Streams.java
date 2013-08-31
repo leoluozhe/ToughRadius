@@ -11,13 +11,13 @@ import java.io.StringWriter;
 
 public class Streams
 {
-    /** ¿½±´Á÷ÄÚÊı¾İ,ºÍputBytes·½·¨ÏàÍ¬ */
+    /** æ‹·è´æµå†…æ•°æ®,å’ŒputBytesæ–¹æ³•ç›¸åŒ */
     public static long copy(InputStream input, OutputStream output) throws IOException
     {
         return putBytes(input, output);
     }
 
-    /** ¶ÁÁ÷ÖĞ×Ö½ÚÊı */
+    /** è¯»æµä¸­å­—èŠ‚æ•° */
     public static byte[] getBytesFilePath(File file) throws IOException
     {
         if (file == null || !file.isFile() || !file.canRead())
@@ -31,13 +31,13 @@ public class Streams
         {
             ret = input.read(buf, readcount, len - readcount);
             if (ret == -1)
-                throw new EOFException("°´³¤¶È¶ÁÏûÏ¢Ê±,³¤¶È²»¹»¼´µ½´ïÁ÷Î²¶Ë");
+                throw new EOFException("æŒ‰é•¿åº¦è¯»æ¶ˆæ¯æ—¶,é•¿åº¦ä¸å¤Ÿå³åˆ°è¾¾æµå°¾ç«¯");
             readcount += ret;
         }
         return buf;
     }
 
-    /** ¶ÁÁ÷³É×Ö·û´®,Ö¸¶¨±àÂë */
+    /** è¯»æµæˆå­—ç¬¦ä¸²,æŒ‡å®šç¼–ç  */
     public static String getString(InputStream stream, String charset) throws IOException
     {
         try
@@ -63,7 +63,7 @@ public class Streams
         }
     }
 
-    /** ¶ÁÁ÷ÖĞ×Ö½ÚÊı */
+    /** è¯»æµä¸­å­—èŠ‚æ•° */
     public static byte[] getBytes(InputStream input, int len) throws IOException
     {
         int readcount = 0, ret = 0;
@@ -72,13 +72,13 @@ public class Streams
         {
             ret = input.read(buf, readcount, len - readcount);
             if (ret == -1)
-                throw new EOFException("°´³¤¶È¶ÁÏûÏ¢Ê±,³¤¶È²»¹»¼´µ½´ïÁ÷Î²¶Ë");
+                throw new EOFException("æŒ‰é•¿åº¦è¯»æ¶ˆæ¯æ—¶,é•¿åº¦ä¸å¤Ÿå³åˆ°è¾¾æµå°¾ç«¯");
             readcount += ret;
         }
         return buf;
     }
 
-    /** ¶ÁÁ÷ÖĞ×ÊÔ´ */
+    /** è¯»æµä¸­èµ„æº */
     public static long putBytes(InputStream input, OutputStream output) throws IOException
     {
         byte[] buffer = new byte[1024];
@@ -92,7 +92,7 @@ public class Streams
         return count;
     }
 
-    /** ¶ÁCLASSPATHÖĞ×ÊÔ´ */
+    /** è¯»CLASSPATHä¸­èµ„æº */
     public static byte[] getBytesClassPath(Class<?> clazz, String path) throws IOException
     {
         InputStream in = clazz.getResourceAsStream(path);
@@ -104,13 +104,13 @@ public class Streams
             int readLen = (len - off > 32) ? 32 : len - off;
             int ret = in.read(buf, off, readLen);
             if (ret == -1)
-                throw new EOFException("¶Á[" + path + "]Ê±°´³¤¶È¶ÁÏûÏ¢Ê±,³¤¶È²»¹»¼´µ½´ïÁ÷Î²¶Ë");
+                throw new EOFException("è¯»[" + path + "]æ—¶æŒ‰é•¿åº¦è¯»æ¶ˆæ¯æ—¶,é•¿åº¦ä¸å¤Ÿå³åˆ°è¾¾æµå°¾ç«¯");
             off += ret;
         }
         return buf;
     }
 
-    /** ¶ÁCLASSPATHÖĞ×ÊÔ´ */
+    /** è¯»CLASSPATHä¸­èµ„æº */
     public static void putBytesClassPath(Class<?> clazz, String path, OutputStream output) throws IOException
     {
         InputStream in = clazz.getResourceAsStream(path);
@@ -122,14 +122,14 @@ public class Streams
             int readLen = (len - off > 1024) ? 1024 : len - off;
             int ret = in.read(buf, 0, readLen);
             if (ret == -1)
-                throw new EOFException("¶Á[" + path + "]Ê±°´³¤¶È¶ÁÏûÏ¢Ê±,³¤¶È²»¹»¼´µ½´ïÁ÷Î²¶Ë");
+                throw new EOFException("è¯»[" + path + "]æ—¶æŒ‰é•¿åº¦è¯»æ¶ˆæ¯æ—¶,é•¿åº¦ä¸å¤Ÿå³åˆ°è¾¾æµå°¾ç«¯");
             off += ret;
 
             output.write(buf, 0, ret);
         }
     }
 
-    /** ¶ÁÁ÷»ñÈ¡Ò»ĞĞ */
+    /** è¯»æµè·å–ä¸€è¡Œ */
     public static int readLine(InputStream input, byte[] b, int off, int len) throws IOException
     {
         if (len <= 0)

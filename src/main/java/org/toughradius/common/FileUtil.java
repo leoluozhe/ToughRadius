@@ -16,16 +16,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * ÎÄ¼ş²Ù×÷¹¤¾ßÀà
+ * æ–‡ä»¶æ“ä½œå·¥å…·ç±»
  */
 public class FileUtil
 {
 
     /**
-     * ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ(°üÀ¨Ä¿Â¼ºÍÎÄ¼ş)
+     * åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨(åŒ…æ‹¬ç›®å½•å’Œæ–‡ä»¶)
      * 
-     * @param path ÎÄ¼şÍêÕûÂ·¾¶
-     * @return true/false ´æÔÚÔò·µ»Øtrue
+     * @param path æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return true/false å­˜åœ¨åˆ™è¿”å›true
      */
     public static boolean isExists(File path)
     {
@@ -36,10 +36,10 @@ public class FileUtil
     }
     
     /**
-     * ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ(°üÀ¨Ä¿Â¼ºÍÎÄ¼ş)
+     * åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨(åŒ…æ‹¬ç›®å½•å’Œæ–‡ä»¶)
      * 
-     * @param path ÎÄ¼şÍêÕûÂ·¾¶
-     * @return true/false ´æÔÚÔò·µ»Øtrue
+     * @param path æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return true/false å­˜åœ¨åˆ™è¿”å›true
      */
     public static boolean isExists(String path)
     {
@@ -58,10 +58,10 @@ public class FileUtil
     }
 
     /**
-     * ÅĞ¶ÏÂ·¾¶ÊÇ·ñÎªÄ¿Â¼
+     * åˆ¤æ–­è·¯å¾„æ˜¯å¦ä¸ºç›®å½•
      * 
-     * @param path ÒªÅĞ¶ÏµÄÍêÕûÂ·¾¶
-     * @return true/false Èç¹ûÊÇÄ¿Â¼£¬·µ»Øtrue
+     * @param path è¦åˆ¤æ–­çš„å®Œæ•´è·¯å¾„
+     * @return true/false å¦‚æœæ˜¯ç›®å½•ï¼Œè¿”å›true
      */
     public static boolean isDirectory(String path)
     {
@@ -82,10 +82,10 @@ public class FileUtil
     }
     
     /**
-     * ÅĞ¶ÏÂ·¾¶ÊÇ·ñÎªÄ¿Â¼
+     * åˆ¤æ–­è·¯å¾„æ˜¯å¦ä¸ºç›®å½•
      * 
-     * @param file ÎÄ¼ş¶ÔÏó
-     * @return true/false Èç¹ûÊÇÄ¿Â¼£¬·µ»Øtrue
+     * @param file æ–‡ä»¶å¯¹è±¡
+     * @return true/false å¦‚æœæ˜¯ç›®å½•ï¼Œè¿”å›true
      */
     public static boolean isDirectory(File file)
     {
@@ -99,10 +99,10 @@ public class FileUtil
     }
 
     /**
-     * ¶ÁÈ¡Ä¿Â¼µÄËùÓĞÎÄ¼ş×ÓÄ¿Â¼ÁĞ±í
+     * è¯»å–ç›®å½•çš„æ‰€æœ‰æ–‡ä»¶å­ç›®å½•åˆ—è¡¨
      * 
-     * @param dirPath Ä¿Â¼Â·¾¶
-     * @param ÎÄ¼şÄ¿Â¼ÁĞ±í
+     * @param dirPath ç›®å½•è·¯å¾„
+     * @param æ–‡ä»¶ç›®å½•åˆ—è¡¨
      */
     public static String[] getDirectoryList(String dirPath)
     {
@@ -120,11 +120,11 @@ public class FileUtil
     }
 
     /** 
-     * µİ¹é³õÊ¼»¯ÎÄ¼şÁĞ±í 
+     * é€’å½’åˆå§‹åŒ–æ–‡ä»¶åˆ—è¡¨ 
      * 
-     * @param fileList ´«ÈëµÄÎÄ¼şÁĞ±íÒıÓÃ£¬ĞèÏÈnew£¬²»ÔÊĞíÎªnull;
-     * @param dir Ö¸¶¨ËÑË÷Ä¿Â¼
-     * @param suffix ºó×º»òÒÔ¸Ã½áÎ²ÏàÍ¬µÄÊı¾İ,µ÷ÓÃendsWith½øĞĞÆ¥Åä
+     * @param fileList ä¼ å…¥çš„æ–‡ä»¶åˆ—è¡¨å¼•ç”¨ï¼Œéœ€å…ˆnewï¼Œä¸å…è®¸ä¸ºnull;
+     * @param dir æŒ‡å®šæœç´¢ç›®å½•
+     * @param suffix åç¼€æˆ–ä»¥è¯¥ç»“å°¾ç›¸åŒçš„æ•°æ®,è°ƒç”¨endsWithè¿›è¡ŒåŒ¹é…
      */
     public static void qFileListBySuffix(List<File> fileList, File dir, String suffix)
     {
@@ -145,11 +145,11 @@ public class FileUtil
     }
     
     /**
-     * ¿½±´Ä¿Â¼ ³É¹¦·µ»Øfalse,²»ÊÇÄ¿Â¼»òdestÂ·¾¶ÊéĞ´´íÎó·µ»Øfalse
+     * æ‹·è´ç›®å½• æˆåŠŸè¿”å›false,ä¸æ˜¯ç›®å½•æˆ–destè·¯å¾„ä¹¦å†™é”™è¯¯è¿”å›false
      * 
-     * @param src Ô´Ä¿Â¼
-     * @param dest Ä¿±êÄ¿Â¼
-     * @return ³É¹¦·µ»Øfalse,²»ÊÇÄ¿Â¼»òdestÂ·¾¶ÊéĞ´´íÎó·µ»Øfalse
+     * @param src æºç›®å½•
+     * @param dest ç›®æ ‡ç›®å½•
+     * @return æˆåŠŸè¿”å›false,ä¸æ˜¯ç›®å½•æˆ–destè·¯å¾„ä¹¦å†™é”™è¯¯è¿”å›false
      */
     public static boolean copyDirectory(File src, String dest) throws Exception
     {
@@ -170,7 +170,7 @@ public class FileUtil
                 String target = dest + StringUtil.getSystemSeparator()+ entry.getName();
                 if (entry.isDirectory())
                 {
-                    copyDirectory(entry, target); //µİ¹é
+                    copyDirectory(entry, target); //é€’å½’
                 }
                 else
                 {
@@ -188,9 +188,9 @@ public class FileUtil
     }
     
     /**
-     * É¾³ıÎÄ¼ş¼Ğ
+     * åˆ é™¤æ–‡ä»¶å¤¹
      * 
-     * @param directory ÎÄ¼ş¼ĞÂ·¾¶
+     * @param directory æ–‡ä»¶å¤¹è·¯å¾„
      * @return true/false
      */
     public static boolean deleteDirectory(String dir, String[] forbidDirs)throws Exception
@@ -202,10 +202,10 @@ public class FileUtil
     }
 
     /**
-     * É¾³ıÎÄ¼ş¼Ğ
+     * åˆ é™¤æ–‡ä»¶å¤¹
      * 
-     * @param directory ÎÄ¼ş¼ĞÏó
-     * @param forbidDirs ½ûÖ¹É¾³ıµÄÄ¿Â¼
+     * @param directory æ–‡ä»¶å¤¹è±¡
+     * @param forbidDirs ç¦æ­¢åˆ é™¤çš„ç›®å½•
      * @return true/false
      */
     public static boolean deleteDirectory(File dir, String[] forbidDirs) throws Exception
@@ -252,10 +252,10 @@ public class FileUtil
     }
     
     /**
-     * ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+     * åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @return true/false ´æÔÚÔò·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return true/false å­˜åœ¨åˆ™è¿”å›true
      */
     public static boolean isFile(String fileName)
     {
@@ -276,10 +276,10 @@ public class FileUtil
     }
 
     /**
-     * ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+     * åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
      * 
      * @param file File
-     * @return true/false ´æÔÚÔò·µ»Øtrue
+     * @return true/false å­˜åœ¨åˆ™è¿”å›true
      */
     public static boolean isFile(File file)
     {
@@ -293,10 +293,10 @@ public class FileUtil
     }
 
     /**
-     * ÎÄ¼ş¿½±´,Òª¼ì²éÊÇ·ñÊÇÎÄ¼ş
+     * æ–‡ä»¶æ‹·è´,è¦æ£€æŸ¥æ˜¯å¦æ˜¯æ–‡ä»¶
      * 
-     * @param fromFile Ô´ÎÄ¼ş¶ÔÏó
-     * @param toFile Ä¿±êÎÄ¼ş¶ÔÏó
+     * @param fromFile æºæ–‡ä»¶å¯¹è±¡
+     * @param toFile ç›®æ ‡æ–‡ä»¶å¯¹è±¡
      * @return true/false
      */
     public static boolean copyFile(File fromFile, File toFile) throws Exception
@@ -323,10 +323,10 @@ public class FileUtil
     }
     
     /**
-     * ÎÄ¼ş¿½±´Àà,ÊäÈëÂ·¾¶
+     * æ–‡ä»¶æ‹·è´ç±»,è¾“å…¥è·¯å¾„
      * 
-     * @param fromFile Ô´ÎÄ¼şÂ·¾¶
-     * @param toFile Ä¿±êÎÄ¼şÂ·¾¶
+     * @param fromFile æºæ–‡ä»¶è·¯å¾„
+     * @param toFile ç›®æ ‡æ–‡ä»¶è·¯å¾„
      * @return true/false
      */
     public static boolean copyFile(String fromFile, String toFile) throws Exception
@@ -341,11 +341,11 @@ public class FileUtil
     }
 
     /**
-     * ÎÄ¼ş¿½±´,ÊäÈëÔ´ÎÄ¼şÂ·¾¶,Ä¿±êÄ¿Â¼,ÎÄ¼şÃû
+     * æ–‡ä»¶æ‹·è´,è¾“å…¥æºæ–‡ä»¶è·¯å¾„,ç›®æ ‡ç›®å½•,æ–‡ä»¶å
      * 
-     * @param fromFile Ô´ÎÄ¼şÂ·¾¶
-     * @param toDir Ä¿±êÄ¿Â¼
-     * @param fileName Ä¿Â¼ÎÄ¼ş
+     * @param fromFile æºæ–‡ä»¶è·¯å¾„
+     * @param toDir ç›®æ ‡ç›®å½•
+     * @param fileName ç›®å½•æ–‡ä»¶
      * @return true/false
      */
     public static boolean copyFile(String fromFile, String toDir, String fileName) throws Exception
@@ -357,7 +357,7 @@ public class FileUtil
         if (!from.exists() || !from.isFile())
             return false;
         
-        //ĞÂ½¨Ä¿Â¼
+        //æ–°å»ºç›®å½•
         if (!ValidateUtil.isEmpty(toDir))
         {
             File dir = new File(toDir);
@@ -376,10 +376,10 @@ public class FileUtil
     }
 
     /**
-     * É¾³ıÎÄ¼ş,Èç¹ûÂ·¾¶Îª¿Õ»òÎÄ¼ş²»´æÔÚÔò·µ»Øfalse
+     * åˆ é™¤æ–‡ä»¶,å¦‚æœè·¯å¾„ä¸ºç©ºæˆ–æ–‡ä»¶ä¸å­˜åœ¨åˆ™è¿”å›false
      * 
-     * @param filePath ÎÄ¼şÍêÕûÂ·¾¶
-     * @return true/false ³É¹¦É¾³ıÔò·µ»Øtrue
+     * @param filePath æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @return true/false æˆåŠŸåˆ é™¤åˆ™è¿”å›true
      */
     public static boolean deleteFile(String filePath)
     {
@@ -394,10 +394,10 @@ public class FileUtil
     }
     
     /**
-     * ¶ÁÈ¡ÎÄ¼şÄÚÈİ£¬²¢½«ÄÚÈİÒÔ×Ö·û´®ĞÎÊ½Êä³ö¡£ Èç¹ûÎÄ¼ş²»´æÔÚ£¬»òÂ·¾¶´íÎó£¬Ôò·µ»Ø¿Õ×Ö·û¶ÔÏó
+     * è¯»å–æ–‡ä»¶å†…å®¹ï¼Œå¹¶å°†å†…å®¹ä»¥å­—ç¬¦ä¸²å½¢å¼è¾“å‡ºã€‚ å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæˆ–è·¯å¾„é”™è¯¯ï¼Œåˆ™è¿”å›ç©ºå­—ç¬¦å¯¹è±¡
      * 
-     * @param fileName ÎÄ¼şÃû³Æ
-     * @return ÎÄ¼şÄÚÈİ
+     * @param fileName æ–‡ä»¶åç§°
+     * @return æ–‡ä»¶å†…å®¹
      */
     public static String readResource(Class<?> classPath, String resourceName, String encoding)
     {
@@ -426,10 +426,10 @@ public class FileUtil
     }
 
     /**
-     * ¶ÁÈ¡ÎÄ¼şÄÚÈİ£¬²¢½«ÄÚÈİÒÔ×Ö·û´®ĞÎÊ½Êä³ö¡£ Èç¹ûÎÄ¼ş²»´æÔÚ£¬»òÂ·¾¶´íÎó£¬Ôò·µ»Ø¿Õ×Ö·û¶ÔÏó
+     * è¯»å–æ–‡ä»¶å†…å®¹ï¼Œå¹¶å°†å†…å®¹ä»¥å­—ç¬¦ä¸²å½¢å¼è¾“å‡ºã€‚ å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæˆ–è·¯å¾„é”™è¯¯ï¼Œåˆ™è¿”å›ç©ºå­—ç¬¦å¯¹è±¡
      * 
-     * @param fileName ÎÄ¼şÃû³Æ
-     * @return ÎÄ¼şÄÚÈİ
+     * @param fileName æ–‡ä»¶åç§°
+     * @return æ–‡ä»¶å†…å®¹
      */
     public static String readFile(String fileName, String encoding)
     {
@@ -460,11 +460,11 @@ public class FileUtil
     }
     
     /**
-     * ¸ù¾İÎÄ¼şÂ·¾¶,Ãû³Æ,°ÑÄÚÈİÒÔ×Ö½ÚÊı×éµÄ·½Ê½Ğ´Èëµ½Ö¸¶¨µÄÎÄ¼şÖĞ
+     * æ ¹æ®æ–‡ä»¶è·¯å¾„,åç§°,æŠŠå†…å®¹ä»¥å­—èŠ‚æ•°ç»„çš„æ–¹å¼å†™å…¥åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @param in ÎÄ¼şÁ÷
-     * @return true/false Ğ´Èë²Ù×÷³É¹¦£¬·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param in æ–‡ä»¶æµ
+     * @return true/false å†™å…¥æ“ä½œæˆåŠŸï¼Œè¿”å›true
      */
     public static long writeBytesReturnSize(String fileName, InputStream in)
     {
@@ -482,27 +482,27 @@ public class FileUtil
     }
     
     /**
-     * ¸ù¾İÎÄ¼şÂ·¾¶,Ãû³Æ,°ÑÄÚÈİÒÔ×Ö½ÚÊı×éµÄ·½Ê½Ğ´Èëµ½Ö¸¶¨µÄÎÄ¼şÖĞ
+     * æ ¹æ®æ–‡ä»¶è·¯å¾„,åç§°,æŠŠå†…å®¹ä»¥å­—èŠ‚æ•°ç»„çš„æ–¹å¼å†™å…¥åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @param content ÎÄ¼şÄÚÈİ
-     * @return true/false Ğ´Èë²Ù×÷³É¹¦£¬·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param content æ–‡ä»¶å†…å®¹
+     * @return true/false å†™å…¥æ“ä½œæˆåŠŸï¼Œè¿”å›true
      */
     public static long writeBytesReturnSize(String fileName, byte[] content)
     {
-        /* Â·¾¶²»´æÔÚ,·µ»Ø */
+        /* è·¯å¾„ä¸å­˜åœ¨,è¿”å› */
         if (ValidateUtil.isEmpty(fileName))
             return 0;
 
         try
         {
-            // »ñÈ¡ÎÄ¼şËùÔÚÄ¿Â¼,¼ì²é,Èç¹û²»´æÔÚÄ¿Â¼Ôò´´½¨
+            // è·å–æ–‡ä»¶æ‰€åœ¨ç›®å½•,æ£€æŸ¥,å¦‚æœä¸å­˜åœ¨ç›®å½•åˆ™åˆ›å»º
             String filePath = StringUtil.getFilePath(fileName);
             File file = new File(filePath);
             if (!file.exists())
                 file.mkdirs();
 
-            // Ğ´ÈëÎÄ¼ş
+            // å†™å…¥æ–‡ä»¶
             file = new File(fileName);
             synchronized (file)
             {
@@ -523,11 +523,11 @@ public class FileUtil
     }
 
     /**
-     * ¸ù¾İÎÄ¼şÂ·¾¶,Ãû³Æ,°ÑÄÚÈİÒÔ×Ö½ÚÊı×éµÄ·½Ê½Ğ´Èëµ½Ö¸¶¨µÄÎÄ¼şÖĞ
+     * æ ¹æ®æ–‡ä»¶è·¯å¾„,åç§°,æŠŠå†…å®¹ä»¥å­—èŠ‚æ•°ç»„çš„æ–¹å¼å†™å…¥åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @param content ÎÄ¼şÄÚÈİ
-     * @return true/false Ğ´Èë²Ù×÷³É¹¦£¬·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param content æ–‡ä»¶å†…å®¹
+     * @return true/false å†™å…¥æ“ä½œæˆåŠŸï¼Œè¿”å›true
      */
     public static boolean writeBytes(String fileName, byte[] content)
     {
@@ -536,13 +536,13 @@ public class FileUtil
 
         try
         {
-            // »ñÈ¡ÎÄ¼şËùÔÚÄ¿Â¼,¼ì²é,Èç¹û²»´æÔÚÄ¿Â¼Ôò´´½¨
+            // è·å–æ–‡ä»¶æ‰€åœ¨ç›®å½•,æ£€æŸ¥,å¦‚æœä¸å­˜åœ¨ç›®å½•åˆ™åˆ›å»º
             String filePath = StringUtil.getFilePath(fileName);
             File file = new File(filePath);
             if (!file.exists())
                 file.mkdirs();
 
-            // Ğ´ÈëÎÄ¼ş
+            // å†™å…¥æ–‡ä»¶
             file = new File(fileName);
             synchronized (file)
             {
@@ -561,11 +561,11 @@ public class FileUtil
     }
 
     /**
-     * ¸ù¾İÎÄ¼şÂ·¾¶,Ãû³Æ,°ÑÄÚÈİÒÔÁ÷µÄ·½Ê½Ğ´Èëµ½Ö¸¶¨µÄÎÄ¼şÖĞ
+     * æ ¹æ®æ–‡ä»¶è·¯å¾„,åç§°,æŠŠå†…å®¹ä»¥æµçš„æ–¹å¼å†™å…¥åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @param content ÎÄ¼şÄÚÈİ
-     * @return true/false Ğ´Èë²Ù×÷³É¹¦£¬·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param content æ–‡ä»¶å†…å®¹
+     * @return true/false å†™å…¥æ“ä½œæˆåŠŸï¼Œè¿”å›true
      */
     public static boolean write(String fileName, String content)
     {
@@ -574,13 +574,13 @@ public class FileUtil
 
         try
         {
-            // »ñÈ¡ÎÄ¼şËùÔÚÄ¿Â¼,¼ì²é,Èç¹û²»´æÔÚÄ¿Â¼Ôò´´½¨
+            // è·å–æ–‡ä»¶æ‰€åœ¨ç›®å½•,æ£€æŸ¥,å¦‚æœä¸å­˜åœ¨ç›®å½•åˆ™åˆ›å»º
             String filePath = StringUtil.getFilePath(fileName);
             File file = new File(filePath);
             if (!file.exists())
                 file.mkdirs();
 
-            // Ğ´ÈëÎÄ¼ş
+            // å†™å…¥æ–‡ä»¶
             file = new File(fileName);
             synchronized (file)
             {
@@ -600,11 +600,11 @@ public class FileUtil
     }
 
     /**
-     * ¸ù¾İÎÄ¼şÂ·¾¶,Ãû³Æ,°ÑÄÚÈİÒÔ×Ö·ûµÄ·½Ê½Ğ´Èëµ½Ö¸¶¨µÄÎÄ¼şÖĞ
+     * æ ¹æ®æ–‡ä»¶è·¯å¾„,åç§°,æŠŠå†…å®¹ä»¥å­—ç¬¦çš„æ–¹å¼å†™å…¥åˆ°æŒ‡å®šçš„æ–‡ä»¶ä¸­
      * 
-     * @param fileName ÎÄ¼şÍêÕûÂ·¾¶
-     * @param content ÎÄ¼şÄÚÈİ
-     * @return true/false Ğ´Èë²Ù×÷³É¹¦£¬·µ»Øtrue
+     * @param fileName æ–‡ä»¶å®Œæ•´è·¯å¾„
+     * @param content æ–‡ä»¶å†…å®¹
+     * @return true/false å†™å…¥æ“ä½œæˆåŠŸï¼Œè¿”å›true
      */
     public static boolean writeString(String fileName, String content)
     {
@@ -613,13 +613,13 @@ public class FileUtil
 
         try
         {
-            // »ñÈ¡ÎÄ¼şËùÔÚÄ¿Â¼,¼ì²é,Èç¹û²»´æÔÚÄ¿Â¼Ôò´´½¨
+            // è·å–æ–‡ä»¶æ‰€åœ¨ç›®å½•,æ£€æŸ¥,å¦‚æœä¸å­˜åœ¨ç›®å½•åˆ™åˆ›å»º
             String filePath = StringUtil.getFilePath(fileName);
             File file = new File(filePath);
             if (!file.exists())
                 file.mkdirs();
 
-            // Ğ´ÈëÎÄ¼ş
+            // å†™å…¥æ–‡ä»¶
             file = new File(fileName);
 
             FileWriter writer = new FileWriter(file);
@@ -636,11 +636,11 @@ public class FileUtil
     }
     
     /**
-     * ½âÑ¹ZIPÎÄ¼ş
+     * è§£å‹ZIPæ–‡ä»¶
      * 
-     * @param zip ZIPÎÄ¼ş
-     * @param toDir ½âÑ¹Ä¿Â¼
-     * @return¡¡·µ»Øµ±Ç°ÁĞ±í
+     * @param zip ZIPæ–‡ä»¶
+     * @param toDir è§£å‹ç›®å½•
+     * @returnã€€è¿”å›å½“å‰åˆ—è¡¨
      * @throws IOException
      */
     public static List<File> unzip(File zip, File toDir) throws IOException 
@@ -677,7 +677,7 @@ public class FileUtil
     }
     
     /**
-     * ½âÑ¹GZIPÎÄ¼ş
+     * è§£å‹GZIPæ–‡ä»¶
      * 
      * @param gzip
      * @param toDir

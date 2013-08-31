@@ -44,7 +44,7 @@ public class UpgradeDB {
     {
         Statement st = conn.createStatement();
         
-        System.out.println("ÕıÔÚ´´½¨±í");
+        System.out.println("æ­£åœ¨åˆ›å»ºè¡¨");
 
         String script = FileUtil.readFile("./docs/create.sql", "GBK");
         script = script.replaceAll("--.*", "");
@@ -58,7 +58,7 @@ public class UpgradeDB {
                 st.execute(sql.trim());
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("´´½¨±íÊ±·¢Éú´íÎó£º"+e+sql);
+                System.out.println("åˆ›å»ºè¡¨æ—¶å‘ç”Ÿé”™è¯¯ï¼š"+e+sql);
             }
             conn.commit();
         }
@@ -69,7 +69,7 @@ public class UpgradeDB {
 
     
     public void importSql(Connection conn, File sqlfile) throws SQLException {
-        System.out.println("ÕıÔÚµ¼ÈëÍâ²¿sql:" + sqlfile.getAbsolutePath());
+        System.out.println("æ­£åœ¨å¯¼å…¥å¤–éƒ¨sql:" + sqlfile.getAbsolutePath());
 
         Statement st = conn.createStatement();
         String sql = FileUtil.readFile(sqlfile.getPath(), "GBK");
@@ -84,7 +84,7 @@ public class UpgradeDB {
     
     public void shutdown(Connection conn) throws SQLException
     {
-        System.out.println("ÕıÔÚshutdown");
+        System.out.println("æ­£åœ¨shutdown");
         Statement st = conn.createStatement();
         st.execute("SHUTDOWN SCRIPT");
         conn.close();
@@ -105,12 +105,12 @@ public class UpgradeDB {
         UpgradeDB install = new UpgradeDB();
         
         if(dbname == null){
-            System.out.println("¼´½«³õÊ¼»¯Êı¾İ¿â,ÇëÊäÈëÊı¾İ¿âÃû");
+            System.out.println("å³å°†åˆå§‹åŒ–æ•°æ®åº“,è¯·è¾“å…¥æ•°æ®åº“å");
             dbname = install.readIn();
         }
             
         if("".equals(dbname)){
-            System.out.println("Êı¾İ¿âÃû²»ÄÜÎª¿Õ");
+            System.out.println("æ•°æ®åº“åä¸èƒ½ä¸ºç©º");
             return;
         }
 
@@ -118,7 +118,7 @@ public class UpgradeDB {
         {
             if(deleteOld==null)
             {
-                System.out.println("Êı¾İ¿âÒÑ¾­´æÔÚ£¬ÊÇ·ñÉ¾³ı£º y/n");
+                System.out.println("æ•°æ®åº“å·²ç»å­˜åœ¨ï¼Œæ˜¯å¦åˆ é™¤ï¼š y/n");
                 deleteOld = install.readIn();
             }
 
@@ -139,7 +139,7 @@ public class UpgradeDB {
 
         if(importSql==null)
         {
-            System.out.println("ÊÇ·ñµ¼ÈëÍâ²¿sql£º y/n");
+            System.out.println("æ˜¯å¦å¯¼å…¥å¤–éƒ¨sqlï¼š y/n");
             importSql = install.readIn();
 
         }
@@ -153,7 +153,7 @@ public class UpgradeDB {
                     try {
                         install.importSql(conn,sfile);
                     } catch (Exception e) {
-                        System.out.println("µ¼ÈësqlÊ§°Ü£º"+sfile.getPath()+e);
+                        System.out.println("å¯¼å…¥sqlå¤±è´¥ï¼š"+sfile.getPath()+e);
                     }
                     
                 }

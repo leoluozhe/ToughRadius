@@ -6,10 +6,10 @@ import java.util.List;
 
 public class UserStatus {
 
-    public final static IntConst Prepar = new IntConst(100,"Î´¼¤»î×´Ì¬");
-    public final static IntConst Normal = new IntConst(101,"Õı³£×´Ì¬");
-    public final static IntConst Pause = new IntConst(102,"Í£»ú×´Ì¬");
-    public final static IntConst Expire = new IntConst(104,"µ½ÆÚ×´Ì¬");
+    public final static IntConst Prepar = new IntConst(100,"æœªæ¿€æ´»çŠ¶æ€");
+    public final static IntConst Normal = new IntConst(101,"æ­£å¸¸çŠ¶æ€");
+    public final static IntConst Pause = new IntConst(102,"åœæœºçŠ¶æ€");
+    public final static IntConst Expire = new IntConst(104,"åˆ°æœŸçŠ¶æ€");
     
     public final static List<IntConst> UserStatusList = new ArrayList<IntConst>();
     

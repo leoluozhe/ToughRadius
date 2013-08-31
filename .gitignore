@@ -1,7 +1,5 @@
 *.class
-
 # Package Files #
-*.jar
 *.war
 *.ear
 generatorConfig.xml
@@ -9,3 +7,4 @@ mbgen.bat
 logs
 bin
 data
+release

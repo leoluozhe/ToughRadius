@@ -3,7 +3,7 @@ package org.toughradius.constant;
 
 public interface Constant
 {
-    public static final StringConst USER_EXPIRE = new StringConst("EXPIRE_DATE","ÓÃ»§¹ıÆÚÊ±¼ä");
-    public static final StringConst USER_STATUS = new StringConst("STATUS","ÓÃ»§×´Ì¬");
-    public static final StringConst USER_PERIOD = new StringConst("PERIOD","ÓÃ»§ÉÏÍøÊ±¶Î");
+    public static final StringConst USER_EXPIRE = new StringConst("EXPIRE_DATE","ç”¨æˆ·è¿‡æœŸæ—¶é—´");
+    public static final StringConst USER_STATUS = new StringConst("STATUS","ç”¨æˆ·çŠ¶æ€");
+    public static final StringConst USER_PERIOD = new StringConst("PERIOD","ç”¨æˆ·ä¸Šç½‘æ—¶æ®µ");
 }

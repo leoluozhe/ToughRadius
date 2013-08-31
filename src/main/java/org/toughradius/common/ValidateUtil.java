@@ -6,79 +6,79 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 /**
- * ÑéÖ¤¹¤¾ßÀà
+ * éªŒè¯å·¥å…·ç±»
  */
 public class ValidateUtil
 {
 
-    /** ×Ö·û´®È±Ê¡×´Ì¬ */
+    /** å­—ç¬¦ä¸²ç¼ºçœçŠ¶æ€ */
     private static final boolean DEFAULT_EMPTY_OK = false;
     
-    /** Êı×Öchars */
+    /** æ•°å­—chars */
     private static final String DIGITS = "0123456789";
     
-    /** Ğ¡Ğ´×ÖÄ¸chars */
+    /** å°å†™å­—æ¯chars */
     public static final String LETTERS_LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     
-    /** Ğ¡Ğ´×ÖÄ¸chars + Êı×Ö */
+    /** å°å†™å­—æ¯chars + æ•°å­— */
     public static final String LETTERS_LOWERCASE_DIGITS = LETTERS_LOWERCASE + DIGITS;
 
-    /** ´óĞ´×ÖÄ¸chars */
+    /** å¤§å†™å­—æ¯chars */
     public static final String LETTERS_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
-    /** ´óĞ´×ÖÄ¸chars + Êı×Ö */
+    /** å¤§å†™å­—æ¯chars + æ•°å­— */
     public static final String LETTERS_UPPERCASE_DIGITS = LETTERS_UPPERCASE + DIGITS;
     
-    /** È«²¿×ÖÄ¸chars */
+    /** å…¨éƒ¨å­—æ¯chars */
     public static final String LETTERS = LETTERS_LOWERCASE + LETTERS_UPPERCASE;
 
-    /** È«²¿×ÖÄ¸Êı×Ö */
+    /** å…¨éƒ¨å­—æ¯æ•°å­— */
     public static final String LETTERS_DIGITS = LETTERS + DIGITS;
     
-    /** ¿Õ°×µÄchars (°üÀ¨¿Õ¸ñ,\t,\n,\r) */
+    /** ç©ºç™½çš„chars (åŒ…æ‹¬ç©ºæ ¼,\t,\n,\r) */
     private static final String WHITE_SPACE = " \t\n\r";
     
-    /** Ğ¡Êıµã */
+    /** å°æ•°ç‚¹ */
     private static final String DECIMAL_POING_DELIMITER = ".";
 
-    /** µç»°ºÅÂëÀïÔÊĞíµÄ²»ÊÇÊı×ÖµÄchars ,Á½±ßÀ¨ºÅ,ºáÏß,¿Õ¸ñ*/
+    /** ç”µè¯å·ç é‡Œå…è®¸çš„ä¸æ˜¯æ•°å­—çš„chars ,ä¸¤è¾¹æ‹¬å·,æ¨ªçº¿,ç©ºæ ¼*/
     private static final String PHONE_NUMBER_DELIMITERS = "()- ";
 
-    /** È«Çòµç»°ºÅÂëÔÊĞí"+"ºÅµÄchars*/
+    /** å…¨çƒç”µè¯å·ç å…è®¸"+"å·çš„chars*/
     private static final String VALID_PHONE_CHARS_WORLD = "+" + DIGITS + PHONE_NUMBER_DELIMITERS;
 
-    /** ÊÖ»úºÅÂëÔÊĞí"+"ºÅºÍÊı×Ö,µ«Ö»ÔÊĞíµÚÒ»¸ö×Ö·ûÊÇ+ºÅ,ÑéÖ¤ÊÇ¼ì²éÊÇ·ñµÚÒ»¸öÊÇ,Èç¹ûÊÇÈ¥³ıÔÙÑéÖ¤ */
+    /** æ‰‹æœºå·ç å…è®¸"+"å·å’Œæ•°å­—,ä½†åªå…è®¸ç¬¬ä¸€ä¸ªå­—ç¬¦æ˜¯+å·,éªŒè¯æ˜¯æ£€æŸ¥æ˜¯å¦ç¬¬ä¸€ä¸ªæ˜¯,å¦‚æœæ˜¯å»é™¤å†éªŒè¯ */
     private static final String VALID_MSISDN_CHARS = DIGITS;
     
-    /** ÊÖ»úºÅÂëÔÊĞíµÄ×î´ó³¤¶È */
+    /** æ‰‹æœºå·ç å…è®¸çš„æœ€å¤§é•¿åº¦ */
     private static final int VALID_MSISDN_MAXLEN = 21;
   
-    /** ÊÖ»úºÅÂëÔÊĞíµÄ×îĞ¡³¤¶È */
+    /** æ‰‹æœºå·ç å…è®¸çš„æœ€å°é•¿åº¦ */
     private static final int VALID_MSISDN_MINLEN = 11;
     
-    /** ¶¨Òå12ÔÂ·İ¶ÔÓ¦µÄÌìÊı */
+    /** å®šä¹‰12æœˆä»½å¯¹åº”çš„å¤©æ•° */
     private static final int[] DAYS_IN_MONTH = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    /** ¼ì²éÁ½¸ö¶ÔÏóÊÇ·ñÏàµÈ */
+    /** æ£€æŸ¥ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ç›¸ç­‰ */
     public static boolean isEqual(Object obj, Object obj2)
     {
         return (obj == null)?(obj2 == null):obj.equals(obj2);
     }
     
-    /** ¼ì²éÁ½¸ö¶ÔÏóÊÇ·ñÏàµÈ */
+    /** æ£€æŸ¥ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ç›¸ç­‰ */
     public static boolean isNotEqual(Object obj, Object obj2)
     {
         return (obj == null)?(obj2 != null):!obj.equals(obj2);
     }
 
-    /** ¼ì²ésrcÊÇ·ñ°üÀ¨str */
+    /** æ£€æŸ¥srcæ˜¯å¦åŒ…æ‹¬str */
     public static boolean isIndexOf(String src, String str)
     {
         return (src == null)?(str == null):(src.indexOf(str) != -1);
     }
     
     
-    /** ¼ì²é¶ÔÏóÊÇ·ñÎª¿Õ */
+    /** æ£€æŸ¥å¯¹è±¡æ˜¯å¦ä¸ºç©º */
     public static boolean isEmpty(Object obj)
     {
         if (obj == null)
@@ -93,31 +93,31 @@ public class ValidateUtil
         return false;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñÎª¿Õ */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©º */
     public static boolean isEmpty(String s)
     {
         return ((s == null) || (s.trim().length() == 0));
     }
 
-    /** ¼ì²é¼¯ºÏÊÇ·ñÎª¿Õ */
+    /** æ£€æŸ¥é›†åˆæ˜¯å¦ä¸ºç©º */
     public static boolean isEmpty(Collection<?> c)
     {
         return ((c == null) || (c.size() == 0));
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ²»Îª¿Õ */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦ä¸ä¸ºç©º */
     public static boolean isNotEmpty(String s)
     {
         return ((s != null) && (s.trim().length() > 0));
     }
 
-       /** ¼ì²é¼¯ºÏÊÇ·ñ²»Îª¿Õ */
+       /** æ£€æŸ¥é›†åˆæ˜¯å¦ä¸ä¸ºç©º */
     public static boolean isNotEmpty(Collection<?> c)
     {
         return ((c != null) && (c.size() > 0));
     }
     
-    /** ¼ì²éÊÇ·ñ²»Îª¿Õ */
+    /** æ£€æŸ¥æ˜¯å¦ä¸ä¸ºç©º */
     public static boolean isNotEmpty(Object obj)
     {
         if (obj == null)
@@ -133,65 +133,65 @@ public class ValidateUtil
     }
 
     /**
-     * Èç¹ûsÖĞ´æÔÚc,Ôò·µ»Øtrue,·ñÔò·µ»Øfalse
+     * å¦‚æœsä¸­å­˜åœ¨c,åˆ™è¿”å›true,å¦åˆ™è¿”å›false
      */
     public static boolean isCharInString(char c, String s)
     {
         return (s.indexOf(c) != -1);
     }    
 
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇ´óĞ´×ÖÄ¸,(×¢:A-ZÖ®¼ä) */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯å¤§å†™å­—æ¯,(æ³¨:A-Zä¹‹é—´) */
     public static boolean isLetterUppercase(char c)
     {
         return LETTERS_UPPERCASE.indexOf(c) != -1;
     }
     
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇ´óĞ´×ÖÄ¸¼ÓÊı×Ö,(×¢:A-Z,0-9Ö®¼ä) */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯å¤§å†™å­—æ¯åŠ æ•°å­—,(æ³¨:A-Z,0-9ä¹‹é—´) */
     public static boolean isLetterUppercaseDigits(char c)
     {
         return LETTERS_UPPERCASE_DIGITS.indexOf(c) != -1;
     }
     
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇĞ¡Ğ´×ÖÄ¸,(×¢:a-zÖ®¼ä) */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯å°å†™å­—æ¯,(æ³¨:a-zä¹‹é—´) */
     public static boolean isLetterLowercase(char c)
     {
         return LETTERS_LOWERCASE.indexOf(c) != -1;
     }
     
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇĞ¡Ğ´×ÖÄ¸¼ÓÊı×Ö,(×¢:a-z,0-9Ö®¼ä) */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯å°å†™å­—æ¯åŠ æ•°å­—,(æ³¨:a-z,0-9ä¹‹é—´) */
     public static boolean isLetterLowercaseDigits(char c)
     {
         return LETTERS_LOWERCASE_DIGITS.indexOf(c) != -1;
     }
     
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇ×ÖÄ¸,(×¢:a-z,A-ZÖ®¼ä) */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯å­—æ¯,(æ³¨:a-z,A-Zä¹‹é—´) */
     public static boolean isLetter(char c)
     {
         return LETTERS.indexOf(c) != -1;
     }
 
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇÊı×Ö */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯æ•°å­— */
     public static boolean isDigit(char c)
     {
         return DIGITS.indexOf(c) != -1;
     }
 
-    /** ¼ì²é×Ö·ûÊÇ·ñÊÇÊı×Ö»ò×ÖÄ¸ */
+    /** æ£€æŸ¥å­—ç¬¦æ˜¯å¦æ˜¯æ•°å­—æˆ–å­—æ¯ */
     public static boolean isLetterOrDigit(char c)
     {
         return LETTERS_DIGITS.indexOf(c) != -1;
     }
 
     /** 
-     * 1\Èç¹û×Ö·û´®Îª¿Õ»òÈ«ÊÇwhitespaceÖĞµÄÖµÔò·µ»Øtrue,´æÔÚÒ»¸ö²»ÊÇÔò·µ»Øfalse
-     * 2\¼ûwhitespace¶¨Òå whitespace = " \t\n\r";(¿Õ¸ñ,\t,\n,\r)
+     * 1\å¦‚æœå­—ç¬¦ä¸²ä¸ºç©ºæˆ–å…¨æ˜¯whitespaceä¸­çš„å€¼åˆ™è¿”å›true,å­˜åœ¨ä¸€ä¸ªä¸æ˜¯åˆ™è¿”å›false
+     * 2\è§whitespaceå®šä¹‰ whitespace = " \t\n\r";(ç©ºæ ¼,\t,\n,\r)
      */
     public static boolean isWhitespace(String s)
     {
         if (isEmpty(s))
             return true;
 
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û·¢ÏÖÒ»¸ö²»ÊÇwhitespace,Ôò·µ»Øfalse
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœå‘ç°ä¸€ä¸ªä¸æ˜¯whitespace,åˆ™è¿”å›false
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -203,7 +203,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÖ¸¶¨µÄ³¤¶È£¬×¢:µ±s=null || s="",min=0Ê±Îªtrue */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æŒ‡å®šçš„é•¿åº¦ï¼Œæ³¨:å½“s=null || s="",min=0æ—¶ä¸ºtrue */
     public static boolean isLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -212,7 +212,7 @@ public class ValidateUtil
         return (s.length() >= min && s.length() <= max);
     }
     
-    /** ¼ì²éÊÇ·ñGBK±àÂë³¤¶È£¬Êı¾İ¿âÒ»°ãÊÇÒ»¸öºº×ÖÁ½¸ö×Ö½Ú */
+    /** æ£€æŸ¥æ˜¯å¦GBKç¼–ç é•¿åº¦ï¼Œæ•°æ®åº“ä¸€èˆ¬æ˜¯ä¸€ä¸ªæ±‰å­—ä¸¤ä¸ªå­—èŠ‚ */
     public static boolean isByteLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -230,7 +230,7 @@ public class ValidateUtil
         return (len >= min && len <= max);
     }
     
-    /** ¼ì²éÊÇ·ñÖ¸¶¨±àÂë³¤¶È£¬UTF-8ÊÇÒ»¸öºº×Ö3¸ö×Ö½Ú£¬GBKÊÇÁ½¸ö */
+    /** æ£€æŸ¥æ˜¯å¦æŒ‡å®šç¼–ç é•¿åº¦ï¼ŒUTF-8æ˜¯ä¸€ä¸ªæ±‰å­—3ä¸ªå­—èŠ‚ï¼ŒGBKæ˜¯ä¸¤ä¸ª */
     public static boolean isByteLen(String s, int min, int max, String encoding)
     {
         if (isEmpty(s))
@@ -248,13 +248,13 @@ public class ValidateUtil
         return (len >= min && len <= max);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÕûĞÍ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ•´å‹ */
     public static boolean isInteger(String s)
     {
         if (isEmpty(s))
             return DEFAULT_EMPTY_OK;
 
-        // Öğ¸ö¼ì²é,Èç¹û³öÏÖÒ»¸ö×Ö·û²»ÊÇÊı×ÖÔò·µ»Øfalse
+        // é€ä¸ªæ£€æŸ¥,å¦‚æœå‡ºç°ä¸€ä¸ªå­—ç¬¦ä¸æ˜¯æ•°å­—åˆ™è¿”å›false
         for (int i = 0; i < s.length(); i++)
         {
             if (!isDigit(s.charAt(i)))
@@ -264,7 +264,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²éÊÇ·ñÊÇ´ø·ûºÅµÄÕûĞÍ(ÔÊĞíµÚÒ»¸ö×Ö·ûÎª"+,-",²»½ÓÊÜ¸¡µã".",Ö¸Êı"E"µÈ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯å¸¦ç¬¦å·çš„æ•´å‹(å…è®¸ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸º"+,-",ä¸æ¥å—æµ®ç‚¹".",æŒ‡æ•°"E"ç­‰ */
     public static boolean isSignedInteger(String s)
     {
         if (isEmpty(s))
@@ -282,7 +282,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇ´ø·ûºÅµÄ³¤ÕûĞÍ(ÔÊĞíµÚÒ»¸ö×Ö·ûÎª"+,-",²»½ÓÊÜ¸¡µã".",Ö¸Êı"E"µÈ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯å¸¦ç¬¦å·çš„é•¿æ•´å‹(å…è®¸ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸º"+,-",ä¸æ¥å—æµ®ç‚¹".",æŒ‡æ•°"E"ç­‰ */
     public static boolean isSignedLong(String s)
     {
         if (isEmpty(s))
@@ -300,7 +300,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸öÕıÕûÊı */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªæ­£æ•´æ•° */
     public static boolean isPositiveInteger(String s)
     {
         if (isEmpty(s))
@@ -320,7 +320,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸ö·Ç¸ºÕûÊı */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªéè´Ÿæ•´æ•° */
     public static boolean isNonnegativeInteger(String s)
     {
         if (isEmpty(s))
@@ -340,7 +340,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸ö¸ºÕûÊı */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªè´Ÿæ•´æ•° */
     public static boolean isNegativeInteger(String s)
     {
         if (isEmpty(s))
@@ -360,7 +360,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸ö·ÇÕıÕûÊı */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªéæ­£æ•´æ•° */
     public static boolean isNonpositiveInteger(String s)
     {
         if (isEmpty(s))
@@ -380,7 +380,7 @@ public class ValidateUtil
         }
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñÊÇÕûĞÍ,ÇÒÔÚa,bÖ®¼ä,>=a,<=b */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦æ˜¯æ•´å‹,ä¸”åœ¨a,bä¹‹é—´,>=a,<=b */
     public static boolean isIntegerInRange(String s, int a, int b)
     {
         if (isEmpty(s))
@@ -394,7 +394,7 @@ public class ValidateUtil
         return ((num >= a) && (num <= b));
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñÊÇÕıÕûĞÍ,ÇÒÔÚa,bÖ®¼ä,>=a,<=b */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦æ˜¯æ­£æ•´å‹,ä¸”åœ¨a,bä¹‹é—´,>=a,<=b */
     public static boolean isIntegerInRangeLen(String s, int a, int b)
     {
         if (isEmpty(s))
@@ -406,7 +406,7 @@ public class ValidateUtil
         return ((s.length() >= a) && (s.length() <= b));
     }
     
-    /** ÊÇ·ñÊÇUnicodeÂë */
+    /** æ˜¯å¦æ˜¯Unicodeç  */
     public static final boolean isUnicode(String str)
     {
         if (isEmpty(str))
@@ -427,7 +427,7 @@ public class ValidateUtil
 
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸öÎŞ·ûºÅµÄ¸¡µãĞÍ,²»Ö§³ÖÖ¸µãE */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªæ— ç¬¦å·çš„æµ®ç‚¹å‹,ä¸æ”¯æŒæŒ‡ç‚¹E */
     public static boolean isFloat(String s)
     {
         if (isEmpty(s))
@@ -436,10 +436,10 @@ public class ValidateUtil
         if (s.startsWith(DECIMAL_POING_DELIMITER))
             return false;
         
-        //Ö»ÔÊĞíÒ»¸öµã.
+        //åªå…è®¸ä¸€ä¸ªç‚¹.
         boolean seenDecimalPoint = false;
         
-        // Öğ¸ö×Ö·û¼ì²é
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥
         for (int i = 0; i < s.length(); i++)
         {
             char c = s.charAt(i);
@@ -461,7 +461,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸öÔÊĞí·ûºÅµÄ¸¡µãĞÍ,ÔÊĞí·ûºÅ"+","-" */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªå…è®¸ç¬¦å·çš„æµ®ç‚¹å‹,å…è®¸ç¬¦å·"+","-" */
     public static boolean isSignedFloat(String s)
     {
         if (isEmpty(s))
@@ -482,7 +482,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÒ»¸öÔÊĞí·ûºÅµÄË«¾«¶È¸¡µãĞÍ,ÔÊĞí·ûºÅ"+","-" */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯ä¸€ä¸ªå…è®¸ç¬¦å·çš„åŒç²¾åº¦æµ®ç‚¹å‹,å…è®¸ç¬¦å·"+","-" */
     public static boolean isSignedDouble(String s)
     {
         if (isEmpty(s))
@@ -499,7 +499,7 @@ public class ValidateUtil
         }
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ×ÖÄ¸×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å­—æ¯ç»„æˆ */
     public static boolean isAlphabetic(String s)
     {
         if (isEmpty(s))
@@ -516,7 +516,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉĞ¡Ğ´×ÖÄ¸×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å°å†™å­—æ¯ç»„æˆ */
     public static boolean isAlphabeticLowercase(String s)
     {
         if (isEmpty(s))
@@ -533,7 +533,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ´óĞ´×ÖÄ¸×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å¤§å†™å­—æ¯ç»„æˆ */
     public static boolean isAlphabeticUppercase(String s)
     {
         if (isEmpty(s))
@@ -550,7 +550,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ×ÖÄ¸×é³ÉÇÒ³¤¶ÈÔÚmin,max·¶Î§ÄÚ */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å­—æ¯ç»„æˆä¸”é•¿åº¦åœ¨min,maxèŒƒå›´å†… */
     public static boolean isAlphabeticLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -565,7 +565,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉĞ¡Ğ´×ÖÄ¸×é³ÉÇÒ³¤¶ÈÔÚmin,max·¶Î§ÄÚ */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å°å†™å­—æ¯ç»„æˆä¸”é•¿åº¦åœ¨min,maxèŒƒå›´å†… */
     public static boolean isAlphabeticLowercaseLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -580,7 +580,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ´ó×ÖÄ¸×é³ÉÇÒ³¤¶ÈÔÚmin,max·¶Î§ÄÚ */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å¤§å­—æ¯ç»„æˆä¸”é•¿åº¦åœ¨min,maxèŒƒå›´å†… */
     public static boolean isAlphabeticUpperLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -595,7 +595,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ×ÖÄ¸»òÊı×Ö×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å­—æ¯æˆ–æ•°å­—ç»„æˆ */
     public static boolean isAlphanumeric(String s)
     {
         if (isEmpty(s))
@@ -612,7 +612,7 @@ public class ValidateUtil
         return true;
     }
     
-       /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ×ÖÄ¸»òÊı×Ö×é³ÉÇÒ³¤¶ÈÔÚmin,max·¶Î§ÄÚ */
+       /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å­—æ¯æˆ–æ•°å­—ç»„æˆä¸”é•¿åº¦åœ¨min,maxèŒƒå›´å†… */
     public static boolean isAlphanumericLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -627,7 +627,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ´óĞ´×ÖÄ¸»òÊı×Ö×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å¤§å†™å­—æ¯æˆ–æ•°å­—ç»„æˆ */
     public static boolean isAlphaUpperNumeric(String s)
     {
         if (isEmpty(s))
@@ -644,7 +644,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ´óĞ´×ÖÄ¸»òÊı×Ö×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å¤§å†™å­—æ¯æˆ–æ•°å­—ç»„æˆ */
     public static boolean isAlphaLowerNumeric(String s)
     {
         if (isEmpty(s))
@@ -661,7 +661,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉ´óĞ´×ÖÄ¸»òÊı×Ö×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å¤§å†™å­—æ¯æˆ–æ•°å­—ç»„æˆ */
     public static boolean isAlphaUpperNumericLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -676,7 +676,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²é×Ö·û´®ÊÇ·ñ¶¼ÊÇÓÉĞ¡Ğ´×ÖÄ¸»òÊı×Ö×é³É */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦éƒ½æ˜¯ç”±å°å†™å­—æ¯æˆ–æ•°å­—ç»„æˆ */
     public static boolean isAlphaLowerNumericLen(String s, int min, int max)
     {
         if (isEmpty(s))
@@ -691,7 +691,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñÕıÈ·µÄÓÊÕş±àÂë */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦æ­£ç¡®çš„é‚®æ”¿ç¼–ç  */
     public static boolean isZipCode(String s)
     {
         if (isEmpty(s))
@@ -708,13 +708,13 @@ public class ValidateUtil
         if (isEmpty(s))
             return DEFAULT_EMPTY_OK;
            
-        //È¥³ı¸ººÅ
+        //å»é™¤è´Ÿå·
         if (s.startsWith("-"))
             s = s.substring(1);
         
         int ind = s.indexOf(".");
         if (ind == -1)
-            return isInteger(s);//Èç¹ûÃ»ÓĞµãºÅ£¬ÔòÅĞ¶ÏÊÇ·ñÊÇÕûÊı
+            return isInteger(s);//å¦‚æœæ²¡æœ‰ç‚¹å·ï¼Œåˆ™åˆ¤æ–­æ˜¯å¦æ˜¯æ•´æ•°
         
         if (ind == 0)
             return false;
@@ -722,12 +722,12 @@ public class ValidateUtil
         String integer = s.substring(0, ind);
         String radix = s.substring(ind + 1);
         if (!isInteger(integer) || !isIntegerInRangeLen(radix, 2, 2))
-            return false;//Èç¹ûÕûÊı²¿·Ö²»ÊÇÕûÊı£¬Ğ¡Êı²¿·Ö²»ÊÇÕûÊı£¬»òĞ¡Êı²¿·Ö²»ÊÇÁ½Î»
+            return false;//å¦‚æœæ•´æ•°éƒ¨åˆ†ä¸æ˜¯æ•´æ•°ï¼Œå°æ•°éƒ¨åˆ†ä¸æ˜¯æ•´æ•°ï¼Œæˆ–å°æ•°éƒ¨åˆ†ä¸æ˜¯ä¸¤ä½
         
         return true;
     }
 
-    /** ¼ì²é×Ö·û´®ÊÇ·ñÕıÈ·µÄÓÊ¼şµØÖ·(×¢:ÒªÇó´æÔÚ@×Ö·û,ÇÒ²»ÊÇ³öÏÖÔÚµÚÒ»¸ö,×îºóÒ»¸öÎ»ÖÃ,ÏÖÔÚ²»¼ì²éÊÇ·ñ´æÔÚ".") */
+    /** æ£€æŸ¥å­—ç¬¦ä¸²æ˜¯å¦æ­£ç¡®çš„é‚®ä»¶åœ°å€(æ³¨:è¦æ±‚å­˜åœ¨@å­—ç¬¦,ä¸”ä¸æ˜¯å‡ºç°åœ¨ç¬¬ä¸€ä¸ª,æœ€åä¸€ä¸ªä½ç½®,ç°åœ¨ä¸æ£€æŸ¥æ˜¯å¦å­˜åœ¨".") */
     public static boolean isEmail(String s)
     {
         if (isEmpty(s))
@@ -739,14 +739,14 @@ public class ValidateUtil
         int indexLeft = s.indexOf('@');
         int indexRight = s.lastIndexOf('@');
         
-        //Èç¹û²»´æÔÚ@,»ò²»Ö¹Ò»¸ö,»òµÚÒ»¸ö,»ò×îºóÒ»¸ö
+        //å¦‚æœä¸å­˜åœ¨@,æˆ–ä¸æ­¢ä¸€ä¸ª,æˆ–ç¬¬ä¸€ä¸ª,æˆ–æœ€åä¸€ä¸ª
         if (indexLeft < 1 || indexLeft != indexRight || indexLeft == s.length())
             return false;
         
         return true;
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÄê */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„å¹´ */
     public static boolean isYear(String s)
     {
         if (isEmpty(s))
@@ -758,14 +758,14 @@ public class ValidateUtil
         return ((s.length() == 2) || (s.length() == 4));
     }
 
-    /** ÅĞ¶ÏÊÇ·ñÊÇÖÜÄ© yyyy-MM-dd */
+    /** åˆ¤æ–­æ˜¯å¦æ˜¯å‘¨æœ« yyyy-MM-dd */
     public static boolean isWeekend(String date)
     {
         Calendar calendar = DateTimeUtil.toCalendar(date+" 00:00:01");
         return calendar.get(Calendar.DAY_OF_WEEK) == 1;
     }
     
-    /** ÅĞ¶ÏÊÇ·ñ¼¾¶ÈÄ© yyyy-MM-dd */
+    /** åˆ¤æ–­æ˜¯å¦å­£åº¦æœ« yyyy-MM-dd */
     public static boolean isMonthQuarter(String date)
     {
         if (!isDate(date))
@@ -784,7 +784,7 @@ public class ValidateUtil
         return false;
     }
     
-    /** ÅĞ¶ÏÊÇ·ñÄêÄ© yyyy-MM-dd */
+    /** åˆ¤æ–­æ˜¯å¦å¹´æœ« yyyy-MM-dd */
     public static boolean isYearLastDay(String date)
     {
         if (!isDate(date))
@@ -803,7 +803,7 @@ public class ValidateUtil
         return false;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÔÂ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æœˆ */
     public static boolean isMonth(String s)
     {
         if (isEmpty(s))
@@ -812,7 +812,7 @@ public class ValidateUtil
         return isIntegerInRange(s, 1, 12);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÈÕ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¥ */
     public static boolean isDay(String s)
     {
         if (isEmpty(s))
@@ -821,13 +821,13 @@ public class ValidateUtil
         return isIntegerInRange(s, 1, 31);
     }
 
-    /** ¼ì²éÊÇ·ñÈòÄê */
+    /** æ£€æŸ¥æ˜¯å¦é—°å¹´ */
     public static boolean isLeapYear(int year)
     {
         return (year % 4 == 0) && ((!(year % 100 == 0)) || (year % 400 == 0));
     }
     
-       /** ¼ì²éÊÇ·ñÊÇÔÂÄ© yyyy-MM-dd HH:mm:ss */
+       /** æ£€æŸ¥æ˜¯å¦æ˜¯æœˆæœ« yyyy-MM-dd HH:mm:ss */
     public static boolean isMonthLastDay(String date)
     {
         if (!isDate(date))
@@ -839,7 +839,7 @@ public class ValidateUtil
         return isMonthLastDay(year, month, day);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÔÂÄ© */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æœˆæœ« */
     public static boolean isMonthLastDay(String year, String month, String day)
     {
         if (!isDate(year, month, day))
@@ -851,7 +851,7 @@ public class ValidateUtil
         return isMonthLastDay(yearInt, monthInt, dayInt);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÔÂÄ© */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æœˆæœ« */
     public static boolean isMonthLastDay(int year, int month, int day)
     {
         if (year < 1000 || year > 9999 || month > 12 || month < 1 || day > 31 || day < 1)
@@ -872,13 +872,13 @@ public class ValidateUtil
         case 9:
         case 11:
             return day == 30;
-        default://2ÔÂ
+        default://2æœˆ
             boolean isLeapYear = ValidateUtil.isLeapYear(year);
             return isLeapYear?day==29:day==28;
         }
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÊ± */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¶ */
     public static boolean isHour(String s)
     {
         if (isEmpty(s))
@@ -887,7 +887,7 @@ public class ValidateUtil
         return isIntegerInRange(s, 0, 23);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄ·Ö */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„åˆ† */
     public static boolean isMinute(String s)
     {
         if (isEmpty(s))
@@ -895,7 +895,7 @@ public class ValidateUtil
         return isIntegerInRange(s, 0, 59);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÃë */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„ç§’ */
     public static boolean isSecond(String s)
     {
         if (isEmpty(s))
@@ -903,7 +903,7 @@ public class ValidateUtil
         return isIntegerInRange(s, 0, 59);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÈÕÆÚ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¥æœŸ */
     public static boolean isDate(String year, String month, String day)
     {
         if (!(isYear(year) && isMonth(month) && isDay(day)))
@@ -922,7 +922,7 @@ public class ValidateUtil
         return true;
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÈÕÆÚ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¥æœŸ */
     public static boolean isDate(String date)
     {
         if (isEmpty(date))
@@ -944,7 +944,7 @@ public class ValidateUtil
         return isDate(year, month, day);
     }
     
-    /** ÅĞ¶ÏÊÇ²»ÊÇÖ¸¶¨µÄÊ±¼ä¸ñÊ½ */
+    /** åˆ¤æ–­æ˜¯ä¸æ˜¯æŒ‡å®šçš„æ—¶é—´æ ¼å¼ */
     public static boolean isDateTime(String datetime)
     {
         if (isEmpty(datetime))
@@ -958,7 +958,7 @@ public class ValidateUtil
         return isDate(strs[0]) && isTime(strs[1]);
     }
     
-    /** ÅĞ¶ÏÊÇ²»ÊÇÖ¸¶¨µÄÊ±¼ä¸ñÊ½, speÎªÈÕÆÚ·Ö¸ô·û */
+    /** åˆ¤æ–­æ˜¯ä¸æ˜¯æŒ‡å®šçš„æ—¶é—´æ ¼å¼, speä¸ºæ—¥æœŸåˆ†éš”ç¬¦ */
     public static boolean isDateTime(String datetime, String spe)
     {
         if (isEmpty(datetime))
@@ -972,7 +972,7 @@ public class ValidateUtil
         return isDate(strs[0].replaceAll(spe, "-")) && isTime(strs[1]);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÎ÷·½ÕıÈ·µÄÈÕÆÚ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯è¥¿æ–¹æ­£ç¡®çš„æ—¥æœŸ */
     public static boolean isEnglishDate(String date)
     {
         if (isEmpty(date))
@@ -991,7 +991,7 @@ public class ValidateUtil
         return isDate(year, month, day);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÈÕÆÚ±È½ñÌì´ó */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ—¥æœŸæ¯”ä»Šå¤©å¤§ */
     public static boolean isDateAfterToday(String date)
     {
         if (!isDate(date))
@@ -1001,7 +1001,7 @@ public class ValidateUtil
         return date.compareTo(currentDate) > 0;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÈÕÆÚ±È½ñÌì´óµÈÓÚ */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ—¥æœŸæ¯”ä»Šå¤©å¤§ç­‰äº */
     public static boolean isDateAfterEqualToday(String date)
     {
         if (!isDate(date))
@@ -1016,7 +1016,7 @@ public class ValidateUtil
         System.out.println(isDateAfterToday("2012-06-07"));
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÊ±¼ä */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¶é—´ */
     public static boolean isTime(String hour, String minute, String second)
     {
         if (isHour(hour) && isMinute(minute) && isSecond(second))
@@ -1025,7 +1025,7 @@ public class ValidateUtil
         return false;
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÊ±¼ä */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ—¶é—´ */
     public static boolean isTime(String time)
     {
         if (isEmpty(time))
@@ -1044,13 +1044,13 @@ public class ValidateUtil
         return isTime(hour, minute, second);
     }
 
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄµç»°ºÅÂë */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„ç”µè¯å·ç  */
     public static boolean isPhone(String s)
     {
         if (isEmpty(s))
             return DEFAULT_EMPTY_OK;
 
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û·¢ÏÖÒ»¸ö²»ÊÇwhitespace,Ôò·µ»Øfalse
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœå‘ç°ä¸€ä¸ªä¸æ˜¯whitespace,åˆ™è¿”å›false
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -1062,20 +1062,20 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇÕıÈ·µÄÊÖ»úºÅÂë */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯æ­£ç¡®çš„æ‰‹æœºå·ç  */
     public static boolean isMsisdn(String s)
     {
         if (isEmpty(s))
             return DEFAULT_EMPTY_OK;
             
-        //Èç¹ûµÚÒ»¸öÊÇ+ºÅ,ÔòÈ¥³ı
+        //å¦‚æœç¬¬ä¸€ä¸ªæ˜¯+å·,åˆ™å»é™¤
         if (s.charAt(0) == '+')
             s = s.substring(1);
         
         if (s.length() > VALID_MSISDN_MAXLEN || s.length() < VALID_MSISDN_MINLEN)
             return false;
         
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û·¢ÏÖÒ»¸ö²»ÊÇVALID_MSISDN_CHARS,Ôò·µ»Øfalse
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœå‘ç°ä¸€ä¸ªä¸æ˜¯VALID_MSISDN_CHARS,åˆ™è¿”å›false
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -1088,11 +1088,11 @@ public class ValidateUtil
     }
     
     /**
-     * ÅĞ¶ÏºÅÂëÊÇ·ñ·ûºÏÅäÖÃÎÄ¼şËùÉèÌõ¼ş
+     * åˆ¤æ–­å·ç æ˜¯å¦ç¬¦åˆé…ç½®æ–‡ä»¶æ‰€è®¾æ¡ä»¶
      * 
-     * @param phone ºÅÂë×Ö·û´®
-     * @oaram prefixs ¹Ì¶¨Ç°Èı¸öµÄÇ°×º,Èç135,136,159µÈ,¶à¸öÓÃ¶ººÅ¸ô¿ª
-     * @return boolean =true ÊÇÊÖ»úºÅÂë,=false ·ÇÊÖ»úºÅÂë
+     * @param phone å·ç å­—ç¬¦ä¸²
+     * @oaram prefixs å›ºå®šå‰ä¸‰ä¸ªçš„å‰ç¼€,å¦‚135,136,159ç­‰,å¤šä¸ªç”¨é€—å·éš”å¼€
+     * @return boolean =true æ˜¯æ‰‹æœºå·ç ,=false éæ‰‹æœºå·ç 
      */
     public static boolean isMsisdn11(String phone, String prefixs)
     {
@@ -1110,11 +1110,11 @@ public class ValidateUtil
     }
     
     /**
-     * ÅĞ¶ÏºÅÂëÊÇ·ñ·ûºÏÅäÖÃÎÄ¼şËùÉèÌõ¼ş
+     * åˆ¤æ–­å·ç æ˜¯å¦ç¬¦åˆé…ç½®æ–‡ä»¶æ‰€è®¾æ¡ä»¶
      * 
-     * @param phone ºÅÂë×Ö·û´®
-     * @param prefixs Ç°×ºÊı×é£¬Èç135,137,+86,0086,17951135µÈ,¶à¸öÓÃ¶ººÅ¸ô¿ª
-     * @return boolean =true ÊÇÊÖ»úºÅÂë,=false ·ÇÊÖ»úºÅÂë
+     * @param phone å·ç å­—ç¬¦ä¸²
+     * @param prefixs å‰ç¼€æ•°ç»„ï¼Œå¦‚135,137,+86,0086,17951135ç­‰,å¤šä¸ªç”¨é€—å·éš”å¼€
+     * @return boolean =true æ˜¯æ‰‹æœºå·ç ,=false éæ‰‹æœºå·ç 
      */
     public static boolean isMsisdn21(String phone, String prefixs)
     {       
@@ -1134,13 +1134,13 @@ public class ValidateUtil
         return false;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇIPµØÖ·,ipÎª¿Õ·µ»Øfalse; */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯IPåœ°å€,ipä¸ºç©ºè¿”å›false; */
     public static boolean isIP(String ip)
     {
         return isIP(ip, false);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇIPµØÖ· */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯IPåœ°å€ */
     public static boolean isIP(String ip, boolean allowEmpty)
     {
         if (isEmpty(ip))
@@ -1183,13 +1183,13 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²éÊÇ·ñÊÇmacAddress,macAddressÎª¿Õ·µ»Øfalse; */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯macAddress,macAddressä¸ºç©ºè¿”å›false; */
     public static boolean isMacAddress(String macAddress)
     {
         return isMacAddress(macAddress, false);
     }
     
-    /** ¼ì²éÊÇ·ñÊÇIPµØÖ· */
+    /** æ£€æŸ¥æ˜¯å¦æ˜¯IPåœ°å€ */
     public static boolean isMacAddress(String macAddress, boolean allowEmpty)
     {
         if (isEmpty(macAddress))
@@ -1198,7 +1198,7 @@ public class ValidateUtil
         return isRegExp(macAddress, "^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$");
     }
     
-    /** ¼ì²éÊÇ·ñÓÊ±à */
+    /** æ£€æŸ¥æ˜¯å¦é‚®ç¼– */
     public static boolean isPostalCode(String s)
     {
         if (!isInteger(s) || s.trim().length() != 6)
@@ -1207,13 +1207,13 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²éÊÇ·ñÔÚÖ¸¶¨µÄ×Ö·û´®ÄÚ */
+    /** æ£€æŸ¥æ˜¯å¦åœ¨æŒ‡å®šçš„å­—ç¬¦ä¸²å†… */
     public static boolean isScope(String s, String scope)
     {
         if (ValidateUtil.isEmpty(s))
             return ValidateUtil.DEFAULT_EMPTY_OK;
             
-        // Öğ¸ö×Ö·û¼ì²é,Èç¹û·¢ÏÖÒ»¸ö²»ÊÇspecifyStr,Ôò·µ»Øfalse
+        // é€ä¸ªå­—ç¬¦æ£€æŸ¥,å¦‚æœå‘ç°ä¸€ä¸ªä¸æ˜¯specifyStr,åˆ™è¿”å›false
         for (int i=0;i<s.length();i++)
         {
             char c = s.charAt(i);
@@ -1225,7 +1225,7 @@ public class ValidateUtil
         return true;
     }
     
-    /** ¼ì²évalueÊÇ·ñ·ûºÏÖ¸¶¨µÄpattern */
+    /** æ£€æŸ¥valueæ˜¯å¦ç¬¦åˆæŒ‡å®šçš„pattern */
     public static boolean isRegExp(String value, String regExp)
     {
         if (regExp.startsWith("/"))
@@ -1235,7 +1235,7 @@ public class ValidateUtil
         return Pattern.matches(regExp, value);
     }
     
-    /** ¼ì²ésrcÊÇ·ñ°üº¬×Ö·û´®Êı×éÈÎºÎÒ»¸ö */
+    /** æ£€æŸ¥srcæ˜¯å¦åŒ…å«å­—ç¬¦ä¸²æ•°ç»„ä»»ä½•ä¸€ä¸ª */
     public static boolean isStrContainStrArr(String src, String[] strs)
     {
         for (String str : strs)
@@ -1247,13 +1247,13 @@ public class ValidateUtil
         return false;
     }
     
-    /** ¼ì²ésrcÊÇ·ñ°üº¬×Ö·û´®Êı×éÈÎºÎÒ»¸ö */
+    /** æ£€æŸ¥srcæ˜¯å¦åŒ…å«å­—ç¬¦ä¸²æ•°ç»„ä»»ä½•ä¸€ä¸ª */
     public static boolean isStrContainStrArr(String src, String strArr, String delm)
     {
         return isStrContainStrArr(src, strArr.split(delm));
     }
 
-    /** ¼ì²élongÊÇ·ñÔÚlong[]ÄÚ */
+    /** æ£€æŸ¥longæ˜¯å¦åœ¨long[]å†… */
     public static boolean isLongContain(long[] ls, long lo)
     {
         for (long l : ls)
@@ -1265,7 +1265,7 @@ public class ValidateUtil
         return false;
     }
     
-    /** ¼ì²éintÊÇ·ñÔÚint[]ÄÚ */
+    /** æ£€æŸ¥intæ˜¯å¦åœ¨int[]å†… */
     public static boolean isIntContain(int[] is, int in)
     {
         for (int i : is)

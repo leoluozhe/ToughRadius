@@ -60,11 +60,11 @@ public class DBService implements Startable
             configuration.addMapper(RadClientMapper.class);
             configuration.addMapper(RadBlacklistMapper.class);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-            log.info("³õÊ¼»¯Êı¾İ¿âÍê³É");
+            log.info("åˆå§‹åŒ–æ•°æ®åº“å®Œæˆ");
         }
         catch (Exception e)
         {
-            log.error("³õÊ¼»¯Êı¾İ¿âÊ§°Ü£»",e);
+            log.error("åˆå§‹åŒ–æ•°æ®åº“å¤±è´¥ï¼›",e);
         }
 
     }

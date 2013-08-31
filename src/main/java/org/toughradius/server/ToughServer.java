@@ -36,7 +36,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
     
     public void start()
     {
-        logger.info("start  RadiusServer...");
+        logger.info("start RadiusServer...");
         this.setAuthPort(config.getInt("radius.authPort", 1812));
         this.setAcctPort(config.getInt("radius.acctPort", 1813));
         this.start(true, true);
@@ -58,7 +58,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
     
     
     /**
-     * ÈÏÖ¤ÇëÇó´¦Àí
+     * è®¤è¯è¯·æ±‚å¤„ç†
      */
     public RadiusPacket accessRequestReceived(AccessRequest accessRequest, InetSocketAddress client)
             throws RadiusException
@@ -68,7 +68,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
             return packet;
         
         String macaddr = accessRequest.getAttributeValue("Calling-Station-Id");
-        //ÅĞ¶ÏºÚÃûµ¥
+        //åˆ¤æ–­é»‘åå•
         if(Project.getBaseService().getBlacklist(macaddr)!=null)
         {
             packet.setPacketType(RadiusPacket.ACCESS_REJECT);
@@ -76,14 +76,14 @@ public class ToughServer extends RadiusServer implements Constant,Startable
             return packet;
         }
         
-        //ÅĞ¶Ïµ½ÆÚ
+        //åˆ¤æ–­åˆ°æœŸ
         RadUserMeta attr = Project.getUserService().getUserMeta(accessRequest.getUserName(), USER_EXPIRE.value());
         
         int sessionTimeout = config.getInt("radius.maxSessionTimeout");
         
         if(attr!=null)
         {
-            //ÓÃ»§µ±Ííµ½ÆÚ
+            //ç”¨æˆ·å½“æ™šåˆ°æœŸ
             if(attr.getValue().equals(DateTimeUtil.getDateString()))
             {
                 String dateTime = DateTimeUtil.getDateTimeString();
@@ -97,7 +97,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
             }
         }
         
-        //ÉÏÍøÊ±¶Î¿ØÖÆ
+        //ä¸Šç½‘æ—¶æ®µæ§åˆ¶
         RadUserMeta periodAttr = Project.getUserService().getUserMeta(accessRequest.getUserName(), USER_PERIOD.value());
         if (!ValidateUtil.isEmpty(periodAttr.getValue()))
         {
@@ -108,7 +108,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
             String nowTime = DateTimeUtil.getDateTimeString();            
             String nowHour = DateTimeUtil.getTimeString().substring(0, 5);
             
-            //Ê±¶ÎÅĞ¶Ï
+            //æ—¶æ®µåˆ¤æ–­
             boolean _auth = true;
             if(startTime.compareTo(endTime) < 0 && 
                     (nowHour.compareTo(startTime) < 0 || nowHour.compareTo(endTime) > 0 ) ) 
@@ -124,11 +124,11 @@ public class ToughServer extends RadiusServer implements Constant,Startable
                 return packet;
             }
             
-            //»á»°³¬Ê±Ê±³¤¼ÆËã
+            //ä¼šè¯è¶…æ—¶æ—¶é•¿è®¡ç®—
             if(startTime.compareTo(endTime) < 0)                      
                 endTime = nowDay + " " + endTime + ":00";
             else if (nowTime.compareTo(nowDay + " " + startTime + ":00") > 0)            
-                endTime = afterDay + " " + endTime + ":00";//¿çÌì
+                endTime = afterDay + " " + endTime + ":00";//è·¨å¤©
             else
                 endTime = nowDay + " " + endTime + ":00";
             
@@ -142,7 +142,7 @@ public class ToughServer extends RadiusServer implements Constant,Startable
     }
     
     /**
-     * ¼Æ·ÑÇëÇó´¦Àí
+     * è®¡è´¹è¯·æ±‚å¤„ç†
      */
     public RadiusPacket accountingRequestReceived(AccountingRequest accountingRequest, InetSocketAddress client)
             throws RadiusException

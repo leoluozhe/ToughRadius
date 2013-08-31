@@ -45,7 +45,7 @@ public class Utils
         try
         {
             byte[] strTemp = s.getBytes();
-            // Ê¹ÓÃMD5´´½¨MessageDigest¶ÔÏó
+            // ä½¿ç”¨MD5åˆ›å»ºMessageDigestå¯¹è±¡
             MessageDigest mdTemp = MessageDigest.getInstance("MD5");
             mdTemp.update(strTemp);
             byte[] md = mdTemp.digest();
@@ -67,7 +67,7 @@ public class Utils
     }
 
     /**
-     * ipµØÖ·×ª³ÉÕûÊı.
+     * ipåœ°å€è½¬æˆæ•´æ•°.
      * 
      * @param ip
      * @return
@@ -81,7 +81,7 @@ public class Utils
     }
 
     /**
-     * ÕûÊı×ª³ÉipµØÖ·.
+     * æ•´æ•°è½¬æˆipåœ°å€.
      * 
      * @param ipLong
      * @return
@@ -174,7 +174,7 @@ public class Utils
 
     public static String Html2Text(String inputString)
     {
-        String htmlStr = inputString; // º¬html±êÇ©µÄ×Ö·û´®
+        String htmlStr = inputString; // å«htmlæ ‡ç­¾çš„å­—ç¬¦ä¸²
         String textStr = "";
         java.util.regex.Pattern p_script;
         java.util.regex.Matcher m_script;
@@ -188,27 +188,27 @@ public class Utils
 
         try
         {
-            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; // ¶¨ÒåscriptµÄÕıÔò±í´ïÊ½{»ò<script[^>]*?>[\\s\\S]*?<\\/script>
+            String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; // å®šä¹‰scriptçš„æ­£åˆ™è¡¨è¾¾å¼{æˆ–<script[^>]*?>[\\s\\S]*?<\\/script>
             // }
-            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; // ¶¨ÒåstyleµÄÕıÔò±í´ïÊ½{»ò<style[^>]*?>[\\s\\S]*?<\\/style>
+            String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; // å®šä¹‰styleçš„æ­£åˆ™è¡¨è¾¾å¼{æˆ–<style[^>]*?>[\\s\\S]*?<\\/style>
             // }
-            String regEx_html = "<[^>]+>"; // ¶¨ÒåHTML±êÇ©µÄÕıÔò±í´ïÊ½
+            String regEx_html = "<[^>]+>"; // å®šä¹‰HTMLæ ‡ç­¾çš„æ­£åˆ™è¡¨è¾¾å¼
             String regEx_html1 = "<[^>]+";
             p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
             m_script = p_script.matcher(htmlStr);
-            htmlStr = m_script.replaceAll(""); // ¹ıÂËscript±êÇ©
+            htmlStr = m_script.replaceAll(""); // è¿‡æ»¤scriptæ ‡ç­¾
 
             p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);
             m_style = p_style.matcher(htmlStr);
-            htmlStr = m_style.replaceAll(""); // ¹ıÂËstyle±êÇ©
+            htmlStr = m_style.replaceAll(""); // è¿‡æ»¤styleæ ‡ç­¾
 
             p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
             m_html = p_html.matcher(htmlStr);
-            htmlStr = m_html.replaceAll(""); // ¹ıÂËhtml±êÇ©
+            htmlStr = m_html.replaceAll(""); // è¿‡æ»¤htmlæ ‡ç­¾
 
             p_html1 = Pattern.compile(regEx_html1, Pattern.CASE_INSENSITIVE);
             m_html1 = p_html1.matcher(htmlStr);
-            htmlStr = m_html1.replaceAll(""); // ¹ıÂËhtml±êÇ©
+            htmlStr = m_html1.replaceAll(""); // è¿‡æ»¤htmlæ ‡ç­¾
 
             textStr = htmlStr;
 
@@ -218,7 +218,7 @@ public class Utils
             System.err.println("Html2Text: " + e.getMessage());
         }
 
-        return textStr;// ·µ»ØÎÄ±¾×Ö·û´®
+        return textStr;// è¿”å›æ–‡æœ¬å­—ç¬¦ä¸²
     }
 
     @SuppressWarnings("unchecked")
@@ -417,7 +417,7 @@ public class Utils
         }
 
         File srcdir = new File(srcPathName);
-        if (!srcdir.exists()) throw new RuntimeException(srcPathName + "²»´æÔÚ£¡");
+        if (!srcdir.exists()) throw new RuntimeException(srcPathName + "ä¸å­˜åœ¨ï¼");
 
         Project prj = new Project();
         Zip zip = new Zip();
@@ -426,9 +426,9 @@ public class Utils
         FileSet fileSet = new FileSet();
         fileSet.setProject(prj);
         fileSet.setDir(srcdir);
-        // fileSet.setIncludes("**/*.java"); °üÀ¨ÄÄĞ©ÎÄ¼ş»òÎÄ¼ş¼Ğ
+        // fileSet.setIncludes("**/*.java"); åŒ…æ‹¬å“ªäº›æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹
         // eg:zip.setIncludes("*.java");
-        // fileSet.setExcludes(...); ÅÅ³ıÄÄĞ©ÎÄ¼ş»òÎÄ¼ş¼Ğ
+        // fileSet.setExcludes(...); æ’é™¤å“ªäº›æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹
         zip.addFileset(fileSet);
         zip.execute();
     }

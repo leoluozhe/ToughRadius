@@ -16,7 +16,7 @@ import org.xlightweb.server.HttpServer;
 import org.xsocket.connection.IConnection.FlushMode;
 
 /**
- * WEB∑˛ŒÒ∆˜∂®“Â
+ * WEBÊúçÂä°Âô®ÂÆö‰πâ
  */
 public class WebServer implements Startable
 {
@@ -51,9 +51,9 @@ public class WebServer implements Startable
             System.setProperty("org.xlightweb.showDetailedError", "true");
             
             
-            hsrv = new HttpServer(config.getInt("http.port", 9000), rootCtx);
+            hsrv = new HttpServer(config.getInt("webapp.port", 9000), rootCtx);
             hsrv.setWorkerpool(Executors.newCachedThreadPool(new ServerThreadFactory()));
-            hsrv.setMaxConcurrentConnections(config.getInt("http.maxConn", 10000));
+            hsrv.setMaxConcurrentConnections(config.getInt("webapp.maxConn", 1024));
             hsrv.setAutoCompressThresholdBytes(2048);
             hsrv.setFlushmode(FlushMode.ASYNC);
 
@@ -63,9 +63,9 @@ public class WebServer implements Startable
             hsrv.setRequestBodyDefaultEncoding("utf-8");
             hsrv.setStartUpLogMessage("web server starting...");
             hsrv.start();
-            log.info("web server start.....");
+            log.info("start WebServer ...");
         } catch (Exception e) {
-            log.error("web server start fail", e);
+            log.error("WebServer start fail", e);
             System.exit(1);
         }
     }

@@ -7,39 +7,39 @@ public class Ticket implements Serializable
     private static final long serialVersionUID = 1L;
 
     private String ticketCode;
-    private String userName;//ÓÃ»§Ãû
-    private int acctStatusType;//¼Æ·ÑÀàĞÍ
+    private String userName;//ç”¨æˆ·å
+    private int acctStatusType;//è®¡è´¹ç±»å‹
     private String eventTimestamp;//
-    private String nasIpAddress;//½ÓÈë·şÎñÆ÷µÄIPµØÖ·
-    private String acctSessionId;//ÕÊ»á»°±êÊ¶
-    private String acctStartTime;//¼Æ·Ñ¿ªÊ¼Ê±¼ä
-    private String acctStopTime;//¼Æ·Ñ½áÊøÊ±¼ä
-    private int acctSessionTime;//»á»°Ê±¼ä
-    private int acctInputGigawords;//»á»°ÏÂĞĞµÄ×Ö£¨4×Ö½Ú£©µÄ¼ª±¶Êı
-    private long acctInputOctets;//ÊäÈë×Ö½Ú×ÜÊı
-    private int acctInputPackets;//ÊäÈëÊı¾İ°ü
-    private int acctOutputGigawords;//»á»°ÉÏĞĞµÄ×Ö£¨4×Ö½Ú£©µÄ¼ª±¶Êı
-    private long acctOutputOctets;//Êä³ö×Ö½Ú×ÜÊı
-    private int acctOutputPackets;//Êä³öÊı¾İ°ü
-    private String callingStationId;//ÓÃ»§ºô½ĞºÅÂë
-    private int nasPort;//ÍøÂç½ÓÈë·şÎñÆ÷£¨NAS£©¶Ë¿Ú
-    private int nasPortType;//ÍøÂç½ÓÈë·şÎñÆ÷£¨NAS£©¶Ë¿ÚÀàĞÍ
-    private String nasPortId;//ÍøÂç½ÓÈë·şÎñÆ÷ (NAS) ±àºÅĞÅÏ¢
-    private String nasClass;//Àà
-    private int serviceType;//·şÎñÀàĞÍ
-    private int sessionTimeout;//»á»°³¬Ê±
-    private String framedIpAddress;//¿Í»§¶ËµÄIPµØÖ·
-    private String framedIpNetmask;//¿Í»§¶ËµÄ×ÓÍøÑÚÂë
-    private int acctTerminateCause;//¼ÇÕÊÖĞÖ¹Ô­Òò
-    private int startSource;//ÉÏÏß°üÀ´Ô´(1=start,2=stop,3=update,7=acct-on,8=acct-off)
-    private int stopSource;//ÏÂÏß°üÀ´Ô´(1=start,2=stop,3=update,7=acct-on,8=acct-off)
-    private int acctFee;//¼Æ·Ñ½ğ¶î£¬µ¥Î»£º·Ö
-    private int feeReceivables;//Ó¦¿ÛĞÅÓş¶î£¬µ¥Î»£º·Ö
-    private int isDeduct;//ÊÇ·ñÒÑ¿Û·Ñ£¨0/1 Ã»¿Û·Ñ/ÒÑ¿Û·Ñ£©
+    private String nasIpAddress;//æ¥å…¥æœåŠ¡å™¨çš„IPåœ°å€
+    private String acctSessionId;//å¸ä¼šè¯æ ‡è¯†
+    private String acctStartTime;//è®¡è´¹å¼€å§‹æ—¶é—´
+    private String acctStopTime;//è®¡è´¹ç»“æŸæ—¶é—´
+    private int acctSessionTime;//ä¼šè¯æ—¶é—´
+    private int acctInputGigawords;//ä¼šè¯ä¸‹è¡Œçš„å­—ï¼ˆ4å­—èŠ‚ï¼‰çš„å‰å€æ•°
+    private long acctInputOctets;//è¾“å…¥å­—èŠ‚æ€»æ•°
+    private int acctInputPackets;//è¾“å…¥æ•°æ®åŒ…
+    private int acctOutputGigawords;//ä¼šè¯ä¸Šè¡Œçš„å­—ï¼ˆ4å­—èŠ‚ï¼‰çš„å‰å€æ•°
+    private long acctOutputOctets;//è¾“å‡ºå­—èŠ‚æ€»æ•°
+    private int acctOutputPackets;//è¾“å‡ºæ•°æ®åŒ…
+    private String callingStationId;//ç”¨æˆ·å‘¼å«å·ç 
+    private int nasPort;//ç½‘ç»œæ¥å…¥æœåŠ¡å™¨ï¼ˆNASï¼‰ç«¯å£
+    private int nasPortType;//ç½‘ç»œæ¥å…¥æœåŠ¡å™¨ï¼ˆNASï¼‰ç«¯å£ç±»å‹
+    private String nasPortId;//ç½‘ç»œæ¥å…¥æœåŠ¡å™¨ (NAS) ç¼–å·ä¿¡æ¯
+    private String nasClass;//ç±»
+    private int serviceType;//æœåŠ¡ç±»å‹
+    private int sessionTimeout;//ä¼šè¯è¶…æ—¶
+    private String framedIpAddress;//å®¢æˆ·ç«¯çš„IPåœ°å€
+    private String framedIpNetmask;//å®¢æˆ·ç«¯çš„å­ç½‘æ©ç 
+    private int acctTerminateCause;//è®°å¸ä¸­æ­¢åŸå› 
+    private int startSource;//ä¸Šçº¿åŒ…æ¥æº(1=start,2=stop,3=update,7=acct-on,8=acct-off)
+    private int stopSource;//ä¸‹çº¿åŒ…æ¥æº(1=start,2=stop,3=update,7=acct-on,8=acct-off)
+    private int acctFee;//è®¡è´¹é‡‘é¢ï¼Œå•ä½ï¼šåˆ†
+    private int feeReceivables;//åº”æ‰£ä¿¡èª‰é¢ï¼Œå•ä½ï¼šåˆ†
+    private int isDeduct;//æ˜¯å¦å·²æ‰£è´¹ï¼ˆ0/1 æ²¡æ‰£è´¹/å·²æ‰£è´¹ï¼‰
 
     public String toString()
     {
-        return new StringBuffer("ÉÏÍø¼Æ·Ñ¼ÇÂ¼:[")
+        return new StringBuffer("ä¸Šç½‘è®¡è´¹è®°å½•:[")
             .append("ticketCode=").append(ticketCode).append(";")
             .append("nasIpAddress=").append(nasIpAddress).append(";")
             .append("acctSessionId=").append(acctSessionId).append(";")

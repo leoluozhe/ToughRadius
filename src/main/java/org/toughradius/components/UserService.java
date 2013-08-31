@@ -34,7 +34,7 @@ public class UserService
     }
     
     /**
-     * ²éÑ¯µ¥¸öÓÃ»§
+     * æŸ¥è¯¢å•ä¸ªç”¨æˆ·
      * @param username
      * @return
      */
@@ -54,7 +54,7 @@ public class UserService
     }
     
     /**
-     * ²éÑ¯ÓÃ»§µ¥¸öÊôĞÔ
+     * æŸ¥è¯¢ç”¨æˆ·å•ä¸ªå±æ€§
      * @param username
      * @param metaname
      * @return
@@ -78,7 +78,7 @@ public class UserService
     }
     
     /**
-     * ²éÑ¯ÓÃ»§ÊôĞÔ¼¯ºÏ
+     * æŸ¥è¯¢ç”¨æˆ·å±æ€§é›†åˆ
      * @param username
      * @return
      */
@@ -101,7 +101,7 @@ public class UserService
     
     
     /**
-     * ²éÑ¯µ¥¸öÓÃ»§×é
+     * æŸ¥è¯¢å•ä¸ªç”¨æˆ·ç»„
      * @param username
      * @return
      */
@@ -121,7 +121,7 @@ public class UserService
     }
     
     /**
-     * ²éÑ¯ÓÃ»§×éµ¥¸öÊôĞÔ
+     * æŸ¥è¯¢ç”¨æˆ·ç»„å•ä¸ªå±æ€§
      * @param username
      * @param metaname
      * @return
@@ -145,7 +145,7 @@ public class UserService
     }
     
     /**
-     * ²éÑ¯ÓÃ»§×éÊôĞÔ¼¯ºÏ
+     * æŸ¥è¯¢ç”¨æˆ·ç»„å±æ€§é›†åˆ
      * @param username
      * @return
      */
