@@ -27,28 +27,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.toughradius.constant;
-final public class IntConst
-{
-    private int value = -1;
-    private String desc = "未知";
-    
-    public IntConst(int status,String desc)
-    {
-        this.value = status;
-        this.desc = desc;
-    }
-    public int value()
-    {
-        return value;
-    }
-    public String desc()
-    {
-        return desc;
-    }
-    
-    public String toString()
-    {
-        return String.valueOf(value);
-    }
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClientTypes
+{
+    public static final StringConst OTHER = new StringConst("other","其他");
+    public static final StringConst ROS = new StringConst("ros","RouterOS");
+    public static final StringConst HUAWEI = new StringConst("huawei","华为");
+    public static final StringConst H3C = new StringConst("H3C","H3C");
+    
+    public final static List<StringConst> ClientTypeList = new ArrayList<StringConst>();
+    
+    static 
+    {
+        ClientTypeList.add(OTHER);
+        ClientTypeList.add(ROS);
+        ClientTypeList.add(HUAWEI);
+        ClientTypeList.add(H3C);
+    }
 }

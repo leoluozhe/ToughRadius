@@ -1,22 +1,51 @@
+/**
+ * Copyright (c) 2013, jamiesun, All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ *     Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ * 
+ *     Redistributions in binary form must reproduce the above copyright notice, this
+ *     list of conditions and the following disclaimer in the documentation and/or
+ *     other materials provided with the distribution.
+ * 
+ *     Neither the name of the {organization} nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package org.toughradius.components;
 
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.toughradius.Project;
 import org.toughradius.annotation.Inject;
 import org.toughradius.data.RadGroupMapper;
 import org.toughradius.data.RadGroupMetaMapper;
 import org.toughradius.data.RadUserMapper;
 import org.toughradius.data.RadUserMetaMapper;
 import org.toughradius.model.RadGroup;
+import org.toughradius.model.RadGroupExample;
 import org.toughradius.model.RadGroupMeta;
 import org.toughradius.model.RadGroupMetaExample;
 import org.toughradius.model.RadGroupMetaKey;
 import org.toughradius.model.RadUser;
+import org.toughradius.model.RadUserExample;
 import org.toughradius.model.RadUserMeta;
 import org.toughradius.model.RadUserMetaExample;
 import org.toughradius.model.RadUserMetaKey;
@@ -24,7 +53,7 @@ import org.toughradius.model.RadUserMetaKey;
 @Inject
 public class UserService
 {
-    private static Log logger = LogFactory.getLog(UserService.class);
+    private static Log log = LogFactory.getLog(UserService.class);
     
     private DBService dbservice;
     
@@ -54,6 +83,85 @@ public class UserService
     }
     
     /**
+     * 查询用户列表
+     * @param example
+     * @return
+     */
+    public List<RadUser> getUsers(RadUserExample example,RowBounds rowBounds)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
+            List<RadUser> users = mapper.selectByExampleWithRowbounds(example, rowBounds);
+            return users;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 新增用户
+     * @param user
+     */
+    public void addUser(RadUser user)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
+            mapper.insert(user);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 修改用户
+     * @param user
+     */
+    public void updateUser(RadUser user)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
+            mapper.insert(user);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 删除用户
+     * @param username
+     */
+    public void deleteUser(String username)
+    {
+        if(username == null || "".equals(username))
+            return;
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
+            mapper.deleteByPrimaryKey(username);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
      * 查询用户单个属性
      * @param username
      * @param metaname
@@ -70,6 +178,101 @@ public class UserService
             key.setName(metaname);
             RadUserMeta meta = mapper.selectByPrimaryKey(key);
             return meta;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 新增用户属性
+     * @param username
+     * @param metaname
+     * @param value
+     */
+    public void addUserMeta(String username,String metaname,String value)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
+            RadUserMeta meta = new RadUserMeta();
+            meta.setUserName(username);
+            meta.setName(metaname);
+            meta.setValue(value);
+            mapper.insert(meta);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    /**
+     * 修改用户属性
+     * @param username
+     * @param metaname
+     * @param value
+     */
+    public void updateUserMeta(String username,String metaname,String value)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
+            RadUserMeta meta = new RadUserMeta();
+            meta.setUserName(username);
+            meta.setName(metaname);
+            meta.setValue(value);
+            mapper.updateByPrimaryKey(meta);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 删除用户属性
+     * @param username
+     */
+    public void deleteUserMeta(String username)
+    {
+        if(username==null||"".equals(username))
+            return;
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
+            RadUserMetaExample example = new RadUserMetaExample();
+            example.createCriteria().andNameEqualTo(username);
+            mapper.deleteByExample(example);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 删除用户属性
+     * @param username
+     * @param metaname
+     */
+    public void deleteUserMeta(String username,String metaname)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
+            RadUserMetaKey key = new RadUserMetaKey();
+            key.setUserName(username);
+            key.setName(metaname);
+            mapper.deleteByPrimaryKey(key);
+            session.commit();
         }
         finally
         {
@@ -121,6 +324,85 @@ public class UserService
     }
     
     /**
+     * 新增用户组
+     * @param group
+     */
+    public void addGroup(RadGroup group)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
+            mapper.insert(group);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 更新用户组
+     * @param group
+     */
+    public void updateGroup(RadGroup group)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
+            mapper.updateByPrimaryKey(group);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 删除用户组
+     * @param groupname
+     */
+    public void deleteGroup(String groupname)
+    {
+        if(groupname==null || "".equals(groupname))
+            return;
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
+            mapper.deleteByPrimaryKey(groupname);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 查询用户组集合
+     * @param example
+     * @return
+     */
+    public List<RadGroup> getGroups(RadGroupExample example)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
+            List<RadGroup> data= mapper.selectByExample(example);
+            return data;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
      * 查询用户组单个属性
      * @param username
      * @param metaname
@@ -137,6 +419,104 @@ public class UserService
             key.setName(metaname);
             RadGroupMeta meta = mapper.selectByPrimaryKey(key);
             return meta;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 新增用户组属性
+     * @param groupname
+     * @param metaname
+     * @param value
+     */
+    public void addGroupMeta(String groupname,String metaname,String value)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
+            RadGroupMeta meta = new RadGroupMeta();
+            meta.setGroupName(groupname);
+            meta.setName(metaname);
+            meta.setValue(value);
+            mapper.insert(meta);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 修改用户组属性
+     * @param groupname
+     * @param metaname
+     * @param value
+     */
+    public void updateGroupMeta(String groupname,String metaname,String value)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
+            RadGroupMeta meta = new RadGroupMeta();
+            meta.setGroupName(groupname);
+            meta.setName(metaname);
+            meta.setValue(value);
+            mapper.updateByPrimaryKey(meta);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    
+    /**
+     * 删除用户组属性
+     * @param groupname
+     * @param metaname
+     */
+    public void deleteGroupMeta(String groupname)
+    {
+        if(groupname==null||"".equals(groupname))
+            return;
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
+            RadGroupMetaExample example = new RadGroupMetaExample();
+            example.createCriteria().andGroupNameEqualTo(groupname);
+            mapper.deleteByExample(example);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 删除用户组属性
+     * @param groupname
+     * @param metaname
+     */
+    public void deleteGroupMeta(String groupname,String metaname)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
+            RadGroupMetaKey meta = new RadGroupMetaKey();
+            meta.setGroupName(groupname);
+            meta.setName(metaname);
+            mapper.deleteByPrimaryKey(meta);
+            session.commit();
         }
         finally
         {
@@ -165,5 +545,7 @@ public class UserService
             session.close();
         }
     }
+    
+    
     
 }

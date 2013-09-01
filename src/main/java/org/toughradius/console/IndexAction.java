@@ -26,29 +26,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.toughradius.constant;
-final public class IntConst
-{
-    private int value = -1;
-    private String desc = "未知";
-    
-    public IntConst(int status,String desc)
-    {
-        this.value = status;
-        this.desc = desc;
-    }
-    public int value()
-    {
-        return value;
-    }
-    public String desc()
-    {
-        return desc;
-    }
-    
-    public String toString()
-    {
-        return String.valueOf(value);
-    }
+
+package org.toughradius.console;
+
+import java.io.IOException;
+
+import org.toughradius.annotation.AuthAdmin;
+import org.toughradius.components.Freemarker;
+import org.xlightweb.BadMessageException;
+import org.xlightweb.IHttpExchange;
+import org.xlightweb.Mapping;
+
+@AuthAdmin
+@Mapping( { "/*" })
+public class IndexAction extends FliterAction{
+	
+	private Freemarker free;
+	public void setFree(Freemarker free) {
+		this.free = free;
+	}
+
+	public void doGet(IHttpExchange http) throws IOException,BadMessageException {
+		http.send(free.render(http, "index"));
+	}
+
+	public void doPost(IHttpExchange http) throws IOException,BadMessageException {
+
+		
+	}
+
+
 
 }

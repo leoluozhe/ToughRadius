@@ -37,6 +37,24 @@ import org.tinyradius.packet.RadiusPacket;
  * accountingRequestReceived().
  */
 public abstract class RadiusServer {
+    
+    private InetAddress listenAddress = null;
+    private RadiusStat stat = new RadiusStat();
+    private int authPort = 1812;
+    private int acctPort = 1813;
+    private DatagramSocket authSocket = null;
+    private DatagramSocket acctSocket = null;
+    private int socketTimeout = 3000;
+    private List receivedPackets = new LinkedList();
+    private long duplicateInterval = 30000; // 30 s
+    protected transient boolean closing = false;
+    private ExecutorService          worker      = Executors.newCachedThreadPool();
+    private static Log logger = LogFactory.getLog(RadiusServer.class);
+    
+    public RadiusStat getStat()
+    {
+        return stat;
+    }
 
 	/**
 	 * Returns the shared secret used to communicate with the client with the
@@ -365,6 +383,9 @@ public abstract class RadiusServer {
 
 				// parse packet
 				final RadiusPacket request = makeRadiusPacket(packetIn, secret);
+				
+				
+				
 				if (logger.isInfoEnabled())
 					logger.info("received packet from " + remoteAddress + " on local address " + localAddress + ": " + request);
 
@@ -401,8 +422,6 @@ public abstract class RadiusServer {
                         }
 		            }
 		        });
-				
-
 			}
 			catch (SocketTimeoutException ste) {
 				// this is expected behaviour
@@ -442,23 +461,53 @@ public abstract class RadiusServer {
 			if (localAddress.getPort() == getAuthPort()) {
 				// handle packets on auth port
 				if (request instanceof AccessRequest)
-					response = accessRequestReceived((AccessRequest) request, remoteAddress);
+				{
+				    stat.addAuthAll();
+				    response = accessRequestReceived((AccessRequest) request, remoteAddress);
+				    if(response.getPacketType() == RadiusPacket.ACCESS_ACCEPT)
+				        stat.addAuthAccept();
+				    else if(response.getPacketType() == RadiusPacket.ACCESS_REJECT)
+				        stat.addAuthReject();
+				}
 				else
-					logger.error("unknown Radius packet type: " + request.getPacketType());
+				{
+				    stat.addAuthAbandon();
+				    logger.error("unknown Radius packet type: " + request.getPacketType());
+				}
 			}
 			else if (localAddress.getPort() == getAcctPort()) {
 				// handle packets on acct port
 				if (request instanceof AccountingRequest)
-					response = accountingRequestReceived((AccountingRequest) request, remoteAddress);
+				{
+				    stat.addAcctAll();
+				    AccountingRequest accreq = (AccountingRequest) request;
+				    response = accountingRequestReceived(accreq, remoteAddress);
+				    if(accreq.getAcctStatusType() == AccountingRequest.ACCT_STATUS_TYPE_START)
+				        stat.addAcctStart();
+				    else if(accreq.getAcctStatusType() == AccountingRequest.ACCT_STATUS_TYPE_STOP)
+                        stat.addAcctStop();
+                    else if(accreq.getAcctStatusType() == AccountingRequest.ACCT_STATUS_TYPE_INTERIM_UPDATE)
+                        stat.addAcctUpdate();
+                    else if(accreq.getAcctStatusType() == AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_ON)
+                        stat.addAcctOn();
+                    else if(accreq.getAcctStatusType() == AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_OFF)
+                        stat.addAcctOff();				    
+				}
 				else
-					logger.error("unknown Radius packet type: " + request.getPacketType());
+				{
+				    stat.addAcctAbandon();
+				    logger.error("unknown Radius packet type: " + request.getPacketType());
+				}
 			}
 			else {
 				// ignore packet on unknown port
 			}
 		}
 		else
-			logger.info("ignore duplicate packet");
+		{
+		    stat.addAcctRetry();
+		    logger.info("ignore duplicate packet");
+		}
 
 		return response;
 	}
@@ -590,17 +639,7 @@ public abstract class RadiusServer {
 		return false;
 	}
 
-	private InetAddress listenAddress = null;
-	private int authPort = 1812;
-	private int acctPort = 1813;
-	private DatagramSocket authSocket = null;
-	private DatagramSocket acctSocket = null;
-	private int socketTimeout = 3000;
-	private List receivedPackets = new LinkedList();
-	private long duplicateInterval = 30000; // 30 s
-	protected transient boolean closing = false;
-	private ExecutorService          worker      = Executors.newCachedThreadPool();
-	private static Log logger = LogFactory.getLog(RadiusServer.class);
+
 
 }
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><#include "/header.html" parse=true>
+</head>
+<body>
+	<#include "/nav.html" parse=true>
+	<div class="main-box">
+		<div class="container">
+			<div class="row">
+				<#include "/menu.html" parse=true>
+				<div class="span9">
+					<ul class="breadcrumb">
+						<li><b>客户端管理</b> <span class="divider">/</span></li>
+						<li><a href="/client">客户端列表</a><span class="divider">/</span></li>
+						<li><a href="/client?op=add">新增客户端</a></li>
+					</ul>
+					<#if error??>
+					<div class="alert alert-error">${error}</div>
+					</#if>
+
+					<form class="form-horizontal" action="/client?op=update" method="post">
+						<div class="control-group">
+							<label class="control-label" for="address">客戶端IP地址</label>
+							<div class="controls">
+								<input type="text" id="address" name="address" value="${client.getAddress()}" placeholder="0.0.0.0" readonly required="required">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="clientType">客戶端类型</label>
+							<div class="controls">
+								<select id="clientType" name="clientType">
+								    <#list typeList as typ>
+									<option value="${typ.value()}"  ${context.seclet(typ.value(),client.getClientType())} >${typ.value()}</option>
+									</#list>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="secret">共享密钥</label>
+							<div class="controls">
+								<input type="text" id="secret" name="secret" value="${client.getSecret()}" placeholder="" required="required">
+							</div>
+						</div>	
+						<div class="control-group">
+							<label class="control-label" for="clientDesc">客户端描述</label>
+							<div class="controls">
+								<textarea id="clientDesc" name="clientDesc" rows="3">${client.getClientDesc()}</textarea>
+							</div>
+						</div>												
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn">提交</button>
+								<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<#include "/footer.html" parse=true>
+</body>
+</html>

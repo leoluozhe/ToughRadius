@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-   <#include "/header.html" parse=true>
-  </head>
-  <body>
-  <#include "/nav.html" parse=true>
+<head>
+<#include "/header.html" parse=true>
+<script type="text/javascript">
+function deleteClient(address)
+{
+    if(confirm("确认删除吗？")){
+        window.location.href = "/client?op=delete&address="+address;
+    }
+}
+</script>
+</head>
+<body>
+	<#include "/nav.html" parse=true>
 	<div class="main-box">
 		<div class="container">
-		    <div class="row">
-               <#include "/menu.html" parse=true>
+			<div class="row">
+				<#include "/menu.html" parse=true>
 				<div class="span9">
 					<ul class="breadcrumb">
-						<li>客户端管理</li>
+						<li><b>客户端管理</b> <span class="divider">/</span></li>
+						<li><a href="/client">客户端列表</a><span class="divider">/</span></li>
+						<li><a href="/client?op=add">新增客户端</a></li>
 					</ul>
+
+					<table class="table table-striped ">
+					  <thead>
+							<tr>
+								<td>客户端地址</td>
+								<td>客户端类型</td>
+								<td>共享密钥</td>
+								<td>客户端描述</td>
+								<td>操作</td>
+							</tr>			
+						</thead>		
+						<tbody>
+							<#list clients as client>
+							<tr>
+								<td>${client.getAddress()}</td>
+								<td>${client.getClientType()}</td>
+								<td>${client.getSecret()}</td>
+								<td>${client.getClientDesc()}</td>
+								<td><a href="/client?op=modify&address=${client.getAddress()}">修改</a><span class="divider">/</span>
+								<a href="javascript:deleteClient('${client.getAddress()}')">删除</a></td>
+							</tr>
+							</#list>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
-    </div > <!-- /container -->
-  <#include "/footer.html" parse=true>
-  </body>
+	</div>
+	<!-- /container -->
+	<#include "/footer.html" parse=true>
+</body>
 </html>

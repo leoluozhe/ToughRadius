@@ -26,29 +26,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.toughradius.constant;
-final public class IntConst
-{
-    private int value = -1;
-    private String desc = "未知";
+package org.toughradius.console;
+
+import java.io.IOException;
+
+import org.toughradius.annotation.AuthAdmin;
+import org.xlightweb.BadMessageException;
+import org.xlightweb.IHttpExchange;
+import org.xlightweb.Mapping;
+
+@AuthAdmin
+@Mapping( { "/blacklist" })
+public class BlacklistAction extends FliterAction{
+
+	public void doGet(IHttpExchange http) throws IOException,BadMessageException {
+		http.send(freemaker.render(http, "blacklist"));
+	}
+    public void add(IHttpExchange http) throws IOException, BadMessageException
+    {
+        http.send(freemaker.render(http, "blacklist_add"));
+    }
     
-    public IntConst(int status,String desc)
+    public void insert(IHttpExchange http) throws IOException, BadMessageException
     {
-        this.value = status;
-        this.desc = desc;
-    }
-    public int value()
-    {
-        return value;
-    }
-    public String desc()
-    {
-        return desc;
-    }
+
+        http.sendRedirect("/blacklist");
+    }  
+     
     
-    public String toString()
+    public void delete(IHttpExchange http) throws IOException, BadMessageException
     {
-        return String.valueOf(value);
-    }
+        http.sendRedirect("/blacklist");
+    }   
+    
+	public void doPost(IHttpExchange http) throws IOException,BadMessageException {
+
+		
+	}
+
+
 
 }

@@ -10,7 +10,12 @@
 		    <div class="row">
                <#include "/menu.html" parse=true>
 				<div class="span9">
-
+					<ul class="breadcrumb">
+						<li>欢迎登陆系统 【${session.getAttribute("login")}】现在是 ${context.getDateTime()} <span class="divider">/</span></li>
+						<li><a href="/user?op=add">新增用户</a><span class="divider">/</span></li>
+						<li><a href="/online">在线用户</a><span class="divider">/</span></li>
+						<li><a href="/user?op=track">用户诊断</a></li>
+					</ul>
 						
 						<table class="table table-striped " >
 						 <thead>
@@ -21,17 +26,17 @@
 						  <tbody>
 						    <tr>
 						      <td>系统版本：</td>
-						      <td>V1.0</td>
+						      <td>${session.getAttribute("version")}</td>
 						      <td>已运行时间：</td>
-						      <td>...</td>
+						      <td>${context.getUptime()}</td>
 						      <td>内存使用：</td>
-						      <td>...</td>
+						      <td>${context.getMemaryUsing()}</td>
 						    </tr>						  
 						    <tr>
 						      <td>当前登陆IP地址：</td>
-						      <td>...</td>
+						      <td>${session.getAttribute("loginIp")}</td>
 						      <td>最后登录时间：</td>
-						      <td>...</td>
+						      <td>${session.getAttribute("lastLogin")}</td>
 						      <td>当前在线：</td>
 						      <td>1000</td>
 						    </tr>

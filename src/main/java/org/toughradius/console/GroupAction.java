@@ -26,29 +26,62 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.toughradius.constant;
-final public class IntConst
+package org.toughradius.console;
+
+import java.io.IOException;
+
+import org.toughradius.annotation.AuthAdmin;
+import org.toughradius.components.Freemarker;
+import org.xlightweb.BadMessageException;
+import org.xlightweb.IHttpExchange;
+import org.xlightweb.Mapping;
+
+@AuthAdmin
+@Mapping(
+{ "/group" })
+public class GroupAction extends FliterAction
 {
-    private int value = -1;
-    private String desc = "未知";
+
+    private Freemarker free;
+
+    public void setFree(Freemarker free)
+    {
+        this.free = free;
+    }
+
+    public void doGet(IHttpExchange http) throws IOException, BadMessageException
+    {
+        http.send(free.render(http, "group"));
+    }
+
+    public void add(IHttpExchange http) throws IOException, BadMessageException
+    {
+
+    }
     
-    public IntConst(int status,String desc)
+    public void insert(IHttpExchange http) throws IOException, BadMessageException
     {
-        this.value = status;
-        this.desc = desc;
-    }
-    public int value()
+
+    }  
+    
+    public void modify(IHttpExchange http) throws IOException, BadMessageException
     {
-        return value;
-    }
-    public String desc()
-    {
-        return desc;
+
     }
     
-    public String toString()
+    public void update(IHttpExchange http) throws IOException, BadMessageException
     {
-        return String.valueOf(value);
+
+    }  
+    
+    public void delete(IHttpExchange http) throws IOException, BadMessageException
+    {
+
+    }     
+    
+    public void doPost(IHttpExchange http) throws IOException, BadMessageException
+    {
+
     }
 
 }

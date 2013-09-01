@@ -26,29 +26,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.toughradius.constant;
-final public class IntConst
-{
-    private int value = -1;
-    private String desc = "未知";
+package org.toughradius.console;
+
+import java.io.IOException;
+
+import org.toughradius.Project;
+import org.toughradius.common.DateTimeUtil;
+import org.toughradius.model.RadAdmin;
+import org.xlightweb.BadMessageException;
+import org.xlightweb.IHttpExchange;
+import org.xlightweb.IHttpSession;
+import org.xlightweb.Mapping;
+
+@Mapping("/login")
+public class LoginAction extends FliterAction{
     
-    public IntConst(int status,String desc)
-    {
-        this.value = status;
-        this.desc = desc;
-    }
-    public int value()
-    {
-        return value;
-    }
-    public String desc()
-    {
-        return desc;
-    }
-    
-    public String toString()
-    {
-        return String.valueOf(value);
-    }
+	public void doGet(IHttpExchange http) throws IOException,BadMessageException {
+		http.send(freemaker.render(http, "login"));
+	}
+
+	public void doPost(IHttpExchange http) throws IOException,BadMessageException {
+
+        IHttpSession session = http.getSession(true);
+        String name = http.getRequest().getParameter("loginName");
+        String pass = http.getRequest().getParameter("password");
+        
+        RadAdmin admin = Project.getBaseService().getAdmin(name);
+        
+        if(admin!=null&&admin.getPassword().equals(pass))
+        {
+            session.setAttribute("login", name);
+            session.setAttribute("lastLogin", DateTimeUtil.getDateTimeString());
+            session.setAttribute("loginIp", http.getRequest().getRemoteAddr());
+            session.setAttribute("version", config.getString("radius.version"));
+            http.sendRedirect("/");
+            return;
+        }
+        http.sendRedirect("/");
+	}
 
 }

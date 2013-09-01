@@ -10,9 +10,9 @@
 		    <div class="row">
                <#include "/menu.html" parse=true>
 				<div class="span9">
-					<ul class="breadcrumb">
-						<li><b>修改密码</b></li>
-					</ul>
+					<#if error??>
+					<div class="alert alert-error">${error}</div>
+					</#if>
 				</div>
 			</div>
 		</div>
