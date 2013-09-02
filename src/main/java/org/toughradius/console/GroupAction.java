@@ -74,6 +74,13 @@ public class GroupAction extends FliterAction
             http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
             return;
         }
+        
+        if(userServ.getGroup(groupName)!=null)
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组已经存在"));
+            return;
+        }
+        
         RadGroup group = new RadGroup();
         group.setGroupName(groupName);
         group.setGroupDesc(groupDesc);
@@ -165,6 +172,15 @@ public class GroupAction extends FliterAction
             return;
         }
         
+        if(metaName.equals(Constant.GROUP_PERIOD.value()))
+        {
+            if(!ValidateUtil.isRegExp(metaValue, "\\d{2}:\\d{2}-\\d{2}:\\d{2}"))
+            {
+                http.send(freemaker.renderWithAlert(http, "error","时段属性值格式必须为 hh:ss-hh:ss"));
+                return;
+            }
+        }
+        
         RadGroupMeta meta = userServ.getGroupMeta(groupName, metaName);
         
         if(meta == null)
@@ -217,6 +233,15 @@ public class GroupAction extends FliterAction
         {
             http.send(freemaker.renderWithAlert(http, "error","属性值不能为空"));
             return;
+        }
+        
+        if(metaName.equals(Constant.GROUP_PERIOD.value()))
+        {
+            if(!ValidateUtil.isRegExp(metaValue, "\\d{2}:\\d{2}-\\d{2}:\\d{2}"))
+            {
+                http.send(freemaker.renderWithAlert(http, "error","时段属性值格式必须为 hh:ss-hh:ss"));
+                return;
+            }
         }
         
         RadGroupMeta meta = userServ.getGroupMeta(groupName, metaName);
@@ -284,7 +309,7 @@ public class GroupAction extends FliterAction
     
     public void doPost(IHttpExchange http) throws IOException, BadMessageException
     {
-
+        doGet(http);
     }
 
 }

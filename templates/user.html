@@ -2,6 +2,14 @@
 <html lang="zh-CN">
   <head>
    <#include "/header.html" parse=true>
+   <script type="text/javascript">
+   function deleteUser(userName)
+   {
+	    if(confirm("确认删除吗？")){
+	        window.location.href = "/user?op=delete&userName="+userName;
+	    }
+   }
+   </script>   
   </head>
   <body>
   <#include "/nav.html" parse=true>
@@ -40,9 +48,9 @@
 								<td>${user.getUserName()}</td>
 								<td>${user.getGroupName()}</td>
 								<td>
-								<a href="/user?op=view&username=${user.getUserName()}">详情</a>
+								<a href="/user?op=view&userName=${user.getUserName()}">详情</a>
 								<span class="divider">/</span>
-								<a href="javascript:deleteClient('${user.getUserName()}')">删除</a>
+								<a href="javascript:deleteUser('${user.getUserName()}')">删除</a>
 								</td>
 							</tr>
 							</#list>

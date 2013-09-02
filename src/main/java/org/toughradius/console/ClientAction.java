@@ -186,7 +186,7 @@ public class ClientAction extends FliterAction{
     @Override
     public void doPost(IHttpExchange http) throws IOException, BadMessageException
     {
-        
+        doGet(http);
     }
 
 

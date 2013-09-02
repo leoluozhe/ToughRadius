@@ -57,9 +57,16 @@ public class UserService
     
     private DBService dbservice;
     
+    private CacheService cacheService;
+    
     public void setDbservice(DBService dbservice)
     {
         this.dbservice = dbservice;
+    }
+    
+    public void setCacheService(CacheService cacheService)
+    {
+        this.cacheService = cacheService;
     }
     
     /**
@@ -114,6 +121,7 @@ public class UserService
             RadUserMapper mapper = session.getMapper(RadUserMapper.class);
             mapper.insert(user);
             session.commit();
+            cacheService.updateUser(user);
         }
         finally
         {
@@ -131,8 +139,9 @@ public class UserService
         try
         {
             RadUserMapper mapper = session.getMapper(RadUserMapper.class);
-            mapper.insert(user);
+            mapper.updateByPrimaryKey(user);
             session.commit();
+            cacheService.updateUser(user);
         }
         finally
         {
@@ -151,9 +160,15 @@ public class UserService
         SqlSession session = dbservice.openSession();
         try
         {
-            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
-            mapper.deleteByPrimaryKey(username);
+            RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
+            RadUserMetaExample example = new RadUserMetaExample();
+            example.createCriteria().andNameEqualTo(username);
+            mapper.deleteByExample(example);
+            
+            RadUserMapper mapper2 = session.getMapper(RadUserMapper.class);
+            mapper2.deleteByPrimaryKey(username);
             session.commit();
+            cacheService.removeUser(username);
         }
         finally
         {
@@ -191,17 +206,12 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void addUserMeta(String username,String metaname,String value,String desc)
+    public void addUserMeta(RadUserMeta meta)
     {
         SqlSession session = dbservice.openSession();
         try
         {
             RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
-            RadUserMeta meta = new RadUserMeta();
-            meta.setUserName(username);
-            meta.setName(metaname);
-            meta.setValue(value);
-            meta.setDesc(desc);
             mapper.insert(meta);
             session.commit();
         }
@@ -216,19 +226,15 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void updateUserMeta(String username,String metaname,String value,String desc)
+    public void updateUserMeta(RadUserMeta meta)
     {
         SqlSession session = dbservice.openSession();
         try
         {
             RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
-            RadUserMeta meta = new RadUserMeta();
-            meta.setUserName(username);
-            meta.setName(metaname);
-            meta.setValue(value);
-            meta.setDesc(desc);
             mapper.updateByPrimaryKey(meta);
             session.commit();
+            cacheService.updateUserMeta(meta);
         }
         finally
         {
@@ -252,6 +258,7 @@ public class UserService
             example.createCriteria().andNameEqualTo(username);
             mapper.deleteByExample(example);
             session.commit();
+            cacheService.removeUserMeta(username);
         }
         finally
         {
@@ -275,6 +282,7 @@ public class UserService
             key.setName(metaname);
             mapper.deleteByPrimaryKey(key);
             session.commit();
+            cacheService.removeUserMeta(username, metaname);
         }
         finally
         {
@@ -294,7 +302,8 @@ public class UserService
         {
             RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
             RadUserMetaExample example = new RadUserMetaExample();
-            example.createCriteria().andUserNameEqualTo(username);
+            if(username!=null)
+                example.createCriteria().andUserNameEqualTo(username);
             List<RadUserMeta> metas= mapper.selectByExample(example);
             return metas;
         }
@@ -303,6 +312,7 @@ public class UserService
             session.close();
         }
     }
+    
     
     
     /**
@@ -356,6 +366,7 @@ public class UserService
             RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
             mapper.insert(group);
             session.commit();
+            cacheService.updateGroup(group);
         }
         finally
         {
@@ -375,6 +386,7 @@ public class UserService
             RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
             mapper.updateByPrimaryKey(group);
             session.commit();
+            cacheService.updateGroup(group);
         }
         finally
         {
@@ -402,6 +414,7 @@ public class UserService
             mapper.deleteByPrimaryKey(groupname);            
             
             session.commit();
+            cacheService.removeGroup(groupname);
         }
         finally
         {
@@ -467,6 +480,7 @@ public class UserService
             RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
             mapper.insert(meta);
             session.commit();
+            cacheService.updateGroupMeta(meta);
         }
         finally
         {
@@ -488,6 +502,7 @@ public class UserService
             RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
             mapper.updateByPrimaryKey(meta);
             session.commit();
+            cacheService.updateGroupMeta(meta);
         }
         finally
         {
@@ -513,6 +528,7 @@ public class UserService
             example.createCriteria().andGroupNameEqualTo(groupname);
             mapper.deleteByExample(example);
             session.commit();
+            cacheService.removeGroupMeta(groupname);
         }
         finally
         {
@@ -536,6 +552,7 @@ public class UserService
             meta.setName(metaname);
             mapper.deleteByPrimaryKey(meta);
             session.commit();
+            cacheService.removeGroupMeta(groupname, metaname);
         }
         finally
         {
@@ -555,7 +572,8 @@ public class UserService
         {
             RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
             RadGroupMetaExample example = new RadGroupMetaExample();
-            example.createCriteria().andGroupNameEqualTo(groupname);
+            if(groupname!=null)
+                example.createCriteria().andGroupNameEqualTo(groupname);
             List<RadGroupMeta> metas= mapper.selectByExample(example);
             return metas;
         }
@@ -565,6 +583,6 @@ public class UserService
         }
     }
     
-    
+
     
 }

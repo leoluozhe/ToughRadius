@@ -2,6 +2,19 @@
 <html lang="zh-CN">
   <head>
    <#include "/header.html" parse=true>
+   <script type="text/javascript">
+   function setMetaName(sel)
+   {
+       var metaname = sel.value;
+       $("#addMetaName").val(metaname);
+   }
+   function updateMeta(metaName,metaValueInput)
+   {
+       var metaValue = $("#"+metaValueInput).val();
+   	   window.location.href = "/user?op=updateMeta&userName=${user.getUserName()}&metaName="+metaName+"&metaValue="+metaValue;
+   }
+
+   </script>   
   </head>
   <body>
   <#include "/nav.html" parse=true>
@@ -15,42 +28,64 @@
 						<li><a href="/user">用户查询</a><span class="divider">/</span></li>
 						<li><a href="/user?op=add">新增用户</a></li>
 					</ul>
-					<form class="form-horizontal">
+					<#if alert??>
+					<div class="alert">${alert}</div>
+					</#if>					
+					<form class="form-horizontal" action="/user?op=update" method="post">
 					  <div class="control-group">
 					    <label class="control-label" for="userName">用户名</label>
 					    <div class="controls">
-					      <input type="text" id="userName" value="${user.getUserName()}" placeholder="用户名">
+					      <input class="span2"  readonly type="text" id="userName" name="userName" value="${user.getUserName()}" placeholder="用户名">
+						  <select class="span2"  id="groupName" name="groupName">
+						    <#list groups as group>
+							<option value="${group.getGroupName()}" ${context.seclet(group.getGroupName(),user.getGroupName())}>${group.getGroupDesc()}</option>
+							</#list>
+						  </select>					   
 					    </div>
 					  </div>
 					  <div class="control-group">
 					    <label class="control-label" for="password">密码</label>
 					    <div class="controls">
-					      <input type="password" id="password" value="${user.getPassword()"  placeholder="密码">
+					      <input class="span4"  type="password" id="password" name="password" value="${user.getPassword()}"  placeholder="密码">
 					    </div>
 					  </div>
+			  				  
 					  <div class="control-group">
-					      <label class="control-label" for="groupName">用户组:</label>
-						  <select id="groupName" name="groupName">
-						    <#list groups as group>
-							<option value="${group.getGroupName()}" ${context.seclet(group.getGroupName(),user.getGroupName())}>${group.getGroupDesc()}</option>
-							</#list>
-						  </select>
+					    <div class="controls">
+							<button type="submit" class="btn">保存</button>
+							<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
+					    </div>
 					  </div>
+					</form>
+					
+					<ul class="breadcrumb">
+						<li><b>用户组属性管理</b></li>
+					</ul>					
+					
+					<form class="form-horizontal">
 					  <#list metas as meta>	
 					  <div class="control-group">
 					    <label class="control-label" for="${meta.getName()}_name">${meta.getDesc()}</label>
 					    <div class="controls">
 					      <input type="text" id="${meta.getName()}_name" name="${meta.getName()}_name" value="${meta.getName()}" placeholder="属性">
 					      <input type="text" id="${meta.getName()}_value" name="${meta.getName()}_value" value="${meta.getValue()}" placeholder="属性值">
+					      <a class="btn" href="javascript:updateMeta('${meta.getName()}','${meta.getName()}_value');">更新</a>
+					      <a class="btn" href="/user?op=deleteMeta&userName=${user.getUserName()}&metaName=${meta.getName()}">删除</a>					   
 					    </div>
 					  </div>	
-					  </#list>				  				  
-					  <div class="control-group">
-					    <div class="controls">
-							<button type="submit" class="btn">提交</button>
-							<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
-					    </div>
-					  </div>
+					  </#list>						
+					</form>
+					<form class="form-inline" action="/user?op=addMeta" method="post">
+					  <input type="hidden" id="userName" name="userName"  value="${user.getUserName()}"/>
+					  <select class="span2" id="addMetaNames" name="addMetaNames" onclick="setMetaName(this);" onchange="setMetaName(this);">
+						    <#list UserMetaList as metaConst>
+						     <option desc="${metaConst.desc()}" value="${metaConst.value()}"  >${metaConst.desc()}</option>
+							</#list>
+						</select>
+				   	  <input type="text" class="span2" id="addMetaName" name="addMetaName"  placeholder="输入属性名">	
+					  <label class="control-label" for="metaValue"></label>
+					  <input type="text" class="span2" id="addMetaValue" name="addMetaValue"  placeholder="输入属性值">						
+					  <button type="submit" class="btn">保存</button>
 					</form>
 				</div>
 			</div>

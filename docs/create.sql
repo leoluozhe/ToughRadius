@@ -14,7 +14,7 @@ create table RAD_USER_META
     DESC VARCHAR(512) 
 );
 alter table RAD_USER_META add constraint PK_RAD_USER_META primary key (USER_NAME,NAME);
-alter table RAD_USER_META add constraint FK_RAD_USER_META foreign key (USER_NAME) references RAD_USER (USER_NAME);
+
 
 create table RAD_GROUP
 (
@@ -31,7 +31,6 @@ create table RAD_GROUP_META
     DESC VARCHAR(512) 
 );
 alter table RAD_GROUP_META add constraint PK_RAD_GROUP_META primary key (GROUP_NAME,NAME);
-alter table RAD_GROUP_META add constraint FK_RAD_GROUP_META foreign key (GROUP_NAME) references RAD_GROUP (GROUP_NAME);
 
 create table RAD_CLIENT
 (

@@ -40,6 +40,7 @@ import org.toughradius.common.Beans;
 import org.toughradius.common.Config;
 import org.toughradius.common.Utils;
 import org.toughradius.components.BaseService;
+import org.toughradius.components.CacheService;
 import org.toughradius.components.DBService;
 import org.toughradius.components.UserService;
 import org.toughradius.server.AcctServer;
@@ -106,12 +107,12 @@ public class Project
                 actionSet.add(clasz);
             }
         }
+        Beans.start();
         
         AuthServer authServer = new AuthServer(Beans.getBean(Config.class));
         AcctServer acctServer = new AcctServer(Beans.getBean(Config.class));
         WebServer wserv = new WebServer(Beans.getBean(Config.class), actionSet);
         
-        Beans.start();
         authServer.start();
         acctServer.start();
         wserv.start();
@@ -132,6 +133,11 @@ public class Project
     public static UserService getUserService()
     {
         return Beans.getBean(UserService.class);
+    }
+    
+    public static CacheService getCacheService()
+    {
+        return Beans.getBean(CacheService.class);
     }
     
     public static void main(String[] args)

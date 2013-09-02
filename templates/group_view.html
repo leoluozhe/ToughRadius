@@ -28,11 +28,16 @@
 						<li><a href="/group">用户组查询</a><span class="divider">/</span></li>
 						<li><a href="/group?op=add">新增用户组</a></li>
 					</ul>
+					
+					<#if alert??>
+					<div class="alert">${alert}</div>
+					</#if>
+										
 					<form class="form-horizontal" action="/group?op=update" method="post">
 					  <div class="control-group">
 					    <label class="control-label" for="groupName">用户组名</label>
 					    <div class="controls">
-					      <input type="text" class="span4" id="groupName" name="groupName" value="${group.getGroupName()}" placeholder="用户组名">
+					      <input readonly type="text" class="span4" id="groupName" name="groupName" value="${group.getGroupName()}" placeholder="用户组名">
 					    </div>
 					  </div>
 					  <div class="control-group">
@@ -48,9 +53,7 @@
 					    </div>
 					  </div>
 					</form>
-					<#if alert??>
-					<div class="alert">${alert}</div>
-					</#if>
+
 					
 					<ul class="breadcrumb">
 						<li><b>用户组属性管理</b></li>

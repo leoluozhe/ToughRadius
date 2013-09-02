@@ -37,6 +37,7 @@ public class Constant
     public static final StringConst USER_EXPIRE = new StringConst("EXPIRE","过期时间(####-##-##)");
     public static final StringConst USER_STATUS = new StringConst("STATUS","状态(0/1/2:未激活/正常/停机)");
     public static final StringConst USER_PERIOD = new StringConst("PERIOD","上网时段(比如 08:00-21:00)");
+    public static final StringConst USER_BIND_MAC = new StringConst("PERIOD","绑定MAC地址(0/1:不绑定/绑定)");
     public static final StringConst USER_CONCUR_NUMBER  = new StringConst("CONCUR_NUMBER","并发数（0-20）");
     public static final StringConst USER_Framed_IP_Address  = new StringConst("Framed-IP-Address","固定IP");
     public static final StringConst USER_Filter_ID  = new StringConst("Filter-ID","过滤规则组");
@@ -47,6 +48,7 @@ public class Constant
     public static final StringConst GROUP_STATUS = new StringConst("STATUS","状态(1/2:正常/停机)");
     public static final StringConst GROUP_PERIOD = new StringConst("PERIOD","上网时段（比如 08:00-21:00）"); 
     public static final StringConst GROUP_CLIENT = new StringConst("CLIENT","绑定客户端"); 
+    public static final StringConst GROUP_BIND_MAC = new StringConst("PERIOD","绑定MAC地址(0/1:不绑定/绑定)");
     public static final StringConst GROUP_Filter_ID  = new StringConst("Filter-ID","过滤规则组");
     public static final StringConst GROUP_Session_Timeout  = new StringConst("Session-Timeout","最大会话时长（秒）");
     public static final StringConst GROUP_Framed_Pool   = new StringConst("Framed-Pool ","地址池");
@@ -61,6 +63,7 @@ public class Constant
         UserMetaList.add(USER_EXPIRE);
         UserMetaList.add(USER_STATUS);
         UserMetaList.add(USER_PERIOD);
+        UserMetaList.add(USER_BIND_MAC);
         UserMetaList.add(USER_CONCUR_NUMBER);
         UserMetaList.add(USER_Framed_IP_Address);
         UserMetaList.add(USER_Filter_ID);
@@ -70,6 +73,7 @@ public class Constant
         GroupMetaList.add(GROUP_STATUS);
         GroupMetaList.add(GROUP_PERIOD);
         GroupMetaList.add(GROUP_CLIENT);
+        GroupMetaList.add(GROUP_BIND_MAC);
         GroupMetaList.add(GROUP_Filter_ID);
         GroupMetaList.add(GROUP_Session_Timeout);
         GroupMetaList.add(GROUP_Framed_Pool);

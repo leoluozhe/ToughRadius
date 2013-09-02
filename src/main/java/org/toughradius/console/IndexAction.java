@@ -52,7 +52,7 @@ public class IndexAction extends FliterAction{
 
 	public void doPost(IHttpExchange http) throws IOException,BadMessageException {
 
-		
+		doGet(http);
 	}
 
 

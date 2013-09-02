@@ -41,6 +41,8 @@ import org.toughradius.Project;
 import org.toughradius.common.Config;
 import org.toughradius.common.DateTimeUtil;
 import org.toughradius.common.ValidateUtil;
+import org.toughradius.components.BaseService;
+import org.toughradius.components.CacheService;
 import org.toughradius.constant.Constant;
 import org.toughradius.model.RadClient;
 import org.toughradius.model.RadUser;
@@ -50,6 +52,8 @@ public class AuthServer extends RadiusServer implements Startable
 {
     private static Log logger = LogFactory.getLog(AuthServer.class);
     private Config config;
+    private BaseService baseServ = Project.getBaseService();
+    private CacheService cacheServ = Project.getCacheService();
     
     public AuthServer()
     {
@@ -70,14 +74,14 @@ public class AuthServer extends RadiusServer implements Startable
     @Override
     public String getSharedSecret(InetSocketAddress client)
     {
-        RadClient rc = Project.getBaseService().getClient(client.getAddress().getHostAddress());
+        RadClient rc = baseServ.getClient(client.getAddress().getHostAddress());
         return rc!=null?rc.getSecret():null;
     }
 
     @Override
     public String getUserPassword(String userName)
     {
-        RadUser user = Project.getUserService().getUser(userName);
+        RadUser user = cacheServ.getUser(userName);
         return user!=null?user.getPassword():null;
     }
     
@@ -92,10 +96,24 @@ public class AuthServer extends RadiusServer implements Startable
         if(packet.getPacketType() == RadiusPacket.ACCESS_REJECT)
             return packet;
         
+        /**************************************************************
+         * 用户状态判断
+         **************************************************************/
+        
+        /**************************************************************
+         * 并发数判断
+         **************************************************************/
+        
+        /**************************************************************
+         * MAC地址绑定处理
+         **************************************************************/
         String macaddr = accessRequest.getAttributeValue("Calling-Station-Id");
         
-        //判断到期
-        RadUserMeta attr = Project.getUserService().getUserMeta(accessRequest.getUserName(), Constant.USER_EXPIRE.value());
+
+        /**************************************************************
+         * 判断到期
+         **************************************************************/
+        RadUserMeta attr = cacheServ.getUserMeta(accessRequest.getUserName(), Constant.USER_EXPIRE.value());
         
         int sessionTimeout = config.getInt("radius.maxSessionTimeout");
         
@@ -115,9 +133,11 @@ public class AuthServer extends RadiusServer implements Startable
             }
         }
         
-        //上网时段控制
-        RadUserMeta periodAttr = Project.getUserService().getUserMeta(accessRequest.getUserName(), Constant.USER_PERIOD.value());
-        if (!ValidateUtil.isEmpty(periodAttr.getValue()))
+        /**************************************************************
+         * 上网时段控制
+         **************************************************************/
+        RadUserMeta periodAttr = cacheServ.getUserMeta(accessRequest.getUserName(), Constant.USER_PERIOD.value());
+        if (periodAttr!=null&&!ValidateUtil.isEmpty(periodAttr.getValue()))
         {
             String startTime = periodAttr.getValue().substring(0, 5);
             String endTime = periodAttr.getValue().substring(6, 11);
@@ -154,10 +174,15 @@ public class AuthServer extends RadiusServer implements Startable
             if(timeLenth < sessionTimeout)
                 sessionTimeout = timeLenth;
         }
-        
         packet.addAttribute(new IntegerAttribute(27,sessionTimeout));
+        
+        /**************************************************************
+         * 扩展属性下发
+         **************************************************************/
+        /////////
+        
+        
         return packet;
     }
-
 
 }
