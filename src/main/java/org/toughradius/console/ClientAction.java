@@ -89,13 +89,13 @@ public class ClientAction extends FliterAction{
         
         if(!ValidateUtil.isIP(address, false))
         {
-            http.send(freemaker.renderWithError(http, "client_add","客户端地址不符合要求"));
+            http.send(freemaker.renderWithAlert(http, "client_add","客户端地址不符合要求"));
             return;
         }
         
         if(ValidateUtil.isEmpty(secret))
         {
-             http.send(freemaker.renderWithError(http, "client_add","共享密钥不能为空"));
+             http.send(freemaker.renderWithAlert(http, "client_add","共享密钥不能为空"));
              return;
         }
         
@@ -126,7 +126,7 @@ public class ClientAction extends FliterAction{
         RadClient client = baseServ.getClient(request.getParameter("address"));
         if(client==null)
         {
-            http.send(freemaker.renderWithError(http, "error","没有符合条件的客户端信息"));
+            http.send(freemaker.renderWithAlert(http, "error","没有符合条件的客户端信息"));
             return;
         }
         request.setAttribute("client", client);
@@ -144,7 +144,7 @@ public class ClientAction extends FliterAction{
         RadClient client = baseServ.getClient(request.getParameter("address"));
         if(client==null)
         {
-            http.send(freemaker.renderWithError(http, "error","没有符合条件的客户端信息"));
+            http.send(freemaker.renderWithAlert(http, "error","没有符合条件的客户端信息"));
             return;
         }
         
@@ -154,7 +154,7 @@ public class ClientAction extends FliterAction{
         
         if(ValidateUtil.isEmpty(secret))
         {
-             http.send(freemaker.renderWithError(http, "client_add","共享密钥不能为空"));
+             http.send(freemaker.renderWithAlert(http, "client_add","共享密钥不能为空"));
              return;
         }
         

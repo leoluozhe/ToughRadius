@@ -48,7 +48,7 @@ public class PageContext {
     public String seclet(String value1,String value2){
         if(value1.equals(value2))
         {
-            return "seclected";
+            return "selected";
         }
         return "";
     }

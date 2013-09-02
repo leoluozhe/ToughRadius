@@ -29,9 +29,18 @@
 package org.toughradius.console;
 
 import java.io.IOException;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.toughradius.annotation.AuthAdmin;
+import org.toughradius.common.ValidateUtil;
+import org.toughradius.model.RadGroup;
+import org.toughradius.model.RadUser;
+import org.toughradius.model.RadUserExample;
+import org.toughradius.model.RadUserExample.Criteria;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
+import org.xlightweb.IHttpRequest;
 import org.xlightweb.Mapping;
 
 @AuthAdmin
@@ -39,6 +48,24 @@ import org.xlightweb.Mapping;
 public class UserAction extends FliterAction{
 
 	public void doGet(IHttpExchange http) throws IOException,BadMessageException {
+	    IHttpRequest request = http.getRequest();
+	    String userName = request.getParameter("userName");
+	    String groupName = request.getParameter("groupName");
+	    
+	    RadUserExample example = new RadUserExample();
+	    Criteria query = example.createCriteria();
+	    if(!ValidateUtil.isEmpty(userName))
+	    {
+	        query.andUserNameLike(userName);
+	    }
+        if(!ValidateUtil.isEmpty(groupName))
+        {
+            query.andGroupNameEqualTo(groupName);
+        }
+	    List<RadGroup> groups = userServ.getGroups();
+	    List<RadUser> users = userServ.getUsers(example, new RowBounds(0,20));
+	    request.setAttribute("groups", groups);
+	    request.setAttribute("users", users);
 		http.send(freemaker.render(http, "user"));
 	}
 	

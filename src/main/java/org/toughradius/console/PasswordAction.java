@@ -31,8 +31,12 @@ package org.toughradius.console;
 import java.io.IOException;
 
 import org.toughradius.annotation.AuthAdmin;
+import org.toughradius.common.ValidateUtil;
+import org.toughradius.model.RadAdmin;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
+import org.xlightweb.IHttpRequest;
+import org.xlightweb.IHttpSession;
 import org.xlightweb.Mapping;
 
 @AuthAdmin
@@ -44,7 +48,37 @@ public class PasswordAction extends FliterAction{
 	}
 
 	public void doPost(IHttpExchange http) throws IOException,BadMessageException {
-		http.sendRedirect("/");
+	    IHttpRequest request = http.getRequest();
+	    IHttpSession session = http.getSession(true);
+	    String loginName = (String) session.getAttribute("login");
+	    String oldpass = request.getParameter("oldpass");
+	    String newpass1 = request.getParameter("newpass1");
+	    String newpass2 = request.getParameter("newpass2");
+	    
+	    if(ValidateUtil.isEmpty(oldpass)||ValidateUtil.isEmpty(newpass1)||ValidateUtil.isEmpty(newpass2))
+	    {
+            http.send(freemaker.renderWithAlert(http, "password","请填写完整的数据"));
+            return;
+	    }
+	    
+	    if(!newpass1.equals(newpass2))
+	    {
+            http.send(freemaker.renderWithAlert(http, "password","确认密码不匹配"));
+            return;
+	    }
+	    
+        RadAdmin admin = baseServ.getAdmin(loginName);
+        
+        if(admin == null||!admin.getPassword().equals(oldpass))
+        {
+            http.send(freemaker.renderWithAlert(http, "password","旧密码不匹配"));
+            return;
+        }
+        
+        admin.setPassword(newpass1);
+        baseServ.updateAdmin(admin);
+	    
+        http.send(freemaker.renderWithAlert(http, "password","修改成功"));
 	}
 
 

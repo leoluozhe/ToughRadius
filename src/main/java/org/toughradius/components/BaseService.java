@@ -206,4 +206,23 @@ public class BaseService
             session.close();
         }
     }
+    
+    /**
+     * 修改管理员
+     * @param admin
+     */
+    public void updateAdmin(RadAdmin admin)
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadAdminMapper mapper = session.getMapper(RadAdminMapper.class);
+            mapper.updateByPrimaryKey(admin);
+            session.commit();
+        }
+        finally
+        {
+            session.close();
+        }
+    }
 }

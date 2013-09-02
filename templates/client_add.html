@@ -14,8 +14,8 @@
 						<li><a href="/client">客户端列表</a><span class="divider">/</span></li>
 						<li><a href="/client?op=add">新增客户端</a></li>
 					</ul>
-					<#if error??>
-					<div class="alert alert-error">${error}</div>
+					<#if alert??>
+					<div class="alert">${alert}</div>
 					</#if>
 
 					<form class="form-horizontal" action="/client?op=insert" method="post">

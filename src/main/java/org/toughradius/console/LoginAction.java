@@ -62,7 +62,11 @@ public class LoginAction extends FliterAction{
             http.sendRedirect("/");
             return;
         }
-        http.sendRedirect("/");
+        else
+        {
+            http.send(freemaker.renderWithAlert(http, "login","用户名和密码不匹配"));
+            return;
+        }
 	}
 
 }

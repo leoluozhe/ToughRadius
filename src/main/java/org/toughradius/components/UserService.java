@@ -191,7 +191,7 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void addUserMeta(String username,String metaname,String value)
+    public void addUserMeta(String username,String metaname,String value,String desc)
     {
         SqlSession session = dbservice.openSession();
         try
@@ -201,6 +201,7 @@ public class UserService
             meta.setUserName(username);
             meta.setName(metaname);
             meta.setValue(value);
+            meta.setDesc(desc);
             mapper.insert(meta);
             session.commit();
         }
@@ -215,7 +216,7 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void updateUserMeta(String username,String metaname,String value)
+    public void updateUserMeta(String username,String metaname,String value,String desc)
     {
         SqlSession session = dbservice.openSession();
         try
@@ -225,6 +226,7 @@ public class UserService
             meta.setUserName(username);
             meta.setName(metaname);
             meta.setValue(value);
+            meta.setDesc(desc);
             mapper.updateByPrimaryKey(meta);
             session.commit();
         }
@@ -316,6 +318,25 @@ public class UserService
             RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
             RadGroup ru = mapper.selectByPrimaryKey(groupname);
             return ru;
+        }
+        finally
+        {
+            session.close();
+        }
+    }
+    
+    /**
+     * 查询用户组集合
+     * @return
+     */
+    public List<RadGroup> getGroups()
+    {
+        SqlSession session = dbservice.openSession();
+        try
+        {
+            RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
+            List<RadGroup> groups = mapper.selectByExample(null);
+            return groups;
         }
         finally
         {
@@ -432,7 +453,7 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void addGroupMeta(String groupname,String metaname,String value)
+    public void addGroupMeta(String groupname,String metaname,String value,String desc)
     {
         SqlSession session = dbservice.openSession();
         try
@@ -442,6 +463,7 @@ public class UserService
             meta.setGroupName(groupname);
             meta.setName(metaname);
             meta.setValue(value);
+            meta.setDesc(desc);
             mapper.insert(meta);
             session.commit();
         }
@@ -457,7 +479,7 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void updateGroupMeta(String groupname,String metaname,String value)
+    public void updateGroupMeta(String groupname,String metaname,String value,String desc)
     {
         SqlSession session = dbservice.openSession();
         try
@@ -467,6 +489,7 @@ public class UserService
             meta.setGroupName(groupname);
             meta.setName(metaname);
             meta.setValue(value);
+            meta.setDesc(desc);
             mapper.updateByPrimaryKey(meta);
             session.commit();
         }

@@ -93,6 +93,7 @@ public class DBService implements Startable
             configuration.addMapper(RadBlacklistMapper.class);
             configuration.addMapper(RadAdminMapper.class);
             configuration.addMapper(RadOnlineMapper.class);
+            
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
             log.info("database init done !");
         }

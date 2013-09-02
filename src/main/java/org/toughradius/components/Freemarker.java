@@ -126,8 +126,8 @@ public class Freemarker implements Startable {
 		return resp;
     }
     
-    public IHttpResponse renderWithError(IHttpExchange http, String tmpname,String error){
-        http.getRequest().setAttribute("error", error);
+    public IHttpResponse renderWithAlert(IHttpExchange http, String tmpname,String alert){
+        http.getRequest().setAttribute("alert", alert);
         return render(http, tmpname);
     }
     
