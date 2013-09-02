@@ -29,12 +29,18 @@
 package org.toughradius.console;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.toughradius.annotation.AuthAdmin;
-import org.toughradius.components.Freemarker;
+import org.toughradius.common.ValidateUtil;
+import org.toughradius.constant.Constant;
+import org.toughradius.model.RadGroup;
+import org.toughradius.model.RadGroupMeta;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
+import org.xlightweb.IHttpRequest;
 import org.xlightweb.Mapping;
+
 
 @AuthAdmin
 @Mapping(
@@ -42,41 +48,238 @@ import org.xlightweb.Mapping;
 public class GroupAction extends FliterAction
 {
 
-    private Freemarker free;
-
-    public void setFree(Freemarker free)
-    {
-        this.free = free;
-    }
-
+    /**
+     * 查询用户组列表
+     */
     public void doGet(IHttpExchange http) throws IOException, BadMessageException
     {
-        http.send(free.render(http, "group"));
+        IHttpRequest request = http.getRequest();
+        List<RadGroup> groups = userServ.getGroups();
+        request.setAttribute("groups", groups);
+        http.send(freemaker.render(http, "group"));
     }
 
     public void add(IHttpExchange http) throws IOException, BadMessageException
     {
-
+        http.send(freemaker.render(http, "group_add"));
     }
     
     public void insert(IHttpExchange http) throws IOException, BadMessageException
     {
-
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        String groupDesc = request.getParameter("groupDesc");
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        RadGroup group = new RadGroup();
+        group.setGroupName(groupName);
+        group.setGroupDesc(groupDesc);
+        userServ.addGroup(group);
+        
+        http.sendRedirect("/group?op=view&groupName="+groupName);
     }  
     
-    public void modify(IHttpExchange http) throws IOException, BadMessageException
+    /**
+     * 用户组详细资料，可修改
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
+    public void view(IHttpExchange http) throws IOException, BadMessageException
     {
-
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        
+        RadGroup group = userServ.getGroup(groupName);
+        
+        if(group==null)
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组不存在"));
+            return;
+        }
+        
+        List<RadGroupMeta> metas = userServ.getGroupMetas(groupName);
+        request.setAttribute("group", group);
+        request.setAttribute("metas", metas);
+        request.setAttribute("GroupMetaList",Constant.GroupMetaList );
+        http.send(freemaker.render(http, "group_view"));
     }
     
+    /**
+     * 修改用户组资料
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
     public void update(IHttpExchange http) throws IOException, BadMessageException
     {
 
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        String groupDesc = request.getParameter("groupDesc");
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        RadGroup group = new RadGroup();
+        group.setGroupName(groupName);
+        group.setGroupDesc(groupDesc);
+        userServ.updateGroup(group);
+        
+        http.sendRedirect("/group?op=view&groupName="+groupName);
     }  
     
+    /**
+     * 增加用户组属性
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
+    public void addMeta(IHttpExchange http) throws IOException, BadMessageException
+    {
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        request.setParameter("groupName", groupName);
+        String metaName = request.getParameter("addMetaName");
+        String metaValue = request.getParameter("addMetaValue");
+        
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        
+        if(ValidateUtil.isEmpty(metaName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性名不能为空"));
+            return;
+        }
+        
+        if(ValidateUtil.isEmpty(metaValue))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性值不能为空"));
+            return;
+        }
+        
+        RadGroupMeta meta = userServ.getGroupMeta(groupName, metaName);
+        
+        if(meta == null)
+        {
+            meta = new RadGroupMeta();
+            meta.setGroupName(groupName);
+            meta.setName(metaName);
+            meta.setValue(metaValue);
+            meta.setDesc(Constant.getGroupMetaDesc(metaName));
+            userServ.addGroupMeta(meta);
+        }
+        else
+        {
+            meta.setValue(metaValue);
+            meta.setDesc(Constant.getGroupMetaDesc(metaName));
+            userServ.updateGroupMeta(meta);
+            
+        }
+        
+        http.sendRedirect("/group?op=view&groupName="+groupName);
+        
+    }  
+    
+    /**
+     * 更新用户组属性
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
+    public void updateMeta(IHttpExchange http) throws IOException, BadMessageException
+    {
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        String metaName = request.getParameter("metaName");
+        String metaValue = request.getParameter("metaValue");
+        
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        
+        if(ValidateUtil.isEmpty(metaName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性名不能为空"));
+            return;
+        }
+        
+        if(ValidateUtil.isEmpty(metaValue))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性值不能为空"));
+            return;
+        }
+        
+        RadGroupMeta meta = userServ.getGroupMeta(groupName, metaName);
+        
+        if(meta == null)
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性不存在"));
+            return;
+        }
+
+        meta.setValue(metaValue);
+        userServ.updateGroupMeta(meta);
+            
+        http.sendRedirect("/group?op=view&groupName="+groupName);
+        
+    }  
+    
+    /**
+     * 删除用户组属性
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
+    public void deleteMeta(IHttpExchange http) throws IOException, BadMessageException
+    {
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        String metaName = request.getParameter("metaName");
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        
+        if(ValidateUtil.isEmpty(metaName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","属性名不能为空"));
+            return;
+        }
+        
+        userServ.deleteGroupMeta(groupName, metaName);
+        http.sendRedirect("/group?op=view&groupName="+groupName);
+        
+    }     
+    
+    /**
+     * 删除用户组
+     * @param http
+     * @throws IOException
+     * @throws BadMessageException
+     */
     public void delete(IHttpExchange http) throws IOException, BadMessageException
     {
-
+        IHttpRequest request = http.getRequest();
+        String groupName = request.getParameter("groupName");
+        if(ValidateUtil.isEmpty(groupName))
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户组名不能为空"));
+            return;
+        }
+        
+        userServ.deleteGroup(groupName);
+        http.sendRedirect("/group");
     }     
     
     public void doPost(IHttpExchange http) throws IOException, BadMessageException

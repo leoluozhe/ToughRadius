@@ -35,9 +35,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.toughradius.annotation.AuthAdmin;
 import org.toughradius.common.ValidateUtil;
 import org.toughradius.model.RadGroup;
+import org.toughradius.model.RadGroupMeta;
 import org.toughradius.model.RadUser;
 import org.toughradius.model.RadUserExample;
 import org.toughradius.model.RadUserExample.Criteria;
+import org.toughradius.model.RadUserMeta;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
 import org.xlightweb.IHttpRequest;
@@ -80,9 +82,24 @@ public class UserAction extends FliterAction{
         http.sendRedirect("/user");
     }  
     
-    public void modify(IHttpExchange http) throws IOException, BadMessageException
+    public void view(IHttpExchange http) throws IOException, BadMessageException
     {
-        http.send(freemaker.render(http, "user_update"));
+        IHttpRequest request = http.getRequest();
+        String userName = request.getParameter("username");
+        
+        RadUser user = userServ.getUser(userName);
+        
+        if(user==null)
+        {
+            http.send(freemaker.renderWithAlert(http, "error","用户不存在"));
+            return;
+        }
+        
+        List<RadUserMeta> metas = userServ.getUserMetas(userName);
+        List<RadGroup> groups = userServ.getGroups();
+        request.setAttribute("groups", groups);
+        request.setAttribute("metas", metas);
+        http.send(freemaker.render(http, "user_view"));
     }
     
     public void update(IHttpExchange http) throws IOException, BadMessageException

@@ -40,9 +40,7 @@
 								<td>${user.getUserName()}</td>
 								<td>${user.getGroupName()}</td>
 								<td>
-								<a href="/user?op=view&username=${user.getUserName()}">用户详情</a>
-								<span class="divider">/</span>
-								<a href="/user?op=modify&username=${user.getUserName()}">修改</a>
+								<a href="/user?op=view&username=${user.getUserName()}">详情</a>
 								<span class="divider">/</span>
 								<a href="javascript:deleteClient('${user.getUserName()}')">删除</a>
 								</td>

@@ -166,13 +166,10 @@ public class DictionaryParser {
 		if (tok.countTokens() != 1)
 			throw new IOException("syntax error on line " + lineNum);
 		String includeFile = tok.nextToken();
-
-		File incf = new File(includeFile);
-		if (!incf.exists())
-			throw new IOException("inclueded file '" + includeFile + "' not found, line " + lineNum);
-
-		FileInputStream fis = new FileInputStream(incf);
-		parseDictionary(fis, dictionary);
+		
+		String path = DefaultDictionary.class.getPackage().getName().replaceAll("\\.", "/");
+		
+		parseDictionary(DefaultDictionary.class.getClassLoader().getResourceAsStream(path+"/"+includeFile), dictionary);
 
 		// line numbers begin with 0 again, but file name is
 		// not mentioned in exceptions

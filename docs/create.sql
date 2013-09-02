@@ -42,14 +42,6 @@ create table RAD_CLIENT
 );
 alter table RAD_CLIENT add constraint PK_RAD_CLIENT primary key (ADDRESS);
 
-
-create table RAD_BLACKLIST
-(
-    MACADDR VARCHAR(128) NOT NULL,
-    EXPIRE INTEGER
-);
-alter table RAD_BLACKLIST add constraint PK_RAD_BLACKLIST primary key (MACADDR);
-
 create table RAD_ADMIN
 (
     LOGIN_NAME VARCHAR(128) NOT NULL,

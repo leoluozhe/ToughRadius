@@ -42,7 +42,8 @@ import org.toughradius.common.Utils;
 import org.toughradius.components.BaseService;
 import org.toughradius.components.DBService;
 import org.toughradius.components.UserService;
-import org.toughradius.server.ToughServer;
+import org.toughradius.server.AcctServer;
+import org.toughradius.server.AuthServer;
 import org.toughradius.server.WebServer;
 import org.xlightweb.Mapping;
 
@@ -52,7 +53,7 @@ public class Project
     public static final String LOG4J_FILE = "conf/log4j.xml";
     public static final String CONFIG_FILE = "conf/system.xml";
     private static Log log = LogFactory.getLog(Project.class);
-    private ToughServer server;
+    private AuthServer server;
     
     /**
      * 初始化日志环境
@@ -106,12 +107,13 @@ public class Project
             }
         }
         
-        ToughServer rserver = new ToughServer(Beans.getBean(Config.class));
+        AuthServer authServer = new AuthServer(Beans.getBean(Config.class));
+        AcctServer acctServer = new AcctServer(Beans.getBean(Config.class));
         WebServer wserv = new WebServer(Beans.getBean(Config.class), actionSet);
         
         Beans.start();
-        
-        rserver.start();
+        authServer.start();
+        acctServer.start();
         wserv.start();
         
     }

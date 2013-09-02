@@ -393,8 +393,14 @@ public class UserService
         SqlSession session = dbservice.openSession();
         try
         {
+            RadGroupMetaMapper mapper2 = session.getMapper(RadGroupMetaMapper.class);
+            RadGroupMetaExample example = new RadGroupMetaExample();
+            example.createCriteria().andGroupNameEqualTo(groupname);
+            mapper2.deleteByExample(example);
+            
             RadGroupMapper mapper = session.getMapper(RadGroupMapper.class);
-            mapper.deleteByPrimaryKey(groupname);
+            mapper.deleteByPrimaryKey(groupname);            
+            
             session.commit();
         }
         finally
@@ -453,17 +459,12 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void addGroupMeta(String groupname,String metaname,String value,String desc)
+    public void addGroupMeta(RadGroupMeta meta)
     {
         SqlSession session = dbservice.openSession();
         try
         {
             RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
-            RadGroupMeta meta = new RadGroupMeta();
-            meta.setGroupName(groupname);
-            meta.setName(metaname);
-            meta.setValue(value);
-            meta.setDesc(desc);
             mapper.insert(meta);
             session.commit();
         }
@@ -479,17 +480,12 @@ public class UserService
      * @param metaname
      * @param value
      */
-    public void updateGroupMeta(String groupname,String metaname,String value,String desc)
+    public void updateGroupMeta(RadGroupMeta meta)
     {
         SqlSession session = dbservice.openSession();
         try
         {
             RadGroupMetaMapper mapper = session.getMapper(RadGroupMetaMapper.class);
-            RadGroupMeta meta = new RadGroupMeta();
-            meta.setGroupName(groupname);
-            meta.setName(metaname);
-            meta.setValue(value);
-            meta.setDesc(desc);
             mapper.updateByPrimaryKey(meta);
             session.commit();
         }

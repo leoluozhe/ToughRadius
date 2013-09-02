@@ -2,6 +2,14 @@
 <html lang="zh-CN">
   <head>
    <#include "/header.html" parse=true>
+   <script type="text/javascript">
+   function deleteGroup(groupName)
+   {
+	    if(confirm("确认删除吗？")){
+	        window.location.href = "/group?op=delete&groupName="+groupName;
+	    }
+   }
+   </script>
   </head>
   <body>
   <#include "/nav.html" parse=true>
@@ -11,8 +19,32 @@
                <#include "/menu.html" parse=true>
 				<div class="span9">
 					<ul class="breadcrumb">
-						<li><a href="#">欢迎登陆ToughRadius</a></li>
+						<li><b>用户组管理</b> <span class="divider">/</span></li>
+						<li><a href="/group">用户组查询</a><span class="divider">/</span></li>
+						<li><a href="/group?op=add">新增用户组</a></li>
 					</ul>
+					<table class="table table-striped ">
+					  <thead>
+							<tr>
+								<td>用户组名</td>
+								<td>用户组描述</td>
+								<td>操作</td>
+							</tr>			
+						</thead>		
+						<tbody>
+							<#list groups as group>
+							<tr>
+								<td>${group.getGroupName()}</td>
+								<td>${group.getGroupDesc()}</td>
+								<td>
+								<a href="/group?op=view&groupName=${group.getGroupName()}">详情</a>
+								<span class="divider">/</span>
+					            <a href="javascript:deleteGroup('${group.getGroupName()}')">删除</a>
+								</td>
+							</tr>
+							</#list>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

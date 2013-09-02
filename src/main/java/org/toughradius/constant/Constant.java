@@ -28,10 +28,74 @@
  */
 package org.toughradius.constant;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Constant
+
+public class Constant
 {
-    public static final StringConst USER_EXPIRE = new StringConst("EXPIRE_DATE","用户过期时间");
-    public static final StringConst USER_STATUS = new StringConst("STATUS","用户状态");
-    public static final StringConst USER_PERIOD = new StringConst("PERIOD","用户上网时段");
+    public static final StringConst USER_EXPIRE = new StringConst("EXPIRE","过期时间(####-##-##)");
+    public static final StringConst USER_STATUS = new StringConst("STATUS","状态(0/1/2:未激活/正常/停机)");
+    public static final StringConst USER_PERIOD = new StringConst("PERIOD","上网时段(比如 08:00-21:00)");
+    public static final StringConst USER_CONCUR_NUMBER  = new StringConst("CONCUR_NUMBER","并发数（0-20）");
+    public static final StringConst USER_Framed_IP_Address  = new StringConst("Framed-IP-Address","固定IP");
+    public static final StringConst USER_Filter_ID  = new StringConst("Filter-ID","过滤规则组");
+    public static final StringConst USER_Mikrotik_Rate_Limit  = new StringConst("Mikrotik-Rate-Limit","RouterOS限速属性");
+    
+
+    
+    public static final StringConst GROUP_STATUS = new StringConst("STATUS","状态(1/2:正常/停机)");
+    public static final StringConst GROUP_PERIOD = new StringConst("PERIOD","上网时段（比如 08:00-21:00）"); 
+    public static final StringConst GROUP_CLIENT = new StringConst("CLIENT","绑定客户端"); 
+    public static final StringConst GROUP_Filter_ID  = new StringConst("Filter-ID","过滤规则组");
+    public static final StringConst GROUP_Session_Timeout  = new StringConst("Session-Timeout","最大会话时长（秒）");
+    public static final StringConst GROUP_Framed_Pool   = new StringConst("Framed-Pool ","地址池");
+    public static final StringConst GROUP_CONCUR_NUMBER  = new StringConst("CONCUR_NUMBER","并发数（0-20）");
+    public static final StringConst GROUP_Mikrotik_Rate_Limit  = new StringConst("Mikrotik-Rate-Limit","RouterOS限速属性");
+    
+    public final static List<StringConst> UserMetaList = new ArrayList<StringConst>();
+    public final static List<StringConst> GroupMetaList = new ArrayList<StringConst>();
+    
+    static 
+    {
+        UserMetaList.add(USER_EXPIRE);
+        UserMetaList.add(USER_STATUS);
+        UserMetaList.add(USER_PERIOD);
+        UserMetaList.add(USER_CONCUR_NUMBER);
+        UserMetaList.add(USER_Framed_IP_Address);
+        UserMetaList.add(USER_Filter_ID);
+        UserMetaList.add(USER_Mikrotik_Rate_Limit);
+        
+        
+        GroupMetaList.add(GROUP_STATUS);
+        GroupMetaList.add(GROUP_PERIOD);
+        GroupMetaList.add(GROUP_CLIENT);
+        GroupMetaList.add(GROUP_Filter_ID);
+        GroupMetaList.add(GROUP_Session_Timeout);
+        GroupMetaList.add(GROUP_Framed_Pool);
+        GroupMetaList.add(GROUP_CONCUR_NUMBER);
+        GroupMetaList.add(GROUP_Mikrotik_Rate_Limit);
+    }
+    
+
+    public static String getGroupMetaDesc(String name)
+    {
+        for (StringConst meta : GroupMetaList)
+        {
+            if(meta.value().equals(name))
+                return meta.desc();
+        }
+        return "Radius扩展属性";
+    }
+    
+    public static String getUserMetaDesc(String name)
+    {
+        for (StringConst meta : UserMetaList)
+        {
+            if(meta.value().equals(name))
+                return meta.desc();
+        }
+        return "Radius扩展属性";
+    }
+    
 }

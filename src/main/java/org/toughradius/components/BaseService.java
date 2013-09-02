@@ -35,10 +35,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.toughradius.annotation.Inject;
 import org.toughradius.data.RadAdminMapper;
-import org.toughradius.data.RadBlacklistMapper;
 import org.toughradius.data.RadClientMapper;
 import org.toughradius.model.RadAdmin;
-import org.toughradius.model.RadBlacklist;
 import org.toughradius.model.RadClient;
 @Inject
 public class BaseService
@@ -148,45 +146,7 @@ public class BaseService
         }
     }
     
-    /**
-     * 查询单个黑名单
-     * @param macaddr
-     * @return
-     */
-    public RadBlacklist getBlacklist(String macaddr)
-    {
-        SqlSession session = dbservice.openSession();
-        try
-        {
-            RadBlacklistMapper mapper = session.getMapper(RadBlacklistMapper.class);
-            RadBlacklist rbl = mapper.selectByPrimaryKey(macaddr);
-            return rbl;
-        }
-        finally
-        {
-            session.close();
-        }
-    }
-    
-    /**
-     * 查询黑名单集合
-     * @return
-     */
-    public List<RadBlacklist> getBlacklists()
-    {
-        SqlSession session = dbservice.openSession();
-        try
-        {
-            RadBlacklistMapper mapper = session.getMapper(RadBlacklistMapper.class);
-            List<RadBlacklist> bs = mapper.selectByExample(null);
-            return bs;
-        }
-        finally
-        {
-            session.close();
-        }
-    }
-    
+
     /**
      * 查询管理员
      * @param loginName

@@ -44,7 +44,6 @@ import org.picocontainer.Startable;
 import org.toughradius.annotation.Inject;
 import org.toughradius.common.Config;
 import org.toughradius.data.RadAdminMapper;
-import org.toughradius.data.RadBlacklistMapper;
 import org.toughradius.data.RadClientMapper;
 import org.toughradius.data.RadGroupMapper;
 import org.toughradius.data.RadGroupMetaMapper;
@@ -90,7 +89,6 @@ public class DBService implements Startable
             configuration.addMapper(RadGroupMapper.class);
             configuration.addMapper(RadGroupMetaMapper.class);
             configuration.addMapper(RadClientMapper.class);
-            configuration.addMapper(RadBlacklistMapper.class);
             configuration.addMapper(RadAdminMapper.class);
             configuration.addMapper(RadOnlineMapper.class);
             
