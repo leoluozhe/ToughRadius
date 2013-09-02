@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+   <#include "/header.html" parse=true>
+   <script type="text/javascript">
+   function setMetaName(sel)
+   {
+       var metaname = sel.value;
+       $("#addMetaName").val(metaname);
+   }
+   function updateMeta(metaName,metaValueInput)
+   {
+       var metaValue = $("#"+metaValueInput).val();
+   	   window.location.href = "/group?op=updateMeta&groupName=${group.getGroupName()}&metaName="+metaName+"&metaValue="+metaValue;
+   }
+
+   </script>
+  </head>
+  <body>
+  <#include "/nav.html" parse=true>
+	<div class="main-box">
+		<div class="container">
+		    <div class="row">
+               <#include "/menu.html" parse=true>
+				<div class="span9">
+					<ul class="breadcrumb">
+						<li><b>用户组管理</b> <span class="divider">/</span></li>
+						<li><a href="/group">用户组查询</a><span class="divider">/</span></li>
+						<li><a href="/group?op=add">新增用户组</a></li>
+					</ul>
+					<form class="form-horizontal" action="/group?op=update" method="post">
+					  <div class="control-group">
+					    <label class="control-label" for="groupName">用户组名</label>
+					    <div class="controls">
+					      <input type="text" class="span4" id="groupName" name="groupName" value="${group.getGroupName()}" placeholder="用户组名">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="groupDesc">用户组描述</label>
+					    <div class="controls">
+					      <input type="text" class="span4" id="groupDesc" name="groupDesc" value="${group.getGroupDesc()}" placeholder="用户组描述">
+					    </div>
+					  </div>			  				  
+					  <div class="control-group">
+					    <div class="controls">
+							<button type="submit" class="btn">保存</button>
+							<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
+					    </div>
+					  </div>
+					</form>
+					<#if alert??>
+					<div class="alert">${alert}</div>
+					</#if>
+					
+					<ul class="breadcrumb">
+						<li><b>用户组属性管理</b></li>
+					</ul>
+					<form class="form-horizontal">
+					  <#list metas as meta>	
+					  <div class="control-group">
+					    <label class="control-label" for="${meta.getName()}_name">${meta.getDesc()!!}</label>
+					    <div class="controls">
+					      <input type="text" class="span2" id="${meta.getName()}_name" value="${meta.getName()}" readonly placeholder="属性">
+					      <input type="text" class="span2" id="${meta.getName()}_value" name="${meta.getName()}_value" value="${meta.getValue()}" placeholder="属性值">
+					      <a class="btn" href="javascript:updateMeta('${meta.getName()}','${meta.getName()}_value');">更新</a>
+					      <a class="btn" href="/group?op=deleteMeta&groupName=${group.getGroupName()}&metaName=${meta.getName()}">删除</a>
+					    </div>
+					  </div>	
+					  </#list>	
+					  </form>					
+					<form class="form-inline" action="/group?op=addMeta" method="post">
+					  <input type="hidden" id="groupName" name="groupName"  value="${group.getGroupName()}"/>
+					  <select class="span2" id="addMetaNames" name="addMetaNames" onclick="setMetaName(this);" onchange="setMetaName(this);">
+						    <#list GroupMetaList as metaConst>
+						     <option desc="${metaConst.desc()}" value="${metaConst.value()}"  >${metaConst.desc()}</option>
+							</#list>
+						</select>
+				   	  <input type="text" class="span2" id="addMetaName" name="addMetaName"  placeholder="输入属性名">	
+					  <label class="control-label" for="metaValue"></label>
+					  <input type="text" class="span2" id="addMetaValue" name="addMetaValue"  placeholder="输入属性值">						
+					  <button type="submit" class="btn">保存</button>
+					</form>
+				</div>
+			</div>
+		</div>
+    </div > <!-- /container -->
+  <#include "/footer.html" parse=true>
+  </body>
+</html>

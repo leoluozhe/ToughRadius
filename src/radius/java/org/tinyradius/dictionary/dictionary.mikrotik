@@ -1,0 +1,48 @@
+# -*- text -*-
+# Copyright (C) 2011 The FreeRADIUS Server project and contributors
+#	http://www.mikrotik.com
+#
+#	http://www.mikrotik.com/documentation//manual_2.9/dictionary
+#
+#	Do NOT follow their instructions and replace the dictionary
+#	in /etc/raddb with the one that they supply.  It is NOT necessary.
+#
+#	On top of that, the sample dictionary file they provide
+#	DOES NOT WORK.  Do NOT use it.
+#
+#	$Id: dcfd89c5ee34b330e3aeb8cb535675cad7b5f962 $
+#
+VENDOR	14988  Mikrotik
+
+VENDORATTR    14988    Mikrotik-Recv-Limit			1	integer
+VENDORATTR    14988    Mikrotik-Xmit-Limit			2	integer
+
+# this attribute is unused
+VENDORATTR    14988    Mikrotik-Group				3	string
+VENDORATTR    14988    Mikrotik-Wireless-Forward		4	integer
+VENDORATTR    14988    Mikrotik-Wireless-Skip-Dot1x		5	integer
+VENDORATTR    14988    Mikrotik-Wireless-Enc-Algo		6	integer
+VENDORATTR    14988    Mikrotik-Wireless-Enc-Key		7	string
+VENDORATTR    14988    Mikrotik-Rate-Limit			8	string
+VENDORATTR    14988    Mikrotik-Realm				9	string
+VENDORATTR    14988    Mikrotik-Host-IP			10	ipaddr
+VENDORATTR    14988    Mikrotik-Mark-Id			11	string
+VENDORATTR    14988    Mikrotik-Advertise-URL			12	string
+VENDORATTR    14988    Mikrotik-Advertise-Interval		13	integer
+VENDORATTR    14988    Mikrotik-Recv-Limit-Gigawords		14	integer
+VENDORATTR    14988    Mikrotik-Xmit-Limit-Gigawords		15	integer
+VENDORATTR    14988    Mikrotik-Wireless-PSK			16	string
+VENDORATTR    14988    Mikrotik-Total-Limit			17	integer
+VENDORATTR    14988    Mikrotik-Total-Limit-Gigawords		18	integer
+VENDORATTR    14988    Mikrotik-Address-List			19	string
+VENDORATTR    14988    Mikrotik-Wireless-MPKey			20	string
+VENDORATTR    14988    Mikrotik-Wireless-Comment		21	string
+VENDORATTR    14988    Mikrotik-Delegated-IPv6-Pool		22	string
+
+# MikroTik Values
+
+VALUE	Mikrotik-Wireless-Enc-Algo	No-encryption		0
+VALUE	Mikrotik-Wireless-Enc-Algo	40-bit-WEP		1
+VALUE	Mikrotik-Wireless-Enc-Algo	104-bit-WEP		2
+
+

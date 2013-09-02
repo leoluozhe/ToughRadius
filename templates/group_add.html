@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+   <#include "/header.html" parse=true>
+   <script type="text/javascript">
+
+   </script>
+  </head>
+  <body>
+  <#include "/nav.html" parse=true>
+	<div class="main-box">
+		<div class="container">
+		    <div class="row">
+               <#include "/menu.html" parse=true>
+				<div class="span9">
+					<ul class="breadcrumb">
+						<li><b>用户组管理</b> <span class="divider">/</span></li>
+						<li><a href="/group">用户组查询</a><span class="divider">/</span></li>
+						<li><a href="/group?op=add">新增用户组</a></li>
+					</ul>
+					<#if alert??>
+					<div class="alert">${alert}</div>
+					</#if>					
+					<form class="form-horizontal" action="/group?op=insert" method="post">
+					  <div class="control-group">
+					    <label class="control-label" for="groupName">用户组名</label>
+					    <div class="controls">
+					      <input type="text" class="span4" id="groupName" name="groupName" value="${param_groupName!!}" placeholder="用户组名">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="groupDesc">用户组描述</label>
+					    <div class="controls">
+					      <input type="text" class="span4" id="groupDesc" name="groupDesc" value="${param_groupDesc!!}" placeholder="用户组描述">
+					    </div>
+					  </div>			  				  
+					  <div class="control-group">
+					    <div class="controls">
+							<button type="submit" class="btn">保存</button>
+							<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
+					    </div>
+					  </div>
+					</form>
+
+					
+				</div>
+			</div>
+		</div>
+    </div > <!-- /container -->
+  <#include "/footer.html" parse=true>
+  </body>
+</html>

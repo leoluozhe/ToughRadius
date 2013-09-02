@@ -1,0 +1,133 @@
+##############################################################################
+#
+#   Dictionary for Huawei.  See also dictionary.h3c
+#
+#   $Id$
+#
+##############################################################################
+
+VENDOR      2011     Huawei              
+
+VENDORATTR        2011     Huawei-Input-Burst-Size         1   integer
+VENDORATTR        2011     Huawei-Input-Average-Rate       2   integer
+VENDORATTR        2011     Huawei-Input-Peak-Rate          3   integer
+VENDORATTR        2011     Huawei-Output-Burst-Size        4   integer
+VENDORATTR        2011     Huawei-Output-Average-Rate      5   integer
+VENDORATTR        2011     Huawei-Output-Peak-Rate         6   integer
+VENDORATTR        2011     Huawei-In-Kb-Before-T-Switch        7   integer
+VENDORATTR        2011     Huawei-Out-Kb-Before-T-Switch       8   integer
+VENDORATTR        2011     Huawei-In-Pkt-Before-T-Switch       9   integer
+VENDORATTR        2011     Huawei-Out-Pkt-Before-T-Switch      10  integer
+VENDORATTR        2011     Huawei-In-Kb-After-T-Switch     11  integer
+VENDORATTR        2011     Huawei-Out-Kb-After-T-Switch        12  integer
+VENDORATTR        2011     Huawei-In-Pkt-After-T-Switch        13  integer
+VENDORATTR        2011     Huawei-Out-Pkt-After-T-Switch       14  integer
+VENDORATTR        2011     Huawei-Remanent-Volume          15  integer
+VENDORATTR        2011     Huawei-Tariff-Switch-Interval       16  integer
+VENDORATTR        2011     Huawei-ISP-ID               17  string
+VENDORATTR        2011     Huawei-Max-Users-Per-Logic-Port     18  integer
+VENDORATTR        2011     Huawei-Command              20  integer
+VENDORATTR        2011     Huawei-Priority             22  integer
+VENDORATTR        2011     Huawei-Control-Identifier       24  integer
+VENDORATTR        2011     Huawei-Result-Code          25  integer
+VENDORATTR        2011     Huawei-Connect-ID           26  integer
+VENDORATTR        2011     Huawei-PortalURL            27  string
+VENDORATTR        2011     Huawei-FTP-Directory            28  string
+VENDORATTR        2011     Huawei-Exec-Privilege           29  integer
+VENDORATTR        2011     Huawei-IP-Address           30  integer
+VENDORATTR        2011     Huawei-Qos-Profile-Name         31  string
+VENDORATTR        2011     Huawei-Destnation-IP-Addr       39  string
+VENDORATTR        2011     Huawei-Destnation-Volume        40  string
+VENDORATTR        2011     Huawei-Startup-Stamp            59  integer
+VENDORATTR        2011     Huawei-IPHost-Addr          60  string
+VENDORATTR        2011     Huawei-VT-Name              64  integer
+VENDORATTR        2011     Huawei-PPP-NCP-Type         70  integer
+VENDORATTR        2011     Huawei-VSI-Name             71  string
+VENDORATTR        2011     Huawei-Subnet-Mask          72  ipaddr
+VENDORATTR        2011     Huawei-Gateway-Address          73  ipaddr
+VENDORATTR        2011     Huawei-Lease-Time           74  integer
+VENDORATTR        2011     Huawei-Primary-WINS         75  ipaddr
+VENDORATTR        2011     Huawei-Secondary-WINS           76  ipaddr
+VENDORATTR        2011     Huawei-Input-Peak-Burst-Size        77  integer
+VENDORATTR        2011     Huawei-Output-Peak-Burst-Size       78  integer
+VENDORATTR        2011     Huawei-Reduced-CIR          79  integer
+VENDORATTR        2011     Huawei-Tunnel-Session-Limit     80  integer
+VENDORATTR        2011     Huawei-Zone-Name            81  string
+VENDORATTR        2011     Huawei-Data-Filter          82  string
+VENDORATTR        2011     Huawei-Access-Service           83  string
+VENDORATTR        2011     Huawei-HW-Accounting-Level      84  integer
+VENDORATTR        2011     Huawei-HW-Portal-Mode           85  integer
+VENDORATTR        2011     Huawei-HW-DPI-Policy-Name       86  string
+VENDORATTR        2011     Huawei-Policy-Route         87  ipaddr
+VENDORATTR        2011     Huawei-Framed-Pool          88  string
+VENDORATTR        2011     Huawei-HW-L2TP-Terminate-Cause      89  string
+VENDORATTR        2011     Huawei-HW-Multi-Account-Mode        90  integer
+VENDORATTR        2011     Huawei-Queue-Profile            91  string
+VENDORATTR        2011     Huawei-Layer4-Session-Limit     92  integer
+VENDORATTR        2011     Huawei-Multicast-Profile        93  string
+VENDORATTR        2011     Huawei-VPN-Instance         94  string
+VENDORATTR        2011     Huawei-Policy-Name          95  string
+VENDORATTR        2011     Huawei-Tunnel-Group-Name        96  string
+VENDORATTR        2011     Huawei-Multicast-Source-Group       97  string
+VENDORATTR        2011     Huawei-Multicast-Receive-Group      98  ipaddr
+VENDORATTR        2011     Huawei-User-Multicast-Type      99  integer
+VENDORATTR        2011     Huawei-Reduced-PIR          100 integer
+VENDORATTR        2011     Huawei-LI-ID                101 string
+VENDORATTR        2011     Huawei-LI-Md-Address            102 ipaddr
+VENDORATTR        2011     Huawei-LI-Md-Port           103 integer
+VENDORATTR        2011     Huawei-LI-Md-VpnInstance        104 string
+VENDORATTR        2011     Huawei-Service-Chg-Cmd          105 integer
+VENDORATTR        2011     Huawei-Acct-Packet-Type         106 integer
+VENDORATTR        2011     Huawei-Call-Reference           107 integer
+VENDORATTR        2011     Huawei-PSTN-Port            108 integer
+VENDORATTR        2011     Huawei-Voip-Service-Type        109 integer
+VENDORATTR        2011     Huawei-Acct-Connection-Time     110 integer
+VENDORATTR        2011     Huawei-Error-Reason         112 integer
+VENDORATTR        2011     Huawei-Remain-Monney            113 integer
+VENDORATTR        2011     Huawei-Org-GK-ipaddr            123 ipaddr
+VENDORATTR        2011     Huawei-Org-GW-ipaddr            124 ipaddr
+VENDORATTR        2011     Huawei-Dst-GK-ipaddr            125 ipaddr
+VENDORATTR        2011     Huawei-Dst-GW-ipaddr            126 ipaddr
+VENDORATTR        2011     Huawei-Access-Num           127 string
+VENDORATTR        2011     Huawei-Remain-Time          128 integer
+VENDORATTR        2011     Huawei-Codec-Type           131 integer
+VENDORATTR        2011     Huawei-Transfer-Num         132 string
+VENDORATTR        2011     Huawei-New-User-Name            133 string
+VENDORATTR        2011     Huawei-Transfer-Station-Id      134 string
+VENDORATTR        2011     Huawei-Primary-DNS          135 ipaddr
+VENDORATTR        2011     Huawei-Secondary-DNS            136 ipaddr
+VENDORATTR        2011     Huawei-ONLY-Account-Type        137 integer
+VENDORATTR        2011     Huawei-Domain-Name          138 string
+VENDORATTR        2011     Huawei-ANCP-Profile         139 string
+VENDORATTR        2011     Huawei-HTTP-Redirect-URL        140 string
+VENDORATTR        2011     Huawei-Loopback-Address         141 string
+VENDORATTR        2011     Huawei-QoS-Profile-Type         142 integer
+VENDORATTR        2011     Huawei-HW-Max-List-Num          143 integer
+VENDORATTR        2011     Huawei-Flow-Info            211 string
+VENDORATTR        2011     Huawei-Flow-Id              212 integer
+VENDORATTR        2011     Huawei-DHCP-Server-IP           214 ipaddr
+VENDORATTR        2011     Huawei-Application-Type         215 integer
+VENDORATTR        2011     Huawei-Indication-Flag          216 octets 
+VENDORATTR        2011     Huawei-Original_NAS-IP_Address      217 ipaddr
+VENDORATTR        2011     Huawei-User-Priority            218 integer
+VENDORATTR        2011     Huawei-ACS-Url              219 string
+VENDORATTR        2011     Huawei-Provision-Code           220 string
+VENDORATTR        2011     Huawei-Application-Scene        221 octets
+VENDORATTR        2011     Huawei-MS-Maximum-MAC-Study-Number  222 octets 
+VENDORATTR        2011     Huawei-Version              254 string
+VENDORATTR        2011     Huawei-Product-ID           255 string
+
+#
+# Integer translations
+#
+
+VALUE       Huawei-User-Priority        Common      0
+VALUE       Huawei-User-Priority        Copper      1
+VALUE       Huawei-User-Priority        Silver      2
+VALUE       Huawei-User-Priority        Gold        3
+
+VALUE       Huawei-Application-Type     Fixed       1
+VALUE       Huawei-Application-Type     Nomadic     2
+VALUE       Huawei-Application-Type     Portable    3
+VALUE       Huawei-Application-Type     Simple-Mobile   4
+VALUE       Huawei-Application-Type     Full-Mobile 5

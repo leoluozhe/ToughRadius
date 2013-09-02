@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+   <#include "/header.html" parse=true>
+  </head>
+  <body>
+  <#include "/nav.html" parse=true>
+	<div class="main-box">
+		<div class="container">
+		    <div class="row">
+               <#include "/menu.html" parse=true>
+				<div class="span9">
+					<ul class="breadcrumb">
+						<li><b>用户管理</b> <span class="divider">/</span></li>
+						<li><a href="/user">用户查询</a><span class="divider">/</span></li>
+						<li><a href="/user?op=add">新增用户</a></li>
+					</ul>
+					<form class="form-horizontal">
+					  <div class="control-group">
+					    <label class="control-label" for="userName">用户名</label>
+					    <div class="controls">
+					      <input type="text" id="userName" value="${user.getUserName()}" placeholder="用户名">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					    <label class="control-label" for="password">密码</label>
+					    <div class="controls">
+					      <input type="password" id="password" value="${user.getPassword()"  placeholder="密码">
+					    </div>
+					  </div>
+					  <div class="control-group">
+					      <label class="control-label" for="groupName">用户组:</label>
+						  <select id="groupName" name="groupName">
+						    <#list groups as group>
+							<option value="${group.getGroupName()}" ${context.seclet(group.getGroupName(),user.getGroupName())}>${group.getGroupDesc()}</option>
+							</#list>
+						  </select>
+					  </div>
+					  <#list metas as meta>	
+					  <div class="control-group">
+					    <label class="control-label" for="${meta.getName()}_name">${meta.getDesc()}</label>
+					    <div class="controls">
+					      <input type="text" id="${meta.getName()}_name" name="${meta.getName()}_name" value="${meta.getName()}" placeholder="属性">
+					      <input type="text" id="${meta.getName()}_value" name="${meta.getName()}_value" value="${meta.getValue()}" placeholder="属性值">
+					    </div>
+					  </div>	
+					  </#list>				  				  
+					  <div class="control-group">
+					    <div class="controls">
+							<button type="submit" class="btn">提交</button>
+							<button type="button" class="btn" onclick="javascript:history.go(-1);">返回</button>
+					    </div>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+    </div > <!-- /container -->
+  <#include "/footer.html" parse=true>
+  </body>
+</html>
