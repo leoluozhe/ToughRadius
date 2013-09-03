@@ -214,6 +214,7 @@ public class UserService
             RadUserMetaMapper mapper = session.getMapper(RadUserMetaMapper.class);
             mapper.insert(meta);
             session.commit();
+            cacheService.updateUserMeta(meta);
         }
         finally
         {

@@ -56,344 +56,288 @@ import org.toughradius.model.RadUserMetaKey;
  * @author jamiesun
  */
 @Inject
-public class CacheService implements Startable
-{
-    private static Log log = LogFactory.getLog(CacheService.class);
-    private Object lock = new Object();
-    private ConcurrentHashMap<String,RadUser> userCache = new ConcurrentHashMap<String, RadUser>();
-    private ConcurrentHashMap<String,List<RadUserMeta>> userMetaCache = new ConcurrentHashMap<String, List<RadUserMeta>>();
-    private ConcurrentHashMap<String,RadGroup> groupCache = new ConcurrentHashMap<String, RadGroup>();
-    private ConcurrentHashMap<String,List<RadGroupMeta>> groupMetaCache = new ConcurrentHashMap<String, List<RadGroupMeta>>();
-   
-    private DBService dbservice;
-    
-    public void setDbservice(DBService dbservice)
-    {
-        this.dbservice = dbservice;
-    }
-    
-    
-    /**
-     * 加载缓存数据
-     */
-    public void start()
-    {
-        log.info("starting load cache data ...");
-        
-        SqlSession session = dbservice.openSession();
-        try
-        {
-            RadUserMapper mapper = session.getMapper(RadUserMapper.class);
-            RadUserMetaMapper umMapper = session.getMapper(RadUserMetaMapper.class);
-            RadGroupMapper gMapper = session.getMapper(RadGroupMapper.class);
-            RadGroupMetaMapper gmMapper = session.getMapper(RadGroupMetaMapper.class);
-            List<RadUser> users = mapper.selectByExample(null);
-            List<RadUserMeta> userMetas = umMapper.selectByExample(null);
-            List<RadGroup> groups = gMapper.selectByExample(null);
-            List<RadGroupMeta> groupMetas = gmMapper.selectByExample(null);
-            
-            synchronized (lock)
-            {
-                for (RadUser user : users)
-                {
-                    userCache.put(user.getUserName(), user);
-                }
-                
-                log.info("load user cache data done !");
-                
-                for (RadUserMeta userMeta : userMetas)
-                {
-                    List<RadUserMeta> ums = userMetaCache.get(userMeta.getUserName());
-                    
-                    if(ums==null)
-                    {
-                        ums = new ArrayList<RadUserMeta>();
-                        ums.add(userMeta);
-                    }
-                    else
-                    {
-                        ums.add(userMeta);
-                    }
-                    
-                }
-                
-                log.info("load userMeta cache data done !");
-                
-                for (RadGroup group : groups)
-                {
-                    groupCache.put(group.getGroupName(), group);
-                }
-                
-                log.info("load group cache data done !");
-                
-                for (RadGroupMeta groupMeta : groupMetas)
-                {
-                  List<RadGroupMeta> ums = groupMetaCache.get(groupMeta.getGroupName());
-                    
-                    if(ums==null)
-                    {
-                        ums = new ArrayList<RadGroupMeta>();
-                        ums.add(groupMeta);
-                    }
-                    else
-                    {
-                        ums.add(groupMeta);
-                    }
-                }
-            }
-            log.info("load groupMeta cache data done !");
-            log.info("load cache data done !");
-        }
-        finally
-        {
-            session.close();
-        }
-        
-        
+public class CacheService implements Startable {
+	private static Log log = LogFactory.getLog(CacheService.class);
+	private Object lock = new Object();
+	private ConcurrentHashMap<String, RadUser> userCache = new ConcurrentHashMap<String, RadUser>();
+	private ConcurrentHashMap<String, List<RadUserMeta>> userMetaCache = new ConcurrentHashMap<String, List<RadUserMeta>>();
+	private ConcurrentHashMap<String, RadGroup> groupCache = new ConcurrentHashMap<String, RadGroup>();
+	private ConcurrentHashMap<String, List<RadGroupMeta>> groupMetaCache = new ConcurrentHashMap<String, List<RadGroupMeta>>();
 
-    }
-    
-    public void reload()
-    {
-        userCache.clear();
-        userMetaCache.clear();
-        groupCache.clear();
-        groupMetaCache.clear();
-        start();
-    }
-    
-    public List<RadUser> getUsers()
-    {
-        return Collections.unmodifiableList(new ArrayList<RadUser>(userCache.values()));
-    }
+	private DBService dbservice;
 
-    public RadUser getUser(String userName)
-    {
-        return userCache.get(userName);  
-    }
-    
-    public List<RadUserMeta> getUserMetas(String userName)
-    {
-        return userMetaCache.get(userName);  
-    }
-    
-    public RadUserMeta getUserMeta(String userName,String metaName)
-    {
-        List<RadUserMeta> metas = userMetaCache.get(userName);  
-        
-        if(metas==null)
-            return null;
-        
-        for (RadUserMeta meta : metas)
-        {
-            if(meta.getName().equals(metaName))
-                return meta;
-        }
-        return null;  
-    }
-    
-    public void updateUser(RadUser user)
-    {
-        if(user==null)
-            return;
-        
-        RadUser cuser = userCache.get(user.getUserName());
-        
-        if(cuser==null)
-        {
-            userCache.put(user.getUserName(), user);
-            
-            SqlSession session = dbservice.openSession();
-            try
-            {
-                RadUserMetaMapper umMapper = session.getMapper(RadUserMetaMapper.class);
-                RadUserMetaExample example = new RadUserMetaExample();
-                example.createCriteria().andUserNameEqualTo(user.getUserName());
-                List<RadUserMeta> userMetas = umMapper.selectByExample(example);
-                userMetaCache.put(user.getUserName(), userMetas);
-            }
-            finally
-            {
-                session.close();
-            }
-        }
-        else
-        {
-            synchronized (cuser)
-            {
-                cuser.setGroupName(user.getGroupName());
-                cuser.setPassword(user.getPassword());
-            }
-        }
-    }
-    
-    public void removeUser(String userName)
-    {
-        userCache.remove(userName);
-        userMetaCache.remove(userName);
-    }
-    
-    public void removeUserMeta(String userName)
-    {
-        userMetaCache.remove(userName);
-    }
-    
-    public void removeUserMeta(String userName,String metaName)
-    {
-        List<RadUserMeta> metas = userMetaCache.get(userName);  
-        
-        synchronized (metas)
-        {
-            for (Iterator<RadUserMeta> iterator = metas.iterator(); iterator.hasNext();)
-            {
-                RadUserMeta meta = iterator.next();
-                if(meta.getName().equals(metaName))
-                {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
-    }
-    
-    public void updateUserMeta(RadUserMeta newMeta)
-    {
-        List<RadUserMeta> metas = userMetaCache.get(newMeta.getUserName());  
-        
-        synchronized (metas)
-        {
-            boolean flag = false;
-            for (Iterator<RadUserMeta> iterator = metas.iterator(); iterator.hasNext();)
-            {
-                RadUserMeta meta = iterator.next();
-                if(meta.getName().equals(newMeta.getName()))
-                {
-                    flag = true;
-                    meta.setValue(newMeta.getValue());
-                    break;
-                }
-            }
-            if(!flag)
-                metas.add(newMeta);
-        }
-    }
-    
-    public List<RadGroup> getGroups()
-    {
-        return Collections.unmodifiableList(new ArrayList<RadGroup>(groupCache.values()));
-    }
+	public void setDbservice(DBService dbservice) {
+		this.dbservice = dbservice;
+	}
 
-    public RadGroup getGroup(String groupName)
-    {
-        return groupCache.get(groupName);  
-    }
-    
-    public List<RadGroupMeta> getGroupMetas(String groupName)
-    {
-        return groupMetaCache.get(groupName);  
-    }
-    
-    public RadGroupMeta getGroupMeta(String groupName,String metaName)
-    {
-        List<RadGroupMeta> metas = groupMetaCache.get(groupName);  
-        if(metas==null)
-            return null;
-        for (RadGroupMeta meta : metas)
-        {
-            if(meta.getName().equals(metaName))
-                return meta;
-        }
-        return null;  
-    }
-    
-    public void updateGroup(RadGroup group)
-    {
-        if(group==null)
-            return;
-        
-        RadGroup cgroup = groupCache.get(group.getGroupName());
-        if(cgroup==null)
-        {
-            groupCache.put(group.getGroupName(), group);
-            
-            SqlSession session = dbservice.openSession();
-            try
-            {
-                RadGroupMetaMapper umMapper = session.getMapper(RadGroupMetaMapper.class);
-                RadGroupMetaExample example = new RadGroupMetaExample();
-                example.createCriteria().andGroupNameEqualTo(group.getGroupName());
-                List<RadGroupMeta> groupMetas = umMapper.selectByExample(example);
-                groupMetaCache.put(group.getGroupName(), groupMetas);
-            }
-            finally
-            {
-                session.close();
-            }
-        }
-        else
-        {
-            synchronized (group)
-            {
-                group.setGroupDesc(group.getGroupDesc());
-            }
-        }
+	/**
+	 * 加载缓存数据
+	 */
+	public void start() {
+		log.info("starting load cache data ...");
 
-    }
-    
-    public void removeGroup(String groupName)
-    {
-        groupCache.remove(groupName);
-        groupMetaCache.remove(groupName);
-    }
-    
-    public void removeGroupMeta(String groupName)
-    {
-        groupMetaCache.remove(groupName);
-    }
-    
-    public void removeGroupMeta(String groupName,String metaName)
-    {
-        List<RadGroupMeta> metas = groupMetaCache.get(groupName);  
-        
-        synchronized (metas)
-        {
-            for (Iterator<RadGroupMeta> iterator = metas.iterator(); iterator.hasNext();)
-            {
-                RadGroupMeta meta = iterator.next();
-                if(meta.getName().equals(metaName))
-                {
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
+		SqlSession session = dbservice.openSession();
+		try {
+			RadUserMapper mapper = session.getMapper(RadUserMapper.class);
+			RadUserMetaMapper umMapper = session.getMapper(RadUserMetaMapper.class);
+			RadGroupMapper gMapper = session.getMapper(RadGroupMapper.class);
+			RadGroupMetaMapper gmMapper = session.getMapper(RadGroupMetaMapper.class);
+			List<RadUser> users = mapper.selectByExample(null);
+			List<RadUserMeta> userMetas = umMapper.selectByExample(null);
+			List<RadGroup> groups = gMapper.selectByExample(null);
+			List<RadGroupMeta> groupMetas = gmMapper.selectByExample(null);
 
-    }
-    
-    public void updateGroupMeta(RadGroupMeta newMeta)
-    {
-        List<RadGroupMeta> metas = groupMetaCache.get(newMeta.getGroupName());  
-        
-        synchronized (metas)
-        {
-            boolean flag = false;
-            for (Iterator<RadGroupMeta> iterator = metas.iterator(); iterator.hasNext();)
-            {
-                RadGroupMeta meta = iterator.next();
-                if(meta.getName().equals(newMeta.getName()))
-                {
-                    flag = true;
-                    meta.setValue(newMeta.getValue());
-                    break;
-                }
-            }
-            
-            if(!flag)
-                metas.add(newMeta);
-        }
-    }
+			synchronized (lock) {
+				for (RadUser user : users) {
+					userCache.put(user.getUserName(), user);
+				}
 
-    public void stop()
-    {
-    }
+				log.info("load (" + userCache.size() + ") user cache data done !");
+
+				for (RadUserMeta userMeta : userMetas) {
+					List<RadUserMeta> ums = userMetaCache.get(userMeta.getUserName());
+
+					if (ums == null) {
+						ums = new ArrayList<RadUserMeta>();
+						ums.add(userMeta);
+						userMetaCache.put(userMeta.getUserName(),ums);
+					} else
+						ums.add(userMeta);
+
+				}
+
+				log.info("load (" + userMetaCache.size() + ") userMeta cache data done !");
+
+				for (RadGroup group : groups) {
+					groupCache.put(group.getGroupName(), group);
+				}
+
+				log.info("load (" + groupCache.size() + ") group cache data done !");
+
+				for (RadGroupMeta groupMeta : groupMetas) {
+					List<RadGroupMeta> ums = groupMetaCache.get(groupMeta.getGroupName());
+
+					if (ums == null) {
+						ums = new ArrayList<RadGroupMeta>();
+						ums.add(groupMeta);
+						groupMetaCache.put(groupMeta.getGroupName(), ums);
+					} else
+						ums.add(groupMeta);
+				}
+			}
+
+			log.info("load (" + groupMetaCache.size() + ") groupMeta cache data done !");
+			log.info("load cache data done !");
+		} finally {
+			session.close();
+		}
+
+	}
+
+	public void reload() {
+		userCache.clear();
+		userMetaCache.clear();
+		groupCache.clear();
+		groupMetaCache.clear();
+		start();
+	}
+
+	public List<RadUser> getUsers() {
+		return Collections.unmodifiableList(new ArrayList<RadUser>(userCache.values()));
+	}
+
+	public RadUser getUser(String userName) {
+		return userCache.get(userName);
+	}
+
+	public List<RadUserMeta> getUserMetas(String userName) {
+		return userMetaCache.get(userName);
+	}
+
+	public RadUserMeta getUserMeta(String userName, String metaName) {
+		List<RadUserMeta> metas = userMetaCache.get(userName);
+
+		if (metas == null)
+			return null;
+
+		for (RadUserMeta meta : metas) {
+			if (meta.getName().equals(metaName))
+				return meta;
+		}
+		return null;
+	}
+
+	public void updateUser(RadUser user) {
+		if (user == null)
+			return;
+
+		RadUser cuser = userCache.get(user.getUserName());
+
+		if (cuser == null) {
+			userCache.put(user.getUserName(), user);
+
+			SqlSession session = dbservice.openSession();
+			try {
+				RadUserMetaMapper umMapper = session.getMapper(RadUserMetaMapper.class);
+				RadUserMetaExample example = new RadUserMetaExample();
+				example.createCriteria().andUserNameEqualTo(user.getUserName());
+				List<RadUserMeta> userMetas = umMapper.selectByExample(example);
+				userMetaCache.put(user.getUserName(), userMetas);
+			} finally {
+				session.close();
+			}
+		} else {
+			synchronized (cuser) {
+				cuser.setGroupName(user.getGroupName());
+				cuser.setPassword(user.getPassword());
+			}
+		}
+	}
+
+	public void removeUser(String userName) {
+		userCache.remove(userName);
+		userMetaCache.remove(userName);
+	}
+
+	public void removeUserMeta(String userName) {
+		userMetaCache.remove(userName);
+	}
+
+	public void removeUserMeta(String userName, String metaName) {
+		List<RadUserMeta> metas = userMetaCache.get(userName);
+
+		synchronized (metas) {
+			for (Iterator<RadUserMeta> iterator = metas.iterator(); iterator.hasNext();) {
+				RadUserMeta meta = iterator.next();
+				if (meta.getName().equals(metaName)) {
+					iterator.remove();
+					break;
+				}
+			}
+		}
+	}
+
+	public void updateUserMeta(RadUserMeta newMeta) {
+		List<RadUserMeta> metas = userMetaCache.get(newMeta.getUserName());
+		if (metas == null) {
+			metas = new ArrayList<RadUserMeta>();
+			metas.add(newMeta);
+			return;
+		}
+
+		synchronized (metas) {
+			boolean flag = false;
+			for (Iterator<RadUserMeta> iterator = metas.iterator(); iterator.hasNext();) {
+				RadUserMeta meta = iterator.next();
+				if (meta.getName().equals(newMeta.getName())) {
+					flag = true;
+					meta.setValue(newMeta.getValue());
+					break;
+				}
+			}
+			if (!flag)
+				metas.add(newMeta);
+		}
+	}
+
+	public List<RadGroup> getGroups() {
+		return Collections.unmodifiableList(new ArrayList<RadGroup>(groupCache.values()));
+	}
+
+	public RadGroup getGroup(String groupName) {
+		return groupCache.get(groupName);
+	}
+
+	public List<RadGroupMeta> getGroupMetas(String groupName) {
+		return groupMetaCache.get(groupName);
+	}
+
+	public RadGroupMeta getGroupMeta(String groupName, String metaName) {
+		List<RadGroupMeta> metas = groupMetaCache.get(groupName);
+		if (metas == null)
+			return null;
+		for (RadGroupMeta meta : metas) {
+			if (meta.getName().equals(metaName))
+				return meta;
+		}
+		return null;
+	}
+
+	public void updateGroup(RadGroup group) {
+		if (group == null)
+			return;
+
+		RadGroup cgroup = groupCache.get(group.getGroupName());
+		if (cgroup == null) {
+			groupCache.put(group.getGroupName(), group);
+
+			SqlSession session = dbservice.openSession();
+			try {
+				RadGroupMetaMapper umMapper = session.getMapper(RadGroupMetaMapper.class);
+				RadGroupMetaExample example = new RadGroupMetaExample();
+				example.createCriteria().andGroupNameEqualTo(group.getGroupName());
+				List<RadGroupMeta> groupMetas = umMapper.selectByExample(example);
+				groupMetaCache.put(group.getGroupName(), groupMetas);
+			} finally {
+				session.close();
+			}
+		} else {
+			synchronized (group) {
+				group.setGroupDesc(group.getGroupDesc());
+			}
+		}
+
+	}
+
+	public void removeGroup(String groupName) {
+		groupCache.remove(groupName);
+		groupMetaCache.remove(groupName);
+	}
+
+	public void removeGroupMeta(String groupName) {
+		groupMetaCache.remove(groupName);
+	}
+
+	public void removeGroupMeta(String groupName, String metaName) {
+		List<RadGroupMeta> metas = groupMetaCache.get(groupName);
+
+		synchronized (metas) {
+			for (Iterator<RadGroupMeta> iterator = metas.iterator(); iterator.hasNext();) {
+				RadGroupMeta meta = iterator.next();
+				if (meta.getName().equals(metaName)) {
+					iterator.remove();
+					break;
+				}
+			}
+		}
+
+	}
+
+	public void updateGroupMeta(RadGroupMeta newMeta) {
+		List<RadGroupMeta> metas = groupMetaCache.get(newMeta.getGroupName());
+
+		if (metas == null) {
+			metas = new ArrayList<RadGroupMeta>();
+			metas.add(newMeta);
+			return;
+		}
+
+		synchronized (metas) {
+			boolean flag = false;
+			for (Iterator<RadGroupMeta> iterator = metas.iterator(); iterator.hasNext();) {
+				RadGroupMeta meta = iterator.next();
+				if (meta.getName().equals(newMeta.getName())) {
+					flag = true;
+					meta.setValue(newMeta.getValue());
+					break;
+				}
+			}
+
+			if (!flag)
+				metas.add(newMeta);
+		}
+	}
+
+	public void stop() {
+	}
 }

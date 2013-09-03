@@ -265,13 +265,13 @@ public class UserAction extends FliterAction{
             meta.setUserName(userName);
             meta.setName(metaName);
             meta.setValue(metaValue);
-            meta.setDesc(Constant.getGroupMetaDesc(metaName));
+            meta.setDesc(Constant.getUserMetaDesc(metaName));
             userServ.addUserMeta(meta);
         }
         else
         {
             meta.setValue(metaValue);
-            meta.setDesc(Constant.getGroupMetaDesc(metaName));
+            meta.setDesc(Constant.getUserMetaDesc(metaName));
             userServ.updateUserMeta(meta);
             
         }

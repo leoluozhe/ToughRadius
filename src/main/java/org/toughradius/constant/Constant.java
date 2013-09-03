@@ -51,7 +51,7 @@ public class Constant
     public static final StringConst GROUP_BIND_MAC = new StringConst("PERIOD","绑定MAC地址(0/1:不绑定/绑定)");
     public static final StringConst GROUP_Filter_ID  = new StringConst("Filter-ID","过滤规则组");
     public static final StringConst GROUP_Session_Timeout  = new StringConst("Session-Timeout","最大会话时长（秒）");
-    public static final StringConst GROUP_Framed_Pool   = new StringConst("Framed-Pool ","地址池");
+    public static final StringConst GROUP_Framed_Pool   = new StringConst("Framed-Pool","地址池");
     public static final StringConst GROUP_CONCUR_NUMBER  = new StringConst("CONCUR_NUMBER","并发数（0-20）");
     public static final StringConst GROUP_Mikrotik_Rate_Limit  = new StringConst("Mikrotik-Rate-Limit","RouterOS限速属性");
     

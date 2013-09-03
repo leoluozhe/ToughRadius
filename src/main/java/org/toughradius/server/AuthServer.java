@@ -29,10 +29,18 @@
 package org.toughradius.server;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.picocontainer.Startable;
 import org.tinyradius.attribute.IntegerAttribute;
+import org.tinyradius.attribute.RadiusAttribute;
+import org.tinyradius.dictionary.AttributeType;
+import org.tinyradius.dictionary.DefaultDictionary;
 import org.tinyradius.packet.AccessRequest;
 import org.tinyradius.packet.RadiusPacket;
 import org.tinyradius.util.RadiusException;
@@ -44,7 +52,10 @@ import org.toughradius.common.ValidateUtil;
 import org.toughradius.components.BaseService;
 import org.toughradius.components.CacheService;
 import org.toughradius.constant.Constant;
+import org.toughradius.constant.GroupStatus;
+import org.toughradius.constant.UserStatus;
 import org.toughradius.model.RadClient;
+import org.toughradius.model.RadGroupMeta;
 import org.toughradius.model.RadUser;
 import org.toughradius.model.RadUserMeta;
 
@@ -78,6 +89,7 @@ public class AuthServer extends RadiusServer implements Startable
         return rc!=null?rc.getSecret():null;
     }
 
+
     @Override
     public String getUserPassword(String userName)
     {
@@ -92,30 +104,91 @@ public class AuthServer extends RadiusServer implements Startable
     public RadiusPacket accessRequestReceived(AccessRequest accessRequest, InetSocketAddress client)
             throws RadiusException
     {
-        RadiusPacket packet = super.accessRequestReceived(accessRequest, client);
+    	
+		RadiusPacket packet = new RadiusPacket(RadiusPacket.ACCESS_ACCEPT, accessRequest.getPacketIdentifier());
+		copyProxyState(accessRequest, packet);
+    	RadUser user = cacheServ.getUser(accessRequest.getUserName());
+    	if(user==null)
+    	{
+            packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+            packet.addAttribute("Reply-Message", "user not exists");
+            return packet;
+    	}
+  
+		if (user.getPassword() == null ||!accessRequest.verifyPassword(user.getPassword()))
+		{
+            packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+            packet.addAttribute("Reply-Message", "user password error");
+            return packet;
+		}
+
         if(packet.getPacketType() == RadiusPacket.ACCESS_REJECT)
             return packet;
         
         /**************************************************************
-         * 用户状态判断
+         * 用户状态判断 用户组状态优先
          **************************************************************/
+        RadUserMeta userStatusMeta = cacheServ.getUserMeta(user.getUserName(),Constant.USER_STATUS.value());
+        if(userStatusMeta!=null)
+        {
+            int uStatus = Integer.valueOf(userStatusMeta.getValue()); 
+            if(UserStatus.Prepar.value() == uStatus)
+            {
+                packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+                packet.addAttribute("Reply-Message", "user not Active");
+                return packet;
+            }
+            
+            if(UserStatus.Pause.value() == uStatus)
+            {
+                packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+                packet.addAttribute("Reply-Message", "user has pause");
+                return packet;
+            }
+        }
+        
+        RadGroupMeta groupStatusMeta = cacheServ.getGroupMeta(user.getGroupName(),Constant.GROUP_STATUS.value());
+        if(groupStatusMeta!=null)
+        {
+            int gStatus = Integer.valueOf(groupStatusMeta.getValue()); 
+            
+            if(GroupStatus.Pause.value() == gStatus)
+            {
+                packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+                packet.addAttribute("Reply-Message", "user group has pause");
+                return packet;
+            }
+        }
         
         /**************************************************************
-         * 并发数判断
+         * 并发数判断 用户并发数优先
          **************************************************************/
+        RadUserMeta userCnumMeta = cacheServ.getUserMeta(user.getUserName(),Constant.USER_CONCUR_NUMBER.value());
+        RadGroupMeta groupCnumMeta = cacheServ.getGroupMeta(user.getGroupName(),Constant.GROUP_CONCUR_NUMBER.value());
+        int _climit = groupCnumMeta!=null?Integer.valueOf(groupCnumMeta.getValue()):config.getInt("radius.concurNumber", 1);
+        int climit = userCnumMeta!=null?Integer.valueOf(userCnumMeta.getValue()):_climit;
+        
+        
+        
         
         /**************************************************************
          * MAC地址绑定处理
          **************************************************************/
         String macaddr = accessRequest.getAttributeValue("Calling-Station-Id");
         
-
+        /**************************************************************
+         * 获取最大会话时长
+         **************************************************************/
+        int sessionTimeout = config.getInt("radius.maxSessionTimeout");
+        RadGroupMeta stimeoutattr = cacheServ.getGroupMeta(user.getGroupName(), Constant.GROUP_Session_Timeout.value());
+        if(stimeoutattr!=null)
+        	sessionTimeout = Integer.valueOf(stimeoutattr.getValue());
+        
         /**************************************************************
          * 判断到期
          **************************************************************/
         RadUserMeta attr = cacheServ.getUserMeta(accessRequest.getUserName(), Constant.USER_EXPIRE.value());
-        
-        int sessionTimeout = config.getInt("radius.maxSessionTimeout");
+       
         
         if(attr!=null)
         {
@@ -123,7 +196,9 @@ public class AuthServer extends RadiusServer implements Startable
             if(attr.getValue().equals(DateTimeUtil.getDateString()))
             {
                 String dateTime = DateTimeUtil.getDateTimeString();
-                sessionTimeout = DateTimeUtil.compareSecond(attr.getValue()+" 23:59:59", dateTime);
+                int _timeout = DateTimeUtil.compareSecond(attr.getValue()+" 23:59:59", dateTime);
+                if(_timeout<sessionTimeout)
+                	sessionTimeout = _timeout;
             }
             else if(DateTimeUtil.compareDay(attr.getValue(), DateTimeUtil.getDateString()) < 0)
             {
@@ -174,14 +249,40 @@ public class AuthServer extends RadiusServer implements Startable
             if(timeLenth < sessionTimeout)
                 sessionTimeout = timeLenth;
         }
-        packet.addAttribute(new IntegerAttribute(27,sessionTimeout));
+        
         
         /**************************************************************
-         * 扩展属性下发
+         * 扩展属性下发 用户属性优先
          **************************************************************/
         /////////
+        List<RadUserMeta> userMetas = cacheServ.getUserMetas(user.getGroupName());
+        List<RadGroupMeta> groupMetas = cacheServ.getGroupMetas(user.getGroupName());
+        Map<String,String> metasMap = new HashMap<String,String>();
+        if(groupMetas!=null)
+        {
+            for (RadGroupMeta radGroupMeta : groupMetas) {
+            	metasMap.put(radGroupMeta.getName(), radGroupMeta.getValue());
+    		}
+        }
         
-        
+        if(userMetas!=null)
+        {
+            for (RadUserMeta radUserMeta : userMetas) {
+            	metasMap.put(radUserMeta.getName(), radUserMeta.getValue());
+    		}
+        }
+
+        for (Iterator<Map.Entry<String,String>> iterator = metasMap.entrySet().iterator(); iterator.hasNext();) {
+        	Map.Entry<String,String> ent =  iterator.next();
+        	AttributeType attrType = DefaultDictionary.getDefaultDictionary().getAttributeTypeByName(ent.getKey());
+		    if(attrType!=null)
+		    {
+		    	packet.removeAttributes(attrType.getTypeCode());
+		    	packet.addAttribute(ent.getKey().trim(), ent.getValue());
+		    }
+        }
+        packet.removeAttributes(27);
+        packet.addAttribute(new IntegerAttribute(27,sessionTimeout));
         return packet;
     }
 

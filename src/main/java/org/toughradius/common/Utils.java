@@ -305,6 +305,7 @@ public class Utils
                     File curFile = (File) list.get(k);
                     String name = curFile.getPath().substring(file.getPath().length(), curFile.getPath().length() - 6);
                     String cname = name.substring(1, name.length()).replaceAll("\\\\", ".");
+                    cname = name.substring(1, name.length()).replaceAll("/", ".");
                     if (cname.startsWith(prefix))
                     {
                         Class clasz;

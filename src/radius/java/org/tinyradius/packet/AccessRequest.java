@@ -144,7 +144,7 @@ public class AccessRequest extends RadiusPacket {
 			throw new IllegalArgumentException("password is empty");
 		if (getAuthProtocol().equals(AUTH_CHAP))
 			return verifyChapPassword(plaintext);
-		return getUserPassword().equals(plaintext);
+		return plaintext.equals(getUserPassword());
 	}
 
 	/**

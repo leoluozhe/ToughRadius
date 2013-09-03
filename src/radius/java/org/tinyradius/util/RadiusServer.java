@@ -75,6 +75,7 @@ public abstract class RadiusServer {
 	 * @return plain-text password or null if user unknown
 	 */
 	public abstract String getUserPassword(String userName);
+	
 
 	/**
 	 * Constructs an answer for an Access-Request packet. Either this
