@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.toughradius.data.RadClientMapper" >
+  <resultMap id="BaseResultMap" type="org.toughradius.model.RadClient" >
+    <id column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="SECRET" property="secret" jdbcType="VARCHAR" />
+    <result column="CLIENT_DESC" property="clientDesc" jdbcType="VARCHAR" />
+    <result column="CLIENT_TYPE" property="clientType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ADDRESS, SECRET, CLIENT_DESC, CLIENT_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.toughradius.model.RadClientExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RAD_CLIENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RAD_CLIENT
+    where ADDRESS = #{address,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RAD_CLIENT
+    where ADDRESS = #{address,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.toughradius.model.RadClientExample" >
+    delete from RAD_CLIENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.toughradius.model.RadClient" >
+    insert into RAD_CLIENT (ADDRESS, SECRET, CLIENT_DESC, 
+      CLIENT_TYPE)
+    values (#{address,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, #{clientDesc,jdbcType=VARCHAR}, 
+      #{clientType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.toughradius.model.RadClient" >
+    insert into RAD_CLIENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="secret != null" >
+        SECRET,
+      </if>
+      <if test="clientDesc != null" >
+        CLIENT_DESC,
+      </if>
+      <if test="clientType != null" >
+        CLIENT_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null" >
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDesc != null" >
+        #{clientDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null" >
+        #{clientType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.toughradius.model.RadClientExample" resultType="java.lang.Integer" >
+    select count(*) from RAD_CLIENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update RAD_CLIENT
+    <set >
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secret != null" >
+        SECRET = #{record.secret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientDesc != null" >
+        CLIENT_DESC = #{record.clientDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientType != null" >
+        CLIENT_TYPE = #{record.clientType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update RAD_CLIENT
+    set ADDRESS = #{record.address,jdbcType=VARCHAR},
+      SECRET = #{record.secret,jdbcType=VARCHAR},
+      CLIENT_DESC = #{record.clientDesc,jdbcType=VARCHAR},
+      CLIENT_TYPE = #{record.clientType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadClient" >
+    update RAD_CLIENT
+    <set >
+      <if test="secret != null" >
+        SECRET = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDesc != null" >
+        CLIENT_DESC = #{clientDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null" >
+        CLIENT_TYPE = #{clientType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ADDRESS = #{address,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadClient" >
+    update RAD_CLIENT
+    set SECRET = #{secret,jdbcType=VARCHAR},
+      CLIENT_DESC = #{clientDesc,jdbcType=VARCHAR},
+      CLIENT_TYPE = #{clientType,jdbcType=VARCHAR}
+    where ADDRESS = #{address,jdbcType=VARCHAR}
+  </update>
+  <cache />
+  <select resultMap="BaseResultMap" parameterType="org.toughradius.model.RadClientExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RAD_CLIENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

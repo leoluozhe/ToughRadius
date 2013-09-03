@@ -2,9 +2,9 @@
 # Package Files #
 *.war
 *.ear
-generatorConfig.xml
+#generatorConfig.xml
 mbgen.bat
 logs
 bin
-data
+#data
 release

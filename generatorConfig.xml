@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry location="lib/hsqldb.jar" />  
+  <context id="toughradius" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.CachePlugin"></plugin> 
+	<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+	<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+	<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+    <commentGenerator >  
+        <property name="suppressAllComments" value="true" />  
+        <property name="suppressDate" value="true" />  
+    </commentGenerator>  	
+	
+    <jdbcConnection driverClass="org.hsqldb.jdbc.JDBCDriver" connectionURL="jdbc:hsqldb:H:/gitroot/ToughRadius/data/radius" 
+        userId="sa" password="" />
+    <javaModelGenerator targetPackage="org.toughradius.model" targetProject="H:/gitroot/ToughRadius/src/main/java" />
+    <sqlMapGenerator  targetPackage="org.toughradius.data"  targetProject="H:/gitroot/ToughRadius/src/main/java" />
+    <javaClientGenerator targetPackage="org.toughradius.data" targetProject="H:/gitroot/ToughRadius/src/main/java" type="XMLMAPPER" />
+    <table schema="" tableName="rad_user" >
+    </table>
+    <table schema="" tableName="rad_user_meta" >
+    </table>    
+    <table schema="" tableName="rad_group" >
+    </table>
+    <table schema="" tableName="rad_group_meta" >
+    </table> 
+    <table schema="" tableName="rad_client" >
+    </table>      
+    <table schema="" tableName="rad_admin" >
+    </table>        
+    <table schema="" tableName="rad_online" >
+    </table>      
+  </context>
+</generatorConfiguration>
