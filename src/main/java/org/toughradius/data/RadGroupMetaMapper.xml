@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.toughradius.data.RadGroupMetaMapper" >
-  <resultMap id="BaseResultMap" type="org.toughradius.model.RadGroupMeta" >
-    <id column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
-    <id column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="VALUE" property="value" jdbcType="VARCHAR" />
-    <result column="DESC" property="desc" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.toughradius.data.RadGroupMetaMapper">
+  <resultMap id="BaseResultMap" type="org.toughradius.model.RadGroupMeta">
+    <id column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <id column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="VALUE" jdbcType="VARCHAR" property="value" />
+    <result column="DESC" jdbcType="VARCHAR" property="desc" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -36,25 +36,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -65,128 +65,128 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     GROUP_NAME, NAME, VALUE, DESC
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.toughradius.model.RadGroupMetaExample" >
+  <select id="selectByExample" parameterType="org.toughradius.model.RadGroupMetaExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from RAD_GROUP_META
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.toughradius.model.RadGroupMetaKey" >
+  <select id="selectByPrimaryKey" parameterType="org.toughradius.model.RadGroupMetaKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from RAD_GROUP_META
     where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
       and NAME = #{name,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadGroupMetaKey" >
+  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadGroupMetaKey">
     delete from RAD_GROUP_META
     where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
       and NAME = #{name,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="org.toughradius.model.RadGroupMetaExample" >
+  <delete id="deleteByExample" parameterType="org.toughradius.model.RadGroupMetaExample">
     delete from RAD_GROUP_META
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.toughradius.model.RadGroupMeta" >
+  <insert id="insert" parameterType="org.toughradius.model.RadGroupMeta">
     insert into RAD_GROUP_META (GROUP_NAME, NAME, VALUE, 
       DESC)
     values (#{groupName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
       #{desc,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.toughradius.model.RadGroupMeta" >
+  <insert id="insertSelective" parameterType="org.toughradius.model.RadGroupMeta">
     insert into RAD_GROUP_META
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="groupName != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
         GROUP_NAME,
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         NAME,
       </if>
-      <if test="value != null" >
+      <if test="value != null">
         VALUE,
       </if>
-      <if test="desc != null" >
+      <if test="desc != null">
         DESC,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="groupName != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
         #{groupName,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
+      <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="value != null" >
+      <if test="value != null">
         #{value,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null" >
+      <if test="desc != null">
         #{desc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.toughradius.model.RadGroupMetaExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="org.toughradius.model.RadGroupMetaExample" resultType="java.lang.Integer">
     select count(*) from RAD_GROUP_META
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update RAD_GROUP_META
-    <set >
-      <if test="record.groupName != null" >
+    <set>
+      <if test="record.groupName != null">
         GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
       </if>
-      <if test="record.name != null" >
+      <if test="record.name != null">
         NAME = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.value != null" >
+      <if test="record.value != null">
         VALUE = #{record.value,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null" >
+      <if test="record.desc != null">
         DESC = #{record.desc,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update RAD_GROUP_META
     set GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
       NAME = #{record.name,jdbcType=VARCHAR},
       VALUE = #{record.value,jdbcType=VARCHAR},
       DESC = #{record.desc,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadGroupMeta" >
+  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadGroupMeta">
     update RAD_GROUP_META
-    <set >
-      <if test="value != null" >
+    <set>
+      <if test="value != null">
         VALUE = #{value,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null" >
+      <if test="desc != null">
         DESC = #{desc,jdbcType=VARCHAR},
       </if>
     </set>
     where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
       and NAME = #{name,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadGroupMeta" >
+  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadGroupMeta">
     update RAD_GROUP_META
     set VALUE = #{value,jdbcType=VARCHAR},
       DESC = #{desc,jdbcType=VARCHAR}
@@ -194,17 +194,224 @@
       and NAME = #{name,jdbcType=VARCHAR}
   </update>
   <cache />
-  <select resultMap="BaseResultMap" parameterType="org.toughradius.model.RadGroupMetaExample" id="selectByExampleWithRowbounds" >
+  <select id="selectByExampleWithRowbounds" parameterType="org.toughradius.model.RadGroupMetaExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
     from RAD_GROUP_META
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap id="BaseResultMap" type="org.toughradius.model.RadGroupMeta">
+    <id column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <id column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="VALUE" jdbcType="VARCHAR" property="value" />
+    <result column="DESC" jdbcType="VARCHAR" property="desc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    GROUP_NAME, NAME, VALUE, DESC
+  </sql>
+  <select id="selectByExample" parameterType="org.toughradius.model.RadGroupMetaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RAD_GROUP_META
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="org.toughradius.model.RadGroupMetaKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from RAD_GROUP_META
+    where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
+      and NAME = #{name,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadGroupMetaKey">
+    delete from RAD_GROUP_META
+    where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
+      and NAME = #{name,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.toughradius.model.RadGroupMetaExample">
+    delete from RAD_GROUP_META
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.toughradius.model.RadGroupMeta">
+    insert into RAD_GROUP_META (GROUP_NAME, NAME, VALUE, 
+      DESC)
+    values (#{groupName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{desc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.toughradius.model.RadGroupMeta">
+    insert into RAD_GROUP_META
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        GROUP_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="value != null">
+        VALUE,
+      </if>
+      <if test="desc != null">
+        DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.toughradius.model.RadGroupMetaExample" resultType="java.lang.Integer">
+    select count(*) from RAD_GROUP_META
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update RAD_GROUP_META
+    <set>
+      <if test="record.groupName != null">
+        GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null">
+        VALUE = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desc != null">
+        DESC = #{record.desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update RAD_GROUP_META
+    set GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      VALUE = #{record.value,jdbcType=VARCHAR},
+      DESC = #{record.desc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadGroupMeta">
+    update RAD_GROUP_META
+    <set>
+      <if test="value != null">
+        VALUE = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        DESC = #{desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
+      and NAME = #{name,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadGroupMeta">
+    update RAD_GROUP_META
+    set VALUE = #{value,jdbcType=VARCHAR},
+      DESC = #{desc,jdbcType=VARCHAR}
+    where GROUP_NAME = #{groupName,jdbcType=VARCHAR}
+      and NAME = #{name,jdbcType=VARCHAR}
+  </update>
+  <cache />
+  <select id="selectByExampleWithRowbounds" parameterType="org.toughradius.model.RadGroupMetaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RAD_GROUP_META
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>

@@ -41,119 +41,146 @@ import org.toughradius.model.RadOnline;
 import org.toughradius.model.RadOnlineExample;
 import org.toughradius.model.RadOnlineKey;
 import org.toughradius.model.RadUser;
+
 @Inject
-public class StatService
-{
+public class StatService {
     private static Log logger = LogFactory.getLog(StatService.class);
     private DBService dbservice;
-    
-    public void setDbservice(DBService dbservice)
-    {
+
+    public void setDbservice(DBService dbservice) {
         this.dbservice = dbservice;
     }
-    
+
     /**
      * 查询在线数
+     * 
      * @param example
      * @return
      */
-    public int countOnline(RadOnlineExample example){
+    public int countOnline(RadOnlineExample example) {
         SqlSession session = dbservice.openSession();
-        try
-        {
+        try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             int count = mapper.countByExample(example);
             return count;
-        }
-        finally
-        {
+        } finally {
             session.close();
         }
     }
     
+    public int countOnline(String  userName) {
+        SqlSession session = dbservice.openSession();
+        try {
+            RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
+            RadOnlineExample example = new RadOnlineExample();
+            example.createCriteria().andUserNameEqualTo(userName);
+            int count = mapper.countByExample(example);
+            return count;
+        } finally {
+            session.close();
+        }
+    }
+
     /**
      * 查询在线用户
+     * 
      * @param clientAddr
      * @param sessionId
      * @return
      */
-    public RadOnline getOnline(String clientAddr,String sessionId)
-    {
+    public RadOnline getOnline(String clientAddr, String sessionId) {
         SqlSession session = dbservice.openSession();
-        try
-        {
+        try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             RadOnlineKey key = new RadOnlineKey();
             key.setClientAddress(clientAddr);
             key.setSessionId(sessionId);
             return mapper.selectByPrimaryKey(key);
-        }
-        finally
-        {
+        } finally {
             session.close();
         }
-        
+
     }
     
+    public RadOnline getOnlineAndRemove(String clientAddr, String sessionId) {
+        SqlSession session = dbservice.openSession();
+        try {
+            RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
+            RadOnlineKey key = new RadOnlineKey();
+            key.setClientAddress(clientAddr);
+            key.setSessionId(sessionId);
+            RadOnline online = mapper.selectByPrimaryKey(key);
+            mapper.deleteByPrimaryKey(key);
+            return online;
+        } finally {
+            session.close();
+        }
+
+    }
+
     /**
      * 查询在线用户集合
+     * 
      * @param example
      * @param rowBounds
      * @return
      */
-    public List<RadOnline> getOnlines(RadOnlineExample example,RowBounds rowBounds)
-    {
+    public List<RadOnline> getOnlines(RadOnlineExample example, RowBounds rowBounds) {
         SqlSession session = dbservice.openSession();
-        try
-        {
+        try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             return mapper.selectByExampleWithRowbounds(example, rowBounds);
-        }
-        finally
-        {
+        } finally {
             session.close();
         }
-        
+
     }
-    
+
+    public List<RadOnline> getOnlinesAndClear() {
+        SqlSession session = dbservice.openSession();
+        try {
+            RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
+            List<RadOnline> result = mapper.selectByExample(null);
+            mapper.deleteByExample(null);
+            return result;
+        } finally {
+            session.close();
+        }
+
+    }
+
     /**
      * 新增在线用户
+     * 
      * @param online
      */
-    public void addOnline(RadOnline online)
-    {
+    public void addOnline(RadOnline online) {
         SqlSession session = dbservice.openSession();
-        try
-        {
+        try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             mapper.insert(online);
             session.commit();
-        }
-        finally
-        {
+        } finally {
             session.close();
         }
     }
-    
+
     /**
      * 删除在线用户
+     * 
      * @param clientAddr
      * @param sessionId
      */
-    public void deleteOnline(String clientAddr,String sessionId)
-    {
+    public void deleteOnline(String clientAddr, String sessionId) {
         SqlSession session = dbservice.openSession();
-        try
-        {
+        try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             RadOnlineKey key = new RadOnlineKey();
             key.setClientAddress(clientAddr);
             key.setSessionId(sessionId);
             mapper.deleteByPrimaryKey(key);
             session.commit();
-        }
-        finally
-        {
+        } finally {
             session.close();
         }
     }

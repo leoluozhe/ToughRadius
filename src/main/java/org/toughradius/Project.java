@@ -30,6 +30,7 @@ package org.toughradius;
 
 import java.io.File;
 import java.util.HashSet;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -42,6 +43,7 @@ import org.toughradius.common.Utils;
 import org.toughradius.components.BaseService;
 import org.toughradius.components.CacheService;
 import org.toughradius.components.DBService;
+import org.toughradius.components.StatService;
 import org.toughradius.components.UserService;
 import org.toughradius.server.AcctServer;
 import org.toughradius.server.AuthServer;
@@ -65,7 +67,7 @@ public class Project
         File file = new File(LOG4J_FILE);
         if (file == null || !file.isFile())
         {
-            System.out.println("初始化Log异常,请检查conf/log4j.xml文件");
+            System.out.println("init Log error,please check conf/log4j.xml");
             return false;
         }
         
@@ -75,7 +77,7 @@ public class Project
         }
         catch(Exception e)
         {
-            System.out.println("初始化Log异常,请检查conf/log4j.xml文件,"+e.getMessage());
+            System.out.println("init Log error,please check conf/log4j.xml,"+e.getMessage());
             return false;
         }
         return true;
@@ -138,6 +140,11 @@ public class Project
     public static CacheService getCacheService()
     {
         return Beans.getBean(CacheService.class);
+    }
+    
+    public static StatService getStatService()
+    {
+        return Beans.getBean(StatService.class);
     }
     
     public static void main(String[] args)

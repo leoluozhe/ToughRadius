@@ -48,7 +48,7 @@ public abstract class RadiusServer {
     private List receivedPackets = new LinkedList();
     private long duplicateInterval = 30000; // 30 s
     protected transient boolean closing = false;
-    private ExecutorService          worker      = Executors.newCachedThreadPool();
+    protected ExecutorService          worker      = Executors.newCachedThreadPool();
     private static Log logger = LogFactory.getLog(RadiusServer.class);
     
     public RadiusStat getStat()

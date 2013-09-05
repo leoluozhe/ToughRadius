@@ -38,7 +38,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.picocontainer.Startable;
 import org.tinyradius.attribute.IntegerAttribute;
-import org.tinyradius.attribute.RadiusAttribute;
 import org.tinyradius.dictionary.AttributeType;
 import org.tinyradius.dictionary.DefaultDictionary;
 import org.tinyradius.packet.AccessRequest;
@@ -51,7 +50,10 @@ import org.toughradius.common.DateTimeUtil;
 import org.toughradius.common.ValidateUtil;
 import org.toughradius.components.BaseService;
 import org.toughradius.components.CacheService;
+import org.toughradius.components.StatService;
+import org.toughradius.components.UserService;
 import org.toughradius.constant.Constant;
+import org.toughradius.constant.FeePolicys;
 import org.toughradius.constant.GroupStatus;
 import org.toughradius.constant.UserStatus;
 import org.toughradius.model.RadClient;
@@ -65,6 +67,8 @@ public class AuthServer extends RadiusServer implements Startable
     private Config config;
     private BaseService baseServ = Project.getBaseService();
     private CacheService cacheServ = Project.getCacheService();
+    private UserService userServ = Project.getUserService();
+    private StatService statServ = Project.getStatService();
     
     public AuthServer()
     {
@@ -167,20 +171,35 @@ public class AuthServer extends RadiusServer implements Startable
         RadGroupMeta groupCnumMeta = cacheServ.getGroupMeta(user.getGroupName(),Constant.GROUP_CONCUR_NUMBER.value());
         int _climit = groupCnumMeta!=null?Integer.valueOf(groupCnumMeta.getValue()):config.getInt("radius.concurNumber", 1);
         int climit = userCnumMeta!=null?Integer.valueOf(userCnumMeta.getValue()):_climit;
-        
-        
+        if(climit>0)
+        {
+            int onum = statServ.countOnline(user.getUserName());
+            if(onum > climit)
+            {
+                packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+                packet.addAttribute("Reply-Message", "user online limit");
+                return packet;
+            }
+        }
         
         
         /**************************************************************
          * MAC地址绑定处理
          **************************************************************/
-        String macaddr = accessRequest.getAttributeValue("Calling-Station-Id");
+       boolean macflag =  checkMac(accessRequest, user);
+       if(!macflag)
+       {
+         packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+         packet.addAttribute("Reply-Message", "user mac bind");
+         return packet;
+       }
         
         /**************************************************************
          * 获取最大会话时长
          **************************************************************/
         int sessionTimeout = config.getInt("radius.maxSessionTimeout");
-        RadGroupMeta stimeoutattr = cacheServ.getGroupMeta(user.getGroupName(), Constant.GROUP_Session_Timeout.value());
+        RadGroupMeta stimeoutattr = cacheServ.getGroupMeta(user.getGroupName(), 
+                Constant.GROUP_Session_Timeout.value());
         if(stimeoutattr!=null)
         	sessionTimeout = Integer.valueOf(stimeoutattr.getValue());
         
@@ -209,8 +228,79 @@ public class AuthServer extends RadiusServer implements Startable
         }
         
         /**************************************************************
-         * 上网时段控制
+         * 上网时段校验
          **************************************************************/
+        int periodTimelen = checkPeriod(accessRequest, sessionTimeout);
+        if(periodTimelen==0)
+        {
+          packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+          packet.addAttribute("Reply-Message", "Invalid period");
+          return packet;
+        }
+        
+        /**************************************************************
+         * 根据余额反算时长
+         **************************************************************/
+        int timelen = calcTimelen(user, sessionTimeout);
+        if(timelen==0)
+        {
+          packet.setPacketType(RadiusPacket.ACCESS_REJECT);
+          packet.addAttribute("Reply-Message", "user credit inadequate");
+          return packet;
+        }
+        else
+            sessionTimeout = timelen;
+
+        
+        /**************************************************************
+         * 扩展属性下发 用户属性优先
+         **************************************************************/
+        setExtAttribute(packet, user, sessionTimeout);
+        
+        return packet;
+    }
+
+    /**
+     * MAC绑定校验
+     * @param accessRequest
+     * @param user
+     */
+    private boolean checkMac(AccessRequest accessRequest, RadUser user) {
+        String macaddr = accessRequest.getAttributeValue("Calling-Station-Id");
+           RadUserMeta userBmacMeta = cacheServ.getUserMeta(user.getUserName(),Constant.USER_BIND_MAC.value());
+           RadGroupMeta groupBmacMeta = cacheServ.getGroupMeta(user.getGroupName(),Constant.USER_BIND_MAC.value());
+
+           boolean _bindMac = groupBmacMeta!=null?"1".equals(groupBmacMeta.getValue()):false;
+           boolean bindMac = userBmacMeta!=null?"1".equals(userBmacMeta.getValue()):_bindMac;
+             
+          if(bindMac){
+        	  RadUserMeta userMac = cacheServ.getUserMeta(user.getUserName(),Constant.USER_MAC_ADDR.value());
+        	  if(userMac==null)
+        	  {
+        		  userMac = new RadUserMeta();
+        		  userMac.setName(Constant.USER_MAC_ADDR.value());
+        		  userMac.setDesc(Constant.USER_MAC_ADDR.desc());
+        		  userMac.setUserName(user.getUserName());
+        		  userMac.setValue(macaddr);
+        		  userServ.addUserMeta(userMac);
+        	  }
+        	  else
+        	  {
+        		  if(!userMac.getValue().equals(macaddr))
+        		      return false;
+        	  }
+            }
+         
+          return true;
+    }
+
+    /**
+     * 上网时段校验
+     * @param accessRequest
+     * @param sessionTimeout
+     * @return
+     */
+    private int checkPeriod(AccessRequest accessRequest, int sessionTimeout) {
         RadUserMeta periodAttr = cacheServ.getUserMeta(accessRequest.getUserName(), Constant.USER_PERIOD.value());
         if (periodAttr!=null&&!ValidateUtil.isEmpty(periodAttr.getValue()))
         {
@@ -231,11 +321,7 @@ public class AuthServer extends RadiusServer implements Startable
                 _auth = false;
             
             if(!_auth)
-            {
-                packet.setPacketType(RadiusPacket.ACCESS_REJECT);
-                packet.addAttribute("Reply-Message", "Invalid period");
-                return packet;
-            }
+                return 0;
             
             //会话超时时长计算
             if(startTime.compareTo(endTime) < 0)                      
@@ -249,12 +335,16 @@ public class AuthServer extends RadiusServer implements Startable
             if(timeLenth < sessionTimeout)
                 sessionTimeout = timeLenth;
         }
-        
-        
-        /**************************************************************
-         * 扩展属性下发 用户属性优先
-         **************************************************************/
-        /////////
+        return sessionTimeout;
+    }
+
+    /**
+     * 扩展属性下发 用户属性优先
+     * @param packet
+     * @param user
+     * @param sessionTimeout
+     */
+    private void setExtAttribute(RadiusPacket packet, RadUser user, int sessionTimeout) {
         List<RadUserMeta> userMetas = cacheServ.getUserMetas(user.getGroupName());
         List<RadGroupMeta> groupMetas = cacheServ.getGroupMetas(user.getGroupName());
         Map<String,String> metasMap = new HashMap<String,String>();
@@ -283,7 +373,34 @@ public class AuthServer extends RadiusServer implements Startable
         }
         packet.removeAttributes(27);
         packet.addAttribute(new IntegerAttribute(27,sessionTimeout));
-        return packet;
+    }
+
+    /**
+     * 根据余额反算时长
+     * @param user
+     * @param sessionTimeout
+     * @return
+     */
+    private int calcTimelen(RadUser user, int sessionTimeout) {
+        RadGroupMeta policy = cacheServ.getGroupMeta(user.getGroupName(), Constant.GROUP_FEE_POLICY.value());
+        RadGroupMeta price = cacheServ.getGroupMeta(user.getGroupName(), Constant.GROUP_FEE_PRICE.value());
+        int _price = price!=null?Integer.valueOf(price.getValue()):0;
+        if(policy!=null)
+        {
+            int _policy = Integer.valueOf(policy.getValue());
+            if(_policy==FeePolicys.PrePay_TimeLen.value())
+            {
+                RadUserMeta userCredit = cacheServ.getUserMeta(user.getUserName(), Constant.USER_CREDIT.value());
+                if(userCredit == null)
+                    return 0;
+                
+                int credit = Integer.valueOf(userCredit.getValue());
+                int timeLenth = (int) ((credit)*60*60/_price);
+                if(timeLenth < sessionTimeout)
+                    sessionTimeout = timeLenth;
+            }
+        }
+        return sessionTimeout;
     }
 
 }

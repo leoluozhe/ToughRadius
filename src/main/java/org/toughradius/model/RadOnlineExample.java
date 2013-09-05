@@ -593,6 +593,66 @@ public class RadOnlineExample {
             addCriterion("NAS_PORT not between", value1, value2, "nasPort");
             return (Criteria) this;
         }
+
+        public Criteria andStartSourceIsNull() {
+            addCriterion("START_SOURCE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceIsNotNull() {
+            addCriterion("START_SOURCE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceEqualTo(Integer value) {
+            addCriterion("START_SOURCE =", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceNotEqualTo(Integer value) {
+            addCriterion("START_SOURCE <>", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceGreaterThan(Integer value) {
+            addCriterion("START_SOURCE >", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("START_SOURCE >=", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceLessThan(Integer value) {
+            addCriterion("START_SOURCE <", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceLessThanOrEqualTo(Integer value) {
+            addCriterion("START_SOURCE <=", value, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceIn(List<Integer> values) {
+            addCriterion("START_SOURCE in", values, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceNotIn(List<Integer> values) {
+            addCriterion("START_SOURCE not in", values, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceBetween(Integer value1, Integer value2) {
+            addCriterion("START_SOURCE between", value1, value2, "startSource");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartSourceNotBetween(Integer value1, Integer value2) {
+            addCriterion("START_SOURCE not between", value1, value2, "startSource");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

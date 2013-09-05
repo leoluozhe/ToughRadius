@@ -30,11 +30,16 @@ package org.toughradius.model;
 
 import java.io.Serializable;
 
+import org.tinyradius.attribute.IntegerAttribute;
+import org.tinyradius.attribute.RadiusAttribute;
+import org.tinyradius.packet.AccountingRequest;
+import org.tinyradius.util.RadiusException;
+import org.toughradius.common.DateTimeUtil;
+
 public class Ticket implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private String ticketCode;
     private String userName;//用户名
     private int acctStatusType;//计费类型
     private String eventTimestamp;//
@@ -66,9 +71,8 @@ public class Ticket implements Serializable
     private int isDeduct;//是否已扣费（0/1 没扣费/已扣费）
 
     public String toString()
-    {
+     {
         return new StringBuffer("上网计费记录:[")
-            .append("ticketCode=").append(ticketCode).append(";")
             .append("nasIpAddress=").append(nasIpAddress).append(";")
             .append("acctSessionId=").append(acctSessionId).append(";")
             .append("userName=").append(userName).append(";")
@@ -138,6 +142,61 @@ public class Ticket implements Serializable
             .toString();
     }
     
+    private static int parseIntAttr(AccountingRequest req,String type)
+    {
+    	RadiusAttribute attr = req.getAttribute(type);
+    	if(attr==null)
+    		return -1;
+		return ((IntegerAttribute)attr).getAttributeValueInt();
+    }
+    
+    private static String parseDatetimeAttr(AccountingRequest req,String type)
+    {
+    	RadiusAttribute attr = req.getAttribute(type);
+    	if(attr==null)
+    		return null;
+    	int datetime = ((IntegerAttribute)attr).getAttributeValueInt();
+    	return DateTimeUtil.toDateTimeString((long)datetime * 1000);
+    }
+    
+    public static Ticket fromRequest(AccountingRequest req) throws RadiusException
+    {
+    	if(req==null)
+    		return null;
+    	
+    	Ticket tic = new Ticket();
+    	tic.setAcctFee(0);
+     	tic.setFeeReceivables(0);
+    	tic.setAcctStartTime(null);
+    	tic.setAcctStopTime(null);
+    	tic.setIsDeduct(0);
+    	tic.setStartSource(0);
+    	tic.setStopSource(0);
+    	tic.setUserName(req.getUserName());
+    	tic.setAcctInputGigawords(parseIntAttr(req,"Acct-Input-Gigawords"));
+    	tic.setAcctInputOctets(parseIntAttr(req,"Acct-Input-Octets"));
+    	tic.setAcctInputPackets(parseIntAttr(req,"Acct-Input-Packets"));
+    	tic.setAcctOutputGigawords(parseIntAttr(req,"Acct-Output-Gigawords"));
+    	tic.setAcctOutputOctets(parseIntAttr(req,"Acct-Output-Octets"));
+    	tic.setAcctSessionId(req.getAttributeValue("Acct-Session-Id"));
+    	tic.setAcctSessionTime(parseIntAttr(req,"Acct-Session-Time"));
+    	tic.setAcctStatusType(req.getAcctStatusType());
+    	tic.setAcctTerminateCause(parseIntAttr(req,"Acct-Terminate-Cause"));
+    	tic.setCallingStationId(req.getAttributeValue("Calling-Station-Id"));
+    	tic.setNasClass(req.getAttributeValue("Class"));
+    	tic.setNasIpAddress(req.getAttributeValue("NAS-IP-Address"));
+    	tic.setNasPort(parseIntAttr(req, "NAS-Port"));
+    	tic.setNasPortId(req.getAttributeValue("NAS-Identifier"));
+    	tic.setNasPortType(parseIntAttr(req, "NAS-Port-Type"));
+    	tic.setServiceType(parseIntAttr(req, "Service-Type"));
+    	tic.setSessionTimeout(parseIntAttr(req, "Session-Timeout"));
+    	tic.setEventTimestamp(parseDatetimeAttr(req,"Event-Timestamp"));
+    	tic.setFramedIpAddress(req.getAttributeValue("Framed-IP-Address"));
+    	tic.setFramedIpNetmask(req.getAttributeValue("Framed-IP-Netmask"));
+
+    	return tic;
+    }
+    
 
     public int getAcctStatusType()
     {
@@ -163,16 +222,6 @@ public class Ticket implements Serializable
     }
 
 
-    public String getTicketCode()
-    {
-        return ticketCode;
-    }
-
-
-    public void setTicketCode(String ticketCode)
-    {
-        this.ticketCode = ticketCode;
-    }
 
 
     public String getUserName()

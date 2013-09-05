@@ -13,6 +13,8 @@ public class RadOnline extends RadOnlineKey implements Serializable {
 
     private String nasPort;
 
+    private Integer startSource;
+
     private static final long serialVersionUID = 1L;
 
     public String getUserName() {
@@ -55,6 +57,14 @@ public class RadOnline extends RadOnlineKey implements Serializable {
         this.nasPort = nasPort;
     }
 
+    public Integer getStartSource() {
+        return startSource;
+    }
+
+    public void setStartSource(Integer startSource) {
+        this.startSource = startSource;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -66,6 +76,7 @@ public class RadOnline extends RadOnlineKey implements Serializable {
         sb.append(", macAddress=").append(macAddress);
         sb.append(", acctStart=").append(acctStart);
         sb.append(", nasPort=").append(nasPort);
+        sb.append(", startSource=").append(startSource);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
