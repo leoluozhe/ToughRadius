@@ -3,7 +3,7 @@
 *.war
 *.ear
 #generatorConfig.xml
-mbgen.bat
+#mbgen.bat
 logs
 bin
 #data
