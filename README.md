@@ -29,9 +29,9 @@ ToughRadius实现了一个Web管理界面，提供用户管理，用户组管理
 
 当前ToughRadius内置Hsqldb的支持，ToughRadius提供了一个快捷的初始化脚本来帮助您初始化您的数据库。
 
-linux环境下请执行：setupDB.sh 
+linux环境下请执行：setupdb.sh 
 
-windows环境请执行：setupDB.bat
+windows环境请执行：setupdb.bat
 
 ### 运行说明
 

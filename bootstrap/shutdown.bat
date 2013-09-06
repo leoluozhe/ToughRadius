@@ -18,14 +18,13 @@ if exist "%PROJ_HOME%\bin\radiusd.exe" goto exec
 
 if not exist "%PROJ_HOME%\bin\java.exe" goto end
 
-copy "%PROJ_HOME%\bin\java.exe" "%PROJ_HOME%\bin\radiusd.exe"
 
 :exec
 echo ===========================
-echo ÕýÔÚ¹Ø±Õ RADIUS Server
+echo  shutdown RADIUS Server
 echo ===========================
 
-"%PROJ_HOME%\bin\radiusd" -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown
+"%PROJ_HOME%\bin\java" -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown
 
 echo ===========================
 echo done

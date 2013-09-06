@@ -17,4 +17,4 @@ if [ ! -f "$PROJ_HOME/bin/java" ]; then
 fi
 
 
-exec nohup $PROJ_HOME/bin/java -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown &
+$PROJ_HOME/bin/java -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown
