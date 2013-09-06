@@ -138,7 +138,7 @@ public class AcctServer extends RadiusServer implements Startable {
      * @throws RadiusException
      */
     private void startAcct(AccountingRequest req, String client) throws RadiusException {
-        RadOnline online = statServ.getOnline(client, req.getAttributeValue(""));
+        RadOnline online = statServ.getOnline(client, req.getAttributeValue("Acct-Session-Id"));
         if (online != null) {
             if (logger.isInfoEnabled())
                 logger.info("Accounting start request repeated");
@@ -174,7 +174,7 @@ public class AcctServer extends RadiusServer implements Startable {
      * @throws RadiusException
      */
     private void updateAcct(AccountingRequest req, String client) throws RadiusException {
-        RadOnline online = statServ.getOnline(client, req.getAttributeValue(""));
+        RadOnline online = statServ.getOnline(client, req.getAttributeValue("Acct-Session-Id"));
         if (online == null) {
             if (logger.isInfoEnabled())
                 logger.info("Accounting update request repeated");
