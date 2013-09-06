@@ -35,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.tinyradius.util.RadiusStat;
 import org.toughradius.annotation.Inject;
 import org.toughradius.common.ActionSet;
 import org.toughradius.common.Beans;
@@ -56,7 +57,6 @@ public class Project
     public static final String LOG4J_FILE = "conf/log4j.xml";
     public static final String CONFIG_FILE = "conf/system.xml";
     private static Log log = LogFactory.getLog(Project.class);
-    private AuthServer server;
     
     /**
      * 初始化日志环境
@@ -114,11 +114,11 @@ public class Project
         AuthServer authServer = new AuthServer(Beans.getBean(Config.class));
         AcctServer acctServer = new AcctServer(Beans.getBean(Config.class));
         WebServer wserv = new WebServer(Beans.getBean(Config.class), actionSet);
-        
+       
         authServer.start();
         acctServer.start();
         wserv.start();
-        
+
     }
     
     public static SqlSession getSession()
@@ -145,6 +145,11 @@ public class Project
     public static StatService getStatService()
     {
         return Beans.getBean(StatService.class);
+    }
+    
+    public static RadiusStat getRadiusStat()
+    {
+        return AuthServer.getStat();
     }
     
     public static void main(String[] args)

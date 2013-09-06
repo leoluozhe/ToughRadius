@@ -57,7 +57,7 @@ public class StatService {
      * @param example
      * @return
      */
-    public int countOnline(RadOnlineExample example) {
+    public int countAllOnline(RadOnlineExample example) {
         SqlSession session = dbservice.openSession();
         try {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
@@ -111,6 +111,7 @@ public class StatService {
             key.setSessionId(sessionId);
             RadOnline online = mapper.selectByPrimaryKey(key);
             mapper.deleteByPrimaryKey(key);
+            session.commit();
             return online;
         } finally {
             session.close();
@@ -142,6 +143,7 @@ public class StatService {
             RadOnlineMapper mapper = session.getMapper(RadOnlineMapper.class);
             List<RadOnline> result = mapper.selectByExample(null);
             mapper.deleteByExample(null);
+            session.commit();
             return result;
         } finally {
             session.close();

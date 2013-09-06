@@ -31,23 +31,25 @@ package org.toughradius.console;
 
 import java.io.IOException;
 
+import org.tinyradius.util.RadiusStat;
+import org.toughradius.Project;
 import org.toughradius.annotation.AuthAdmin;
+import org.toughradius.components.BaseService;
 import org.toughradius.components.Freemarker;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
+import org.xlightweb.IHttpRequest;
 import org.xlightweb.Mapping;
 
 @AuthAdmin
 @Mapping( { "/*" })
 public class IndexAction extends FliterAction{
 	
-	private Freemarker free;
-	public void setFree(Freemarker free) {
-		this.free = free;
-	}
-
 	public void doGet(IHttpExchange http) throws IOException,BadMessageException {
-		http.send(free.render(http, "index"));
+	    IHttpRequest req = http.getRequest();
+	    req.setAttribute("onlineNum",String.valueOf( statServ.countAllOnline(null)));
+	    req.setAttribute("radius",Project.getRadiusStat());
+		http.send(freemaker.render(http, "index"));
 	}
 
 	public void doPost(IHttpExchange http) throws IOException,BadMessageException {

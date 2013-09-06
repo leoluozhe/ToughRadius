@@ -59,6 +59,12 @@ public class TestServer {
 				return packet;
 			}
 
+            @Override
+            public void asyncExecute(RadiusPacket request, InetSocketAddress client) {
+                // TODO Auto-generated method stub
+                
+            }
+
 		};
 		if (args.length >= 1)
 			server.setAuthPort(Integer.parseInt(args[0]));

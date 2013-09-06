@@ -39,7 +39,7 @@ import org.tinyradius.packet.RadiusPacket;
 public abstract class RadiusServer {
     
     private InetAddress listenAddress = null;
-    private RadiusStat stat = new RadiusStat();
+    private static RadiusStat stat = new RadiusStat();
     private int authPort = 1812;
     private int acctPort = 1813;
     private DatagramSocket authSocket = null;
@@ -51,7 +51,7 @@ public abstract class RadiusServer {
     protected ExecutorService          worker      = Executors.newCachedThreadPool();
     private static Log logger = LogFactory.getLog(RadiusServer.class);
     
-    public RadiusStat getStat()
+    public static RadiusStat getStat()
     {
         return stat;
     }
@@ -75,6 +75,8 @@ public abstract class RadiusServer {
 	 * @return plain-text password or null if user unknown
 	 */
 	public abstract String getUserPassword(String userName);
+	
+	public abstract void asyncExecute(RadiusPacket request,InetSocketAddress client);
 	
 
 	/**
@@ -409,6 +411,7 @@ public abstract class RadiusServer {
                                     logger.info("send response: " + response);
                                 DatagramPacket packetOut = makeDatagramPacket(response, secret, remoteAddress.getAddress(), packetIn.getPort(), request);
                                 s.send(packetOut);
+                                asyncExecute(request,remoteAddress);
                             }
                             else
                                 logger.info("no response sent");

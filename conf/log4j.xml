@@ -37,21 +37,15 @@
  <appender name="acct.log" class="org.apache.log4j.DailyRollingFileAppender">
     <param name="File" value="logs/acct/acct.rec" />
     <param name="Append" value="true" />
-    <param name="MaxBackupIndex" value="180"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%m%n" />
     </layout>
   </appender>
   
-   <appender name="acct.log" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="logs/fee/fee.rec" />
-    <param name="Append" value="true" />
-    <param name="MaxBackupIndex" value="180"/>
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%m%n" />
-    </layout>
-  </appender>
-
+    <logger name="acct" additivity="false"> 
+        <level value="info" />
+        <appender-ref ref="acct.log" />
+    </logger>
 
 	<logger name="com.ibatis" additivity="true">
 		<level value="DEBUG" />

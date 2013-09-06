@@ -90,44 +90,42 @@ public class AcctServer extends RadiusServer implements Startable {
         RadUser user = Project.getUserService().getUser(userName);
         return user != null ? user.getPassword() : null;
     }
+    
+    public void asyncExecute(RadiusPacket request, InetSocketAddress client) {
+        try {
+            AccountingRequest accountingRequest = (AccountingRequest)request;
+            switch (accountingRequest.getAcctStatusType()) {
+            case AccountingRequest.ACCT_STATUS_TYPE_START:
+                startAcct(accountingRequest, client.getAddress().getHostAddress());
+                break;
+            case AccountingRequest.ACCT_STATUS_TYPE_STOP:
+                stopAcct(accountingRequest, client.getAddress().getHostAddress());
+                break;
+            case AccountingRequest.ACCT_STATUS_TYPE_INTERIM_UPDATE:
+                updateAcct(accountingRequest, client.getAddress().getHostAddress());
+                break;
+            case AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_ON:
+                setAcctOnOff(AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_ON, client.getAddress()
+                        .getHostAddress());
+                break;
+            case AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_OFF:
+                setAcctOnOff(AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_OFF, client.getAddress()
+                        .getHostAddress());
+                break;
+            default:
+                break;
+
+            }
+        } catch (RadiusException e) {
+            logger.error("accounting error", e);
+        }
+    }
 
     /**
      * 计费请求处理
      */
     public RadiusPacket accountingRequestReceived(final AccountingRequest accountingRequest,
             final InetSocketAddress client) throws RadiusException {
-        worker.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    switch (accountingRequest.getAcctStatusType()) {
-                    case AccountingRequest.ACCT_STATUS_TYPE_START:
-                        startAcct(accountingRequest, client.getAddress().getHostAddress());
-                        break;
-                    case AccountingRequest.ACCT_STATUS_TYPE_STOP:
-                        stopAcct(accountingRequest, client.getAddress().getHostAddress());
-                        break;
-                    case AccountingRequest.ACCT_STATUS_TYPE_INTERIM_UPDATE:
-                        updateAcct(accountingRequest, client.getAddress().getHostAddress());
-                        break;
-                    case AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_ON:
-                        setAcctOnOff(AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_ON, client.getAddress()
-                                .getHostAddress());
-                        break;
-                    case AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_OFF:
-                        setAcctOnOff(AccountingRequest.ACCT_STATUS_TYPE_ACCOUNTING_OFF, client.getAddress()
-                                .getHostAddress());
-                        break;
-                    default:
-                        break;
-
-                    }
-                } catch (RadiusException e) {
-                    logger.error("accounting error", e);
-                }
-            }
-        });
-
         return super.accountingRequestReceived(accountingRequest, client);
     }
 
@@ -142,6 +140,7 @@ public class AcctServer extends RadiusServer implements Startable {
         if (online != null) {
             if (logger.isInfoEnabled())
                 logger.info("Accounting start request repeated");
+            return;
         }
         RadUser user = cacheServ.getUser(req.getUserName());
         if (user == null) {
@@ -177,13 +176,12 @@ public class AcctServer extends RadiusServer implements Startable {
         RadOnline online = statServ.getOnline(client, req.getAttributeValue("Acct-Session-Id"));
         if (online == null) {
             if (logger.isInfoEnabled())
-                logger.info("Accounting update request repeated");
+                logger.info("Accounting update request , but online not exist");
 
             RadUser user = cacheServ.getUser(req.getUserName());
             if (user == null) {
                 if (logger.isInfoEnabled())
                     logger.info("Accounting update request , but user not exist");
-
                 return;
             }
             online = new RadOnline();
@@ -346,5 +344,7 @@ public class AcctServer extends RadiusServer implements Startable {
             logger.error("doPrePayTimeLen error", e);
         }
     }
+
+
 
 }

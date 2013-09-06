@@ -35,7 +35,7 @@
 						      <td>最后登录时间：</td>
 						      <td>${session.getAttribute("lastLogin")}</td>
 						      <td>当前在线：</td>
-						      <td>1000</td>
+						      <td>${onlineNum!!}</td>
 						    </tr>
 						    </tbody>
 						</table>		
@@ -48,22 +48,22 @@
 						  <tbody>
 						    <tr>
 						      <td>
-								<ul >
-								  <li>认证包总数：4291736 </li>
-								  <li> 认证接受包：226271 </li>
-								  <li>认证拒绝包：4065456 </li>
-								  <li>认证丢弃包：15</li>
+								<ul>
+								  <li>认证包总数：${radius.getAuthAll()} </li>
+								  <li> 认证接受包：${radius.getAuthAccept()} </li>
+								  <li>认证拒绝包：${radius.getAuthReject()} </li>
+								  <li>认证丢弃包：${radius.getAuthAbandon()}</li>
 								</ul>						      
                               </td>
 						      <td>
-								<ul >						      
-									<li>记帐包总数：449358 </li>
-									<li>记帐上线包：225743 </li>
-									<li>记帐更新包：0 </li>
-									<li>记帐下线包：223604 </li>
-									<li>记帐开始包：0 </li>
-									<li>记帐结束包：0 </li>
-									<li>记帐丢弃包：0 </li>
+								<ul>						      
+									<li>记帐包总数：${radius.getAcctAll()} </li>
+									<li>记帐上线包：${radius.getAcctStart()} </li>
+									<li>记帐更新包：${radius.getAcctUpdate()} </li>
+									<li>记帐下线包：${radius.getAcctStop()} </li>
+									<li>记帐开始包：${radius.getAcctOn()} </li>
+									<li>记帐结束包：${radius.getAcctOff()} </li>
+									<li>记帐丢弃包：${radius.getAcctAbandon()} </li>
 								</ul>						      
 						      </td>
 						    </tr>	    

@@ -30,12 +30,14 @@ package org.toughradius.console;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.toughradius.annotation.AuthAdmin;
 import org.toughradius.common.Config;
 import org.toughradius.components.BaseService;
 import org.toughradius.components.Freemarker;
+import org.toughradius.components.StatService;
 import org.toughradius.components.UserService;
 import org.xlightweb.BadMessageException;
 import org.xlightweb.IHttpExchange;
@@ -49,6 +51,7 @@ public abstract class FliterAction implements IHttpRequestHandler{
     protected Config config;
 	protected BaseService baseServ;
 	protected UserService userServ;
+	protected StatService statServ;
 	public void setFreemaker(Freemarker freemaker) {
 		this.freemaker = freemaker;
 	}
@@ -61,6 +64,10 @@ public abstract class FliterAction implements IHttpRequestHandler{
 	public void setUserServ(UserService userServ)
     {
         this.userServ = userServ;
+    }
+
+    public void setStatServ(StatService statServ) {
+        this.statServ = statServ;
     }
 	public void setConfig(Config config)
     {

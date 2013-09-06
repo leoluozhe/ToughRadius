@@ -403,4 +403,13 @@ public class AuthServer extends RadiusServer implements Startable
         return sessionTimeout;
     }
 
+    /* (non-Javadoc)
+     * @see org.tinyradius.util.RadiusServer#asyncExecute(org.tinyradius.packet.RadiusPacket, java.net.InetSocketAddress)
+     */
+    @Override
+    public void asyncExecute(RadiusPacket request, InetSocketAddress client) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

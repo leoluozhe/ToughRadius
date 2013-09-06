@@ -218,14 +218,22 @@ public class CacheService implements Startable {
 	}
 
 	public void updateUserMeta(RadUserMeta newMeta) {
+	    if(newMeta==null)
+	        return;
 		List<RadUserMeta> metas = userMetaCache.get(newMeta.getUserName());
-		if (metas == null) {
-			metas = new ArrayList<RadUserMeta>();
-			metas.add(newMeta);
-			return;
-		}
 
+		
+        if (metas == null) {
+            metas = new ArrayList<RadUserMeta>();
+            metas.add(newMeta);
+            userMetaCache.put(newMeta.getUserName(),metas);
+            return;
+        }   
+        
+        
 		synchronized (metas) {
+	    
+		    
 			boolean flag = false;
 			for (Iterator<RadUserMeta> iterator = metas.iterator(); iterator.hasNext();) {
 				RadUserMeta meta = iterator.next();
@@ -314,15 +322,19 @@ public class CacheService implements Startable {
 	}
 
 	public void updateGroupMeta(RadGroupMeta newMeta) {
+	    if(newMeta==null)
+	        return;
 		List<RadGroupMeta> metas = groupMetaCache.get(newMeta.getGroupName());
-
-		if (metas == null) {
-			metas = new ArrayList<RadGroupMeta>();
-			metas.add(newMeta);
-			return;
-		}
-
+		
+        if (metas == null) {
+            metas = new ArrayList<RadGroupMeta>();
+            metas.add(newMeta);
+            groupMetaCache.put(newMeta.getGroupName(), metas);
+            return;
+        }
+        
 		synchronized (metas) {
+		      
 			boolean flag = false;
 			for (Iterator<RadGroupMeta> iterator = metas.iterator(); iterator.hasNext();) {
 				RadGroupMeta meta = iterator.next();
