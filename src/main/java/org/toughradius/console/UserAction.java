@@ -69,7 +69,7 @@ public class UserAction extends FliterAction{
             query.andGroupNameEqualTo(groupName);
         }
 	    List<RadGroup> groups = userServ.getGroups();
-	    List<RadUser> users = userServ.getUsers(example, new RowBounds(0,10));
+	    List<RadUser> users = userServ.getUsers(example, new RowBounds(0,100));
 	    request.setAttribute("groups", groups);
 	    request.setAttribute("users", users);
 		http.send(freemaker.render(http, "user"));
