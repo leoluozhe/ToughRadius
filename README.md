@@ -3,7 +3,7 @@ ToughRadius
 
 ### 最新发布
 
-[ToughRadiusV1.0-build2013090701](https://github.com/jamiesun/ToughRadius-Release/blob/master/ToughRadiusV1.0-build2013090701.zip)
+[ToughRadiusV1.0-build2013090701](http://pan.baidu.com/share/link?uk=604278103&shareid=1758865663)
 
 ToughRadius首个beta版本,已经具备了基本的认证计费功能,支持ros,h3c,huawei设备接入,只需要扩展字典便可支持更多接入类型,支持用户过期策略,时段策略,绑定MAC策略,并发数控制等策略,支持预付费包月和计时资费.
 
@@ -23,7 +23,7 @@ ToughRadius实现了一个Web管理界面，提供用户管理，用户组管理
 
 代码库:https://github.com/jamiesun/ToughRadius
 
-二进制版本发布请移步这里：https://github.com/jamiesun/ToughRadius-Release
+二进制版本发布请移步这里：http://pan.baidu.com/share/link?uk=604278103&shareid=1758865663
 
 如果您对java环境下的构建比较了解，可以选择从源码构建：
 
