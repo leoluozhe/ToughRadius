@@ -18,6 +18,7 @@
         <mkdir dir="${releasedir}" />
     	<mkdir dir="${releasedir}/templates" />
     	<mkdir dir="${releasedir}/conf" />
+    	<mkdir dir="${releasedir}/docs" />
     	<mkdir dir="${releasedir}/lib" />
     	<mkdir dir="${releasedir}/logs" />
     </target>
@@ -35,7 +36,7 @@
         
         <!-- blog -->
         <javac debug="on" deprecation="true" srcdir="${classesdir}" destdir="${classesdir}"
-        	source="1.6"    fork="true" encoding="utf-8">
+        	source="1.6"   fork="true" encoding="utf-8">
             <classpath>
                 <pathelement location="${bindir}"/>
                 <fileset dir="${libdir}">
@@ -62,6 +63,7 @@
          ================================= -->
     <target name="release" depends="buildsrc" description="project release">
     	<copy todir="${releasedir}"><fileset dir="${basedir}/bootstrap" /></copy>
+    	<copy todir="${releasedir}/docs"><fileset dir="${basedir}/docs" /></copy>
     	<copy todir="${releasedir}/templates"><fileset dir="${basedir}/templates" /></copy>
     	<copy todir="${releasedir}/lib">
     		<fileset dir="${basedir}/lib"

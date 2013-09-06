@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.toughradius.data.RadOnlineMapper">
-  <resultMap id="BaseResultMap" type="org.toughradius.model.RadOnline">
-    <id column="CLIENT_ADDRESS" jdbcType="VARCHAR" property="clientAddress" />
-    <id column="SESSION_ID" jdbcType="VARCHAR" property="sessionId" />
-    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
-    <result column="IP_ADDRESS" jdbcType="VARCHAR" property="ipAddress" />
-    <result column="MAC_ADDRESS" jdbcType="VARCHAR" property="macAddress" />
-    <result column="ACCT_START" jdbcType="VARCHAR" property="acctStart" />
-    <result column="NAS_PORT" jdbcType="VARCHAR" property="nasPort" />
-    <result column="START_SOURCE" jdbcType="INTEGER" property="startSource" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.toughradius.data.RadOnlineMapper" >
+  <resultMap id="BaseResultMap" type="org.toughradius.model.RadOnline" >
+    <id column="CLIENT_ADDRESS" property="clientAddress" jdbcType="VARCHAR" />
+    <id column="SESSION_ID" property="sessionId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="IP_ADDRESS" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="MAC_ADDRESS" property="macAddress" jdbcType="VARCHAR" />
+    <result column="ACCT_START" property="acctStart" jdbcType="VARCHAR" />
+    <result column="NAS_PORT" property="nasPort" jdbcType="VARCHAR" />
+    <result column="START_SOURCE" property="startSource" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -40,25 +40,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -69,43 +69,43 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     CLIENT_ADDRESS, SESSION_ID, USER_NAME, IP_ADDRESS, MAC_ADDRESS, ACCT_START, NAS_PORT, 
     START_SOURCE
   </sql>
-  <select id="selectByExample" parameterType="org.toughradius.model.RadOnlineExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.toughradius.model.RadOnlineExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from RAD_ONLINE
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="org.toughradius.model.RadOnlineKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.toughradius.model.RadOnlineKey" >
     select 
     <include refid="Base_Column_List" />
     from RAD_ONLINE
     where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
       and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadOnlineKey">
+  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadOnlineKey" >
     delete from RAD_ONLINE
     where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
       and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="org.toughradius.model.RadOnlineExample">
+  <delete id="deleteByExample" parameterType="org.toughradius.model.RadOnlineExample" >
     delete from RAD_ONLINE
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.toughradius.model.RadOnline">
+  <insert id="insert" parameterType="org.toughradius.model.RadOnline" >
     insert into RAD_ONLINE (CLIENT_ADDRESS, SESSION_ID, USER_NAME, 
       IP_ADDRESS, MAC_ADDRESS, ACCT_START, 
       NAS_PORT, START_SOURCE)
@@ -113,100 +113,100 @@
       #{ipAddress,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, #{acctStart,jdbcType=VARCHAR}, 
       #{nasPort,jdbcType=VARCHAR}, #{startSource,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.toughradius.model.RadOnline">
+  <insert id="insertSelective" parameterType="org.toughradius.model.RadOnline" >
     insert into RAD_ONLINE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="clientAddress != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clientAddress != null" >
         CLIENT_ADDRESS,
       </if>
-      <if test="sessionId != null">
+      <if test="sessionId != null" >
         SESSION_ID,
       </if>
-      <if test="userName != null">
+      <if test="userName != null" >
         USER_NAME,
       </if>
-      <if test="ipAddress != null">
+      <if test="ipAddress != null" >
         IP_ADDRESS,
       </if>
-      <if test="macAddress != null">
+      <if test="macAddress != null" >
         MAC_ADDRESS,
       </if>
-      <if test="acctStart != null">
+      <if test="acctStart != null" >
         ACCT_START,
       </if>
-      <if test="nasPort != null">
+      <if test="nasPort != null" >
         NAS_PORT,
       </if>
-      <if test="startSource != null">
+      <if test="startSource != null" >
         START_SOURCE,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="clientAddress != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clientAddress != null" >
         #{clientAddress,jdbcType=VARCHAR},
       </if>
-      <if test="sessionId != null">
+      <if test="sessionId != null" >
         #{sessionId,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null">
+      <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="ipAddress != null">
+      <if test="ipAddress != null" >
         #{ipAddress,jdbcType=VARCHAR},
       </if>
-      <if test="macAddress != null">
+      <if test="macAddress != null" >
         #{macAddress,jdbcType=VARCHAR},
       </if>
-      <if test="acctStart != null">
+      <if test="acctStart != null" >
         #{acctStart,jdbcType=VARCHAR},
       </if>
-      <if test="nasPort != null">
+      <if test="nasPort != null" >
         #{nasPort,jdbcType=VARCHAR},
       </if>
-      <if test="startSource != null">
+      <if test="startSource != null" >
         #{startSource,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.toughradius.model.RadOnlineExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="org.toughradius.model.RadOnlineExample" resultType="java.lang.Integer" >
     select count(*) from RAD_ONLINE
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update RAD_ONLINE
-    <set>
-      <if test="record.clientAddress != null">
+    <set >
+      <if test="record.clientAddress != null" >
         CLIENT_ADDRESS = #{record.clientAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.sessionId != null">
+      <if test="record.sessionId != null" >
         SESSION_ID = #{record.sessionId,jdbcType=VARCHAR},
       </if>
-      <if test="record.userName != null">
+      <if test="record.userName != null" >
         USER_NAME = #{record.userName,jdbcType=VARCHAR},
       </if>
-      <if test="record.ipAddress != null">
+      <if test="record.ipAddress != null" >
         IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.macAddress != null">
+      <if test="record.macAddress != null" >
         MAC_ADDRESS = #{record.macAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.acctStart != null">
+      <if test="record.acctStart != null" >
         ACCT_START = #{record.acctStart,jdbcType=VARCHAR},
       </if>
-      <if test="record.nasPort != null">
+      <if test="record.nasPort != null" >
         NAS_PORT = #{record.nasPort,jdbcType=VARCHAR},
       </if>
-      <if test="record.startSource != null">
+      <if test="record.startSource != null" >
         START_SOURCE = #{record.startSource,jdbcType=INTEGER},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update RAD_ONLINE
     set CLIENT_ADDRESS = #{record.clientAddress,jdbcType=VARCHAR},
       SESSION_ID = #{record.sessionId,jdbcType=VARCHAR},
@@ -216,36 +216,36 @@
       ACCT_START = #{record.acctStart,jdbcType=VARCHAR},
       NAS_PORT = #{record.nasPort,jdbcType=VARCHAR},
       START_SOURCE = #{record.startSource,jdbcType=INTEGER}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadOnline">
+  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadOnline" >
     update RAD_ONLINE
-    <set>
-      <if test="userName != null">
+    <set >
+      <if test="userName != null" >
         USER_NAME = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="ipAddress != null">
+      <if test="ipAddress != null" >
         IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
       </if>
-      <if test="macAddress != null">
+      <if test="macAddress != null" >
         MAC_ADDRESS = #{macAddress,jdbcType=VARCHAR},
       </if>
-      <if test="acctStart != null">
+      <if test="acctStart != null" >
         ACCT_START = #{acctStart,jdbcType=VARCHAR},
       </if>
-      <if test="nasPort != null">
+      <if test="nasPort != null" >
         NAS_PORT = #{nasPort,jdbcType=VARCHAR},
       </if>
-      <if test="startSource != null">
+      <if test="startSource != null" >
         START_SOURCE = #{startSource,jdbcType=INTEGER},
       </if>
     </set>
     where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
       and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadOnline">
+  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadOnline" >
     update RAD_ONLINE
     set USER_NAME = #{userName,jdbcType=VARCHAR},
       IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
@@ -257,271 +257,17 @@
       and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
   </update>
   <cache />
-  <select id="selectByExampleWithRowbounds" parameterType="org.toughradius.model.RadOnlineExample" resultMap="BaseResultMap">
+  <select resultMap="BaseResultMap" parameterType="org.toughradius.model.RadOnlineExample" id="selectByExampleWithRowbounds" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from RAD_ONLINE
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <resultMap id="BaseResultMap" type="org.toughradius.model.RadOnline">
-    <id column="CLIENT_ADDRESS" jdbcType="VARCHAR" property="clientAddress" />
-    <id column="SESSION_ID" jdbcType="VARCHAR" property="sessionId" />
-    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
-    <result column="IP_ADDRESS" jdbcType="VARCHAR" property="ipAddress" />
-    <result column="MAC_ADDRESS" jdbcType="VARCHAR" property="macAddress" />
-    <result column="ACCT_START" jdbcType="VARCHAR" property="acctStart" />
-    <result column="NAS_PORT" jdbcType="VARCHAR" property="nasPort" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    CLIENT_ADDRESS, SESSION_ID, USER_NAME, IP_ADDRESS, MAC_ADDRESS, ACCT_START, NAS_PORT
-  </sql>
-  <select id="selectByExample" parameterType="org.toughradius.model.RadOnlineExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from RAD_ONLINE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="org.toughradius.model.RadOnlineKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from RAD_ONLINE
-    where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
-      and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="org.toughradius.model.RadOnlineKey">
-    delete from RAD_ONLINE
-    where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
-      and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.toughradius.model.RadOnlineExample">
-    delete from RAD_ONLINE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.toughradius.model.RadOnline">
-    insert into RAD_ONLINE (CLIENT_ADDRESS, SESSION_ID, USER_NAME, 
-      IP_ADDRESS, MAC_ADDRESS, ACCT_START, 
-      NAS_PORT)
-    values (#{clientAddress,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{ipAddress,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, #{acctStart,jdbcType=VARCHAR}, 
-      #{nasPort,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="org.toughradius.model.RadOnline">
-    insert into RAD_ONLINE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="clientAddress != null">
-        CLIENT_ADDRESS,
-      </if>
-      <if test="sessionId != null">
-        SESSION_ID,
-      </if>
-      <if test="userName != null">
-        USER_NAME,
-      </if>
-      <if test="ipAddress != null">
-        IP_ADDRESS,
-      </if>
-      <if test="macAddress != null">
-        MAC_ADDRESS,
-      </if>
-      <if test="acctStart != null">
-        ACCT_START,
-      </if>
-      <if test="nasPort != null">
-        NAS_PORT,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="clientAddress != null">
-        #{clientAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="sessionId != null">
-        #{sessionId,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="ipAddress != null">
-        #{ipAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="macAddress != null">
-        #{macAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="acctStart != null">
-        #{acctStart,jdbcType=VARCHAR},
-      </if>
-      <if test="nasPort != null">
-        #{nasPort,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.toughradius.model.RadOnlineExample" resultType="java.lang.Integer">
-    select count(*) from RAD_ONLINE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update RAD_ONLINE
-    <set>
-      <if test="record.clientAddress != null">
-        CLIENT_ADDRESS = #{record.clientAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sessionId != null">
-        SESSION_ID = #{record.sessionId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userName != null">
-        USER_NAME = #{record.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ipAddress != null">
-        IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.macAddress != null">
-        MAC_ADDRESS = #{record.macAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.acctStart != null">
-        ACCT_START = #{record.acctStart,jdbcType=VARCHAR},
-      </if>
-      <if test="record.nasPort != null">
-        NAS_PORT = #{record.nasPort,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update RAD_ONLINE
-    set CLIENT_ADDRESS = #{record.clientAddress,jdbcType=VARCHAR},
-      SESSION_ID = #{record.sessionId,jdbcType=VARCHAR},
-      USER_NAME = #{record.userName,jdbcType=VARCHAR},
-      IP_ADDRESS = #{record.ipAddress,jdbcType=VARCHAR},
-      MAC_ADDRESS = #{record.macAddress,jdbcType=VARCHAR},
-      ACCT_START = #{record.acctStart,jdbcType=VARCHAR},
-      NAS_PORT = #{record.nasPort,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.toughradius.model.RadOnline">
-    update RAD_ONLINE
-    <set>
-      <if test="userName != null">
-        USER_NAME = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="ipAddress != null">
-        IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="macAddress != null">
-        MAC_ADDRESS = #{macAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="acctStart != null">
-        ACCT_START = #{acctStart,jdbcType=VARCHAR},
-      </if>
-      <if test="nasPort != null">
-        NAS_PORT = #{nasPort,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
-      and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.toughradius.model.RadOnline">
-    update RAD_ONLINE
-    set USER_NAME = #{userName,jdbcType=VARCHAR},
-      IP_ADDRESS = #{ipAddress,jdbcType=VARCHAR},
-      MAC_ADDRESS = #{macAddress,jdbcType=VARCHAR},
-      ACCT_START = #{acctStart,jdbcType=VARCHAR},
-      NAS_PORT = #{nasPort,jdbcType=VARCHAR}
-    where CLIENT_ADDRESS = #{clientAddress,jdbcType=VARCHAR}
-      and SESSION_ID = #{sessionId,jdbcType=VARCHAR}
-  </update>
-  <cache />
-  <select id="selectByExampleWithRowbounds" parameterType="org.toughradius.model.RadOnlineExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from RAD_ONLINE
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>

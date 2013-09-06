@@ -16,9 +16,5 @@ if [ ! -f "$PROJ_HOME/bin/java" ]; then
   return
 fi
 
-# Check $PROJ_HOME/bin/radiusd is Exist
-if [ ! -f "$PROJ_HOME/bin/radiusd" ]; then
-  cp $PROJ_HOME/bin/java $PROJ_HOME/bin/radiusd
-fi
 
-exec nohup $PROJ_HOME/bin/radiusd -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown &
+exec nohup $PROJ_HOME/bin/java -server -classpath "./lib/radiusd.jar" org.toughradius.Shutdown &
