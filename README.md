@@ -1,6 +1,14 @@
 ToughRadius
 ===========
 
+### 最新发布
+
+[ToughRadiusV1.0-build2013090701](https://github.com/jamiesun/ToughRadius-Release/blob/master/ToughRadiusV1.0-build2013090701.zip)
+
+ToughRadius首个beta版本,已经具备了基本的认证计费功能,支持ros,h3c,huawei设备接入,只需要扩展字典便可支持更多接入类型,支持用户过期策略,时段策略,绑定MAC策略,并发数控制等策略,支持预付费包月和计时资费.
+
+后续版本规划,保证核心版本的精简,通过模块接口扩展来实现更丰富的业务功能.
+
 ### ToughRadius 功能特性
 
 ToughRadius 是基于开源TinyRadius开发的一个支持高并发的Radius服务器。TinyRadius提供了Radius协议实现基础，ToughRadius增加了多线程的支持，可以支持高并发的认证计费请求。
@@ -13,7 +21,9 @@ ToughRadius实现了一个Web管理界面，提供用户管理，用户组管理
 
 ### 版本构建
 
-二进制版本发布请移步这里：[https://github.com/jamiesun/ToughRadius-Release][]
+代码库:https://github.com/jamiesun/ToughRadius
+
+二进制版本发布请移步这里：https://github.com/jamiesun/ToughRadius-Release
 
 如果您对java环境下的构建比较了解，可以选择从源码构建：
 
